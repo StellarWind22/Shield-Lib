@@ -70,8 +70,8 @@ public class FabricShieldModelRenderer implements SpecialModelRenderer<Component
 			model.getHandle().render(matrixStack, vertexConsumer, i, j);
 			if (bl2) {
 				BannerBlockEntityRenderer.renderCanvas(matrixStack, vertexConsumerProvider, i, j, model.getPlate(),
-						spriteIdentifier, false, (DyeColor) Objects.requireNonNullElse(dyeColor, DyeColor.WHITE),
-						bannerPatternsComponent, bl, false);
+					spriteIdentifier, false, (DyeColor) Objects.requireNonNullElse(dyeColor, DyeColor.WHITE),
+					bannerPatternsComponent, bl, false);
 			} else {
 				model.getPlate().render(matrixStack, vertexConsumer, i, j);
 			}
@@ -80,20 +80,13 @@ public class FabricShieldModelRenderer implements SpecialModelRenderer<Component
 		}
 	}
 
-	@Override
-	public void collectVertices(Set<Vector3f> vertices) {
-		MatrixStack matrixStack = new MatrixStack();
-		matrixStack.scale(1.0F, -1.0F, -1.0F);
-		this.model.getRootPart().collectVertices(matrixStack, vertices);
-	}
-
 	public record Unbaked(Identifier baseModel, Identifier baseModelNoPat) implements SpecialModelRenderer.Unbaked {
 		public static final MapCodec<FabricShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
-				instance -> instance.group(
-								Identifier.CODEC.fieldOf("texture_banner").forGetter(FabricShieldModelRenderer.Unbaked::baseModel),
-								Identifier.CODEC.fieldOf("texture_default").forGetter(FabricShieldModelRenderer.Unbaked::baseModelNoPat)
-						)
-						.apply(instance, FabricShieldModelRenderer.Unbaked::new)
+			instance -> instance.group(
+				Identifier.CODEC.fieldOf("texture_banner").forGetter(FabricShieldModelRenderer.Unbaked::baseModel),
+				Identifier.CODEC.fieldOf("texture_default").forGetter(FabricShieldModelRenderer.Unbaked::baseModelNoPat)
+			)
+			.apply(instance, FabricShieldModelRenderer.Unbaked::new)
 		);
 
 		@Override
