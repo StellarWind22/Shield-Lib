@@ -6,11 +6,12 @@
   "mixins": [
     "ItemsMixin",
     "LivingEntityMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "RecipeMixin"
   ],
   "client": [
-    "RendererMixin",
-    "HeldItemRendererMixin"
+    "HeldItemRendererMixin",
+    "RendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

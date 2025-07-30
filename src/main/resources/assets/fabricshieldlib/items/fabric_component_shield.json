@@ -6,14 +6,18 @@
       "type": "minecraft:special",
       "base": "fabricshieldlib:item/fabric_banner_shield",
       "model": {
-        "type": "fabricshieldlib:fabric_banner_shield"
+        "type": "fabricshieldlib:fabric_banner_shield",
+        "texture_banner": "fabricshieldlib:entity/fabric_banner_shield_base",
+        "texture_default": "fabricshieldlib:entity/fabric_banner_shield_base_nopattern"
       }
     },
     "on_true": {
       "type": "minecraft:special",
       "base": "fabricshieldlib:item/fabric_banner_shield_blocking",
       "model": {
-        "type": "fabricshieldlib:fabric_banner_shield"
+        "type": "fabricshieldlib:fabric_banner_shield",
+        "texture_banner": "fabricshieldlib:entity/fabric_banner_shield_base",
+        "texture_default": "fabricshieldlib:entity/fabric_banner_shield_base_nopattern"
       }
     }
   }

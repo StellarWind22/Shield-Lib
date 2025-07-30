@@ -5,23 +5,24 @@ import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.render.entity.model.LoadedEntityModels;
 import net.minecraft.util.ActionResult;
 
+@Deprecated
 public interface ShieldSetModelCallback {
+	/**
+	 * Handle event listeners.
+	 */
+	Event<ShieldSetModelCallback> EVENT = EventFactory.createArrayBacked(ShieldSetModelCallback.class,
+		(listeners) -> (loader) -> {
+			for (ShieldSetModelCallback listener : listeners) {
+				ActionResult result = listener.setModel(loader);
 
-    /**
-     * Handle event listeners.
-     */
-    Event<ShieldSetModelCallback> EVENT = EventFactory.createArrayBacked(ShieldSetModelCallback.class,
-            (listeners) -> (loader) -> {
-                for (ShieldSetModelCallback listener : listeners) {
-                    ActionResult result = listener.setModel(loader);
+				if (result != ActionResult.PASS) {
+					return result;
+				}
+			}
 
-                    if (result != ActionResult.PASS) {
-                        return result;
-                    }
-                }
+			return ActionResult.PASS;
+		}
+	);
 
-                return ActionResult.PASS;
-            });
-
-    ActionResult setModel(LoadedEntityModels loader);
+	ActionResult setModel(LoadedEntityModels loader);
 }
