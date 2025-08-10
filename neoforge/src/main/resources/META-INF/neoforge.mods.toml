@@ -1,0 +1,38 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+#issueTrackerURL = ""
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "shieldlib"
+version = "${version}"
+displayName = "ShieldLib"
+authors = "StellarWind22, CringeStar, Rikka0w0"
+description = '''
+Library that makes it easy to add shields with full banner & enchantment support without conflictions!
+'''
+#logoFile = ""
+
+[[dependencies.shieldlib]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.shieldlib]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.8,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.shieldlib]]
+modId = "architectury"
+type = "required"
+versionRange = "[17.0.8,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[mixins]]
+config = "shieldlib.mixins.json"
