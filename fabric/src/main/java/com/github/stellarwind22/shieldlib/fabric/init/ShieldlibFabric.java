@@ -1,6 +1,6 @@
 package com.github.stellarwind22.shieldlib.fabric.init;
 
-import com.github.stellarwind22.shieldlib.init.Shieldlib;
+import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import net.fabricmc.api.ModInitializer;
 
 public final class ShieldlibFabric implements ModInitializer {
@@ -11,6 +11,6 @@ public final class ShieldlibFabric implements ModInitializer {
         // Proceed with mild caution.
 
         // Run our common setup.
-        Shieldlib.init(true);
+        ShieldLib.init(true);
     }
 }

@@ -3,7 +3,7 @@ package com.github.stellarwind22.shieldlib.init;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class Shieldlib {
+public final class ShieldLib {
 
     public static final String MOD_ID = "shieldlib";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
