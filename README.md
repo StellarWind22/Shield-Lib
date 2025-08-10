@@ -1,14 +1,14 @@
 [![](https://jitpack.io/v/CrimsonDawn45/Fabric-Shield-Lib.svg)](https://jitpack.io/#CrimsonDawn45/Fabric-Shield-Lib)
 
-# Fabric Shield Lib
-Library for easily adding new shields, shield enchantments, and enabling you to enchant shields in general without worry of conflictions.
+# Shield Lib
+Library that makes it easy to add shields with banner support, enchantment support, & custom shapes without conflictions!
 
 ## Importing
 library is distributed via [jitpack.io](https://jitpack.io/#CrimsonDawn45/Fabric-Shield-Lib)
 
 #### put this in gradle.properties
 ```properties
-fabric_shield_lib_version=1.8.3-1.21.8
+shieldlib_version=2.0-1.21.8
 ```
 
 #### build.gradle under repositories just above dependencies
@@ -24,14 +24,14 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
         
-        //Fabric Shield Lib
-	modImplementation "com.github.StellarWind22:Fabric-Shield-Lib:v${project.fabric_shield_lib_version}"
+        //Shield Lib
+	modImplementation "com.github.StellarWind22:ShieldLib:v${project.shieldlib_version}"
 }
 ```
 
 #### **build.gradle** under dependencies
 ```gradle
-modImplementation "com.github.StellarWind22:Fabric-Shield-Lib:v${project.fabric_shield_lib_version}"
+modImplementation "com.github.StellarWind22:ShieldLib:v${project.shieldlib_version}"
 ```
 
 - - - -
