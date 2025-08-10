@@ -17,10 +17,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.stellarwind22.shieldlib.fabric.init.ShieldlibFabric"
+      "com.github.stellarwind22.shieldlib.fabric.init.ShieldLibFabric"
     ],
     "client": [
-      "com.github.stellarwind22.shieldlib.fabric.init.ShieldlibFabricClient"
+      "com.github.stellarwind22.shieldlib.fabric.init.ShieldLibFabricClient"
     ]
   },
   "mixins": [

@@ -12,6 +12,10 @@ public class ShieldLibTests {
     //protected final static ShieldLibItem SHIELD = registerItem("shield",
     //        (props) -> new ShieldLibItem(props.durability(200), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
 
+    public static void init() {
+
+    }
+
 
 
     private static <T extends Item> T registerItem(String name, Func<Item.Properties, T> constructor) {
