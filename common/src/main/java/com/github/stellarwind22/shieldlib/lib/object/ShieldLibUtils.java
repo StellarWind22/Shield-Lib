@@ -17,6 +17,8 @@ import java.util.Optional;
 public class ShieldLibUtils {
 
     public static final int VANILLA_SHIELD_DURABILITY = 336;
+    public static final int VANILLA_SHIELD_COOLDOWN_TICKS = 100;
+    public static final int VANILLA_SHIELD_ENCHANTABILITY = 14;
     public static final BlocksAttacks VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT =
             new BlocksAttacks(
                     0.25F,
