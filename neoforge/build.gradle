@@ -31,10 +31,17 @@ repositories {
     }
 }
 
+repositories {
+    maven {url = "https://api.modrinth.com/maven"}
+}
+
 dependencies {
     neoForge "net.neoforged:neoforge:$rootProject.neoforge_version"
-
     modImplementation "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
+
+    //Midnight lib
+    modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}-neoforge"
+    include "maven.modrinth:midnightlib:${project.midnightlib_version}-neoforge"
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')

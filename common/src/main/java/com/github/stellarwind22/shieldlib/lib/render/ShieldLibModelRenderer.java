@@ -93,7 +93,7 @@ public class ShieldLibModelRenderer implements SpecialModelRenderer<DataComponen
             model.handle().render(poseStack, vertexConsumer, i, j);
 
             if(bl2) {
-                BannerRenderer.renderPatterns(poseStack, multiBufferSource, i, j, model.plate(),
+                renderPatterns(poseStack, multiBufferSource, i, j, model.plate(),
                         spriteMat, false, (DyeColor) Objects.requireNonNullElse(color, DyeColor.WHITE),
                         bannerPatternLayers, bl, false);
             } else {

@@ -24,12 +24,24 @@ configurations {
     }
 }
 
+repositories {
+    maven { url "https://maven.terraformersmc.com/releases/"}
+    maven {url = "https://api.modrinth.com/maven"}
+}
+
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
-
     modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
-
     modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
+
+    //Mod Menu
+    modCompileOnly modRuntimeOnly ("com.terraformersmc:modmenu:${project.mod_menu_version}"), {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
+    //Midnight lib
+    modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}-fabric"
+    include "maven.modrinth:midnightlib:${project.midnightlib_version}-fabric"
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
