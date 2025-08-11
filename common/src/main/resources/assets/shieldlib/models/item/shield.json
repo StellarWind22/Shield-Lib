@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"shield": "fabricshieldlib:item/fabric_shield",
+		"shield": "shieldlib:item/shield",
 		"particle": "#shield"
 	},
 	"gui-light":"front",

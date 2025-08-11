@@ -1,5 +1,5 @@
 {
-	"parent": "fabricshieldlib:item/fabric_shield",
+	"parent": "shieldlib:item/shield",
 	"gui-light":"front",
 	"display": {
 		"thirdperson_righthand": {

@@ -1,13 +1,13 @@
 {   
-    "fabricshieldlib.midnightconfig.title": "Configuration de Fabric Shield Lib",
-    "fabricshieldlib.midnightconfig.enable_tooltips":"Activer les infobulles du bouclier",
-    "fabricshieldlib.midnightconfig.allow_vanilla_shield_enchanting":"Autoriser l'enchantement du bouclier vanilla",
-    "fabricshieldlib.midnightconfig.enchantability_convention": "Convention: 15 = Bois || 5 = Pierre || 14 = Fer || 10 = Diamant || 22 = Or",
-    "fabricshieldlib.midnightconfig.vanilla_shield_enchantability":"Enchantabilité du bouclier vanilla",
-    "fabricshieldlib.midnightconfig.universal_disable":"Désactivation du bouclier universel",
-    "fabricshieldlib.midnightconfig.universal_disable_description_1":"Si activé, chaque fois qu'un bouclier est désactivé, chaque type de bouclier sera désactivé.",
-    "fabricshieldlib.midnightconfig.universal_disable_description_2":"Si désactivé, la désactivation d'un bouclier ne désactivera que les boucliers du même type",
-    "fabricshieldlib.shield_tooltip.start":"Lorsqu'il est touché par la hache",
-    "fabricshieldlib.shield_tooltip.unit":"s",
-    "fabricshieldlib.shield_tooltip.end":"Temps de recharge"
+    "shieldlib.midnightconfig.title": "Configuration de Shield Lib",
+    "shieldlib.midnightconfig.enable_tooltips":"Activer les infobulles du bouclier",
+    "shieldlib.midnightconfig.allow_vanilla_shield_enchanting":"Autoriser l'enchantement du bouclier vanilla",
+    "shieldlib.midnightconfig.enchantability_convention": "Convention: 15 = Bois || 5 = Pierre || 14 = Fer || 10 = Diamant || 22 = Or",
+    "shieldlib.midnightconfig.vanilla_shield_enchantability":"Enchantabilité du bouclier vanilla",
+    "shieldlib.midnightconfig.universal_disable":"Désactivation du bouclier universel",
+    "shieldlib.midnightconfig.universal_disable_description_1":"Si activé, chaque fois qu'un bouclier est désactivé, chaque type de bouclier sera désactivé.",
+    "shieldlib.midnightconfig.universal_disable_description_2":"Si désactivé, la désactivation d'un bouclier ne désactivera que les boucliers du même type",
+    "shieldlib.shield_tooltip.start":"Lorsqu'il est touché par la hache",
+    "shieldlib.shield_tooltip.unit":"s",
+    "shieldlib.shield_tooltip.end":"Temps de recharge"
 }

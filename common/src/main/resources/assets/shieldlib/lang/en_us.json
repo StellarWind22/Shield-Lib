@@ -1,13 +1,13 @@
 {   
-    "fabricshieldlib.midnightconfig.title": "Fabric Shield Lib Config",
-    "fabricshieldlib.midnightconfig.enable_tooltips":"Enable shield tooltips",
-    "fabricshieldlib.midnightconfig.allow_vanilla_shield_enchanting":"Allow vanilla shield enchanting",
-    "fabricshieldlib.midnightconfig.enchantability_convention": "Convention: 15 = Wood || 5 = Stone || 14 = Iron || 10 = Diamond || 22 = Gold",
-    "fabricshieldlib.midnightconfig.vanilla_shield_enchantability":"Vanilla Shield Enchantability",
-    "fabricshieldlib.midnightconfig.universal_disable":"Universal Shield Disabling",
-    "fabricshieldlib.midnightconfig.universal_disable_description_1":"If on, whenever any shield gets disabled, every type of shield will be disabled.",
-    "fabricshieldlib.midnightconfig.universal_disable_description_2":"If off, then disabling a shield will only disable shields of the same type",
-    "fabricshieldlib.shield_tooltip.start":"When Hit by Axe",
-    "fabricshieldlib.shield_tooltip.unit":"s",
-    "fabricshieldlib.shield_tooltip.end":"Cooldown"
+    "shieldlib.midnightconfig.title": "Shield Lib Config",
+    "shieldlib.midnightconfig.enable_tooltips":"Enable shield tooltips",
+    "shieldlib.midnightconfig.allow_vanilla_shield_enchanting":"Allow vanilla shield enchanting",
+    "shieldlib.midnightconfig.enchantability_convention": "Convention: 15 = Wood || 5 = Stone || 14 = Iron || 10 = Diamond || 22 = Gold",
+    "shieldlib.midnightconfig.vanilla_shield_enchantability":"Vanilla Shield Enchantability",
+    "shieldlib.midnightconfig.universal_disable":"Universal Shield Disabling",
+    "shieldlib.midnightconfig.universal_disable_description_1":"If on, whenever any shield gets disabled, every type of shield will be disabled.",
+    "shieldlib.midnightconfig.universal_disable_description_2":"If off, then disabling a shield will only disable shields of the same type",
+    "shieldlib.shield_tooltip.start":"When Hit by Axe",
+    "shieldlib.shield_tooltip.unit":"s",
+    "shieldlib.shield_tooltip.end":"Cooldown"
 }
