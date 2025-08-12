@@ -14,6 +14,6 @@ public interface ShieldBlockEvent {
 
     interface Block {
 
-        EventResult onBlock(LivingEntity defender, DamageSource source, float amount, InteractionHand hand, ItemStack shield, int cooldownTicks);
+        EventResult onBlock(LivingEntity defender, DamageSource source, float amount, InteractionHand hand, ItemStack shield);
     }
 }

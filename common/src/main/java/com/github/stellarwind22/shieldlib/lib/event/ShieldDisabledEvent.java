@@ -13,6 +13,6 @@ public interface ShieldDisabledEvent {
 
     interface Disable {
 
-        EventResult onDisable(Player defender, InteractionHand hand, ItemStack shield, int cooldownTicks);
+        EventResult onDisable(Player defender, InteractionHand hand, ItemStack shield);
     }
 }
