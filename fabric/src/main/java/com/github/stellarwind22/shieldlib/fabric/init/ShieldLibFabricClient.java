@@ -8,7 +8,7 @@ public final class ShieldLibFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
-        ShieldLibClient.init(true);
+        ShieldLibClient.init();
         // This entrypoint is suitable for setting up client-specific logic, such as rendering.
     }
 }

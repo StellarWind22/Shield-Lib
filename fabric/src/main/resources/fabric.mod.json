@@ -21,6 +21,9 @@
     ],
     "client": [
       "com.github.stellarwind22.shieldlib.fabric.init.ShieldLibFabricClient"
+    ],
+    "modmenu": [
+      "com.github.stellarwind22.shieldlib.fabric.config.ShieldLibModMenuIntegration"
     ]
   },
   "mixins": [

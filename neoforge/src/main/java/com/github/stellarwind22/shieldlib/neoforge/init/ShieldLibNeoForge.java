@@ -21,7 +21,7 @@ public final class ShieldLibNeoForge {
         }
 
         if(FMLLoader.getDist() == Dist.CLIENT) {
-            ShieldLibClient.init(false);
+            ShieldLibClient.init();
         }
 
         ShieldLib.LOGGER.info("ShieldLib initialized!");

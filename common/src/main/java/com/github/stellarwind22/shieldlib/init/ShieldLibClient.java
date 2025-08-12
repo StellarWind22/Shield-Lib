@@ -12,12 +12,9 @@ import net.minecraft.util.ExtraCodecs;
 @Environment(EnvType.CLIENT)
 public class ShieldLibClient {
 
-    public static boolean IS_FABRIC;
-
     public static final ResourceLocation BANNER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "banner_shield");
 
-    public static void init(boolean isFabric) {
-        IS_FABRIC = isFabric;
+    public static void init() {
 
         ExtraCodecs.LateBoundIdMapper<ResourceLocation, MapCodec<? extends SpecialModelRenderer.Unbaked>> idMapper = SpecialModelRenderersAccessor.getIDMapper();
 
