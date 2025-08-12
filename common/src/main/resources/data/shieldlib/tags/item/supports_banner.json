@@ -2,7 +2,7 @@
 	"replace": false,
 	"values": [
 		"minecraft:shield",
-		"fabricshieldlib:fabric_banner_shield",
-		"fabricshieldlib:fabric_component_shield"
+		"shieldlib:banner_shield",
+		"shieldlib:component_shield"
 	]
 }
