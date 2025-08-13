@@ -1,7 +1,6 @@
 {
 	"replace": false,
 	"values": [
-		"shieldlib:shield",
-		"shieldlib:banner_shield"
+		"#c:tools/shield"
 	]
 }

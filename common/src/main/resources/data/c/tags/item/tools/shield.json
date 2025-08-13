@@ -1,6 +1,7 @@
 {
 	"replace": false,
 	"values": [
+		"minecraft:shield",
 		"shieldlib:shield",
 		"shieldlib:banner_shield"
 	]

@@ -1,15 +1,20 @@
 package com.github.stellarwind22.shieldlib.lib.object;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.BlocksAttacks;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Everything in this class will remain binary-compatible to the maximum extent.
@@ -94,5 +99,20 @@ public class ShieldLibUtils {
                 in.blockSound(),
                 in.disableSound()
         );
+    }
+
+    public static int getEnchantmentLevel(ResourceLocation enchantmentId, ItemStack itemStack) {
+        ItemEnchantments enchants = itemStack.getEnchantments();
+        AtomicInteger result = new AtomicInteger();
+
+        for (Holder<Enchantment> holder : enchants.keySet()) {
+
+            holder.unwrapKey().ifPresent(key -> {
+                if(key.location().equals(enchantmentId)) {
+                    result.set(enchants.getLevel(holder));
+                }
+            });
+        }
+        return result.get();
     }
 }

@@ -1,20 +1,28 @@
 package com.github.stellarwind22.shieldlib.test;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
+import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibItem;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
+import dev.architectury.event.EventResult;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 public class ShieldLibTests {
@@ -26,12 +34,12 @@ public class ShieldLibTests {
 
     protected static RegistrySupplier<Item> BANNER_SHIELD;
 
-    protected static RegistrySupplier<Enchantment> REFLECT_ENCHANTMENT;
+    protected static RegistrySupplier<Enchantment> REFLECT;
+    protected static RegistrySupplier<Enchantment> RECOVERY;
 
-    public static void init() {
+    public static void initItems() {
 
         TEST_ITEMS = DeferredRegister.create(ShieldLib.MOD_ID, Registries.ITEM);
-        TEST_ENCHANTMENTS = DeferredRegister.create(ShieldLib.MOD_ID, Registries.ENCHANTMENT);
 
         SHIELD = registerItem("shield",
                 props -> new ShieldLibItem(
@@ -50,11 +58,22 @@ public class ShieldLibTests {
                 )
         );
 
-        REFLECT_ENCHANTMENT = registerEnchantment("reflect", Enchantment.enchantment(
+        TEST_ITEMS.register();
+    }
+
+    public static void initEnchantments() {
+
+        TEST_ENCHANTMENTS = DeferredRegister.create(ShieldLib.MOD_ID, Registries.ENCHANTMENT);
+
+        Iterable<Holder<Item>> holders = BuiltInRegistries.ITEM.getTagOrEmpty(ShieldLibTags.SHIELD_ENCHANTABLE);
+        List<Holder<Item>> holderList = new ArrayList<>();
+        holders.forEach(holderList::add);
+        HolderSet<Item> holderSet = HolderSet.direct(holderList);
+        ResourceLocation reflectId = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "reflect");
+
+        REFLECT = TEST_ENCHANTMENTS.register("reflect", () -> Enchantment.enchantment(
                 Enchantment.definition(
-                        BuiltInRegistries
-                                .acquireBootstrapRegistrationLookup(BuiltInRegistries.ITEM)
-                                .getOrThrow(ShieldLibTags.SHIELD_ENCHANTABLE),
+                        holderSet,
                         10,
                         3,
                         Enchantment.dynamicCost(1, 10),
@@ -63,10 +82,24 @@ public class ShieldLibTests {
                         EquipmentSlotGroup.HAND
                 )
 
-        ).build(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "reflect")));
+        ).build(reflectId));
 
-        TEST_ITEMS.register();
         TEST_ENCHANTMENTS.register();
+
+        ShieldBlockEvent.EVENT.register((defender, source, amount, hand, itemStack) -> {
+            if(ShieldLibUtils.isShieldItem(itemStack)) {
+                int level = ShieldLibUtils.getEnchantmentLevel(reflectId, itemStack);
+
+                if(level > 0) {
+                    Entity attacker = source.getEntity();
+
+                    if(attacker != null) {
+                        return EventResult.pass();
+                    }
+                }
+            }
+            return EventResult.pass();
+        });
     }
 
     private static <T extends Item> RegistrySupplier<T> registerItem(String name, Function<Item.Properties, T> constructor) {
@@ -76,9 +109,5 @@ public class ShieldLibTests {
             properties = properties.setId(key);
             return constructor.apply(properties);
         });
-    }
-
-    private static <T extends Enchantment> RegistrySupplier<T> registerEnchantment(String name, T enchantment) {
-        return TEST_ENCHANTMENTS.register(name, () -> enchantment);
     }
 }

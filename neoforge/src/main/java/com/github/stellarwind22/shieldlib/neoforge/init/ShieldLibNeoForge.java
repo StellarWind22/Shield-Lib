@@ -16,7 +16,7 @@ public final class ShieldLibNeoForge {
         ShieldLib.init(false);
 
         if(!FMLEnvironment.production) {
-            ShieldLibTests.init();
+            ShieldLibTests.initItems();
             ShieldLib.LOGGER.warn("TEST CODE IS CURRENTLY RUNNING!, IF YOU ARE NOT IN A DEV ENVIRONMENT THIS IS BAD!!");
         }
 

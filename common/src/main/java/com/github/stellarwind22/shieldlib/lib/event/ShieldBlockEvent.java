@@ -13,7 +13,6 @@ public interface ShieldBlockEvent {
     Event<Block> EVENT = EventFactory.createEventResult();
 
     interface Block {
-
         EventResult onBlock(LivingEntity defender, DamageSource source, float amount, InteractionHand hand, ItemStack shield);
     }
 }

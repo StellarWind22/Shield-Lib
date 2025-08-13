@@ -5,9 +5,28 @@
   "name": "ShieldLib",
   "description": "Library that makes it easy to add shields with banner support, enchantment support, & custom shapes without conflictions!",
   "authors": [
-    "StellarWind22",
+    "StellarWind22"
+  ],
+  "contributors":[
+    "LegibleSleet827",
     "CringeStar",
-    "Rikka0w0"
+    "Rikka0w0",
+    "RDKRACZ",
+    "Jamalam360",
+    "NLxDodge",
+    "Spaceman",
+    "How-Bout-No",
+    "Draylar",
+    "ggtylerr",
+    "kanpov",
+    "LimonBlaze",
+    "Luligabi1",
+    "ExDrill",
+    "muhammedesadcomert",
+    "timoreo22",
+    "OverLordsIII",
+    "SKZGx",
+    "Starexify"
   ],
   "contact": {
     "homepage": "https://modrinth.com/mod/fabricshieldlib"
@@ -24,6 +43,9 @@
     ],
     "modmenu": [
       "com.github.stellarwind22.shieldlib.fabric.config.ShieldLibModMenuIntegration"
+    ],
+    "shieldlib:deferred": [
+      "com.github.stellarwind22.shieldlib.fabric.init.ShieldLibFabricDeferred"
     ]
   },
   "mixins": [
