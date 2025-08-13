@@ -64,9 +64,9 @@ public class ShieldLibUtils {
     }
 
     public static Item.Properties vanillaShieldProperties(Item.Properties properties) {
-        return properties
-                .equippableUnswappable(EquipmentSlot.OFFHAND)
-                .component(DataComponents.BREAK_SOUND, SoundEvents.SHIELD_BREAK);
+        return defaultShieldProperties(properties
+                .durability(VANILLA_SHIELD_DURABILITY)
+                .component(DataComponents.BLOCKS_ATTACKS, VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT));
     }
 
     public static Item.Properties defaultShieldProperties(Item.Properties properties) {

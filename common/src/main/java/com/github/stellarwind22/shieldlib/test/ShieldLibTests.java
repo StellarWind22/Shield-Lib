@@ -12,7 +12,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class ShieldLibTests {
 
