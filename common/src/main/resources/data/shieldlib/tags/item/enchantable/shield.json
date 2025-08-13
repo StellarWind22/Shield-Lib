@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:shield",
+    "shieldlib:banner_shield",
+    "shieldlib:component_shield"
+  ]
+}
