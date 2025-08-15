@@ -32,8 +32,8 @@ public class ShieldLibTests {
     protected static DeferredRegister<Enchantment> TEST_ENCHANTMENTS;
 
     protected static RegistrySupplier<Item> SHIELD;
-
     protected static RegistrySupplier<Item> BANNER_SHIELD;
+    protected static RegistrySupplier<Item> BUCKLER_SHIELD;
 
     protected static RegistrySupplier<Enchantment> REFLECT;
     protected static ResourceLocation REFLECT_ID = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "reflect");
@@ -60,6 +60,14 @@ public class ShieldLibTests {
                         Items.OAK_PLANKS
                 )
         );
+
+        BUCKLER_SHIELD = registerItem("buckler_shield",
+                props -> new ShieldLibItem(
+                        ShieldLibUtils.vanillaShieldProperties(props),
+                        ShieldLibUtils.VANILLA_SHIELD_COOLDOWN_TICKS,
+                        ShieldLibUtils.VANILLA_SHIELD_ENCHANTABILITY,
+                        Items.OAK_PLANKS
+                ));
 
         TEST_ITEMS.register();
 

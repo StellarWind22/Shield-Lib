@@ -2,7 +2,7 @@ package com.github.stellarwind22.shieldlib.test;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
-import com.github.stellarwind22.shieldlib.lib.render.ShieldLibModelRenderer;
+import com.github.stellarwind22.shieldlib.lib.render.BucklerShieldModelRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 public class ShieldLibClientTests {
@@ -13,7 +13,7 @@ public class ShieldLibClientTests {
 
         ShieldLibClient.ID_MAPPER.put(
                 BUCKLER_SHIELD_MODEL_TYPE,
-                ShieldLibModelRenderer.Unbaked.CODEC
+                BucklerShieldModelRenderer.Unbaked.CODEC
         );
     }
 }
