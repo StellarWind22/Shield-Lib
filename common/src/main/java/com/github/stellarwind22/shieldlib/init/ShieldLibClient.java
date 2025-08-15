@@ -13,12 +13,11 @@ import net.minecraft.util.ExtraCodecs;
 public class ShieldLibClient {
 
     public static final ResourceLocation BANNER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "banner_shield");
+    public static final ExtraCodecs.LateBoundIdMapper<ResourceLocation, MapCodec<? extends SpecialModelRenderer.Unbaked>> ID_MAPPER = SpecialModelRenderersAccessor.getIDMapper();
 
     public static void init() {
 
-        ExtraCodecs.LateBoundIdMapper<ResourceLocation, MapCodec<? extends SpecialModelRenderer.Unbaked>> idMapper = SpecialModelRenderersAccessor.getIDMapper();
-
-        idMapper.put(
+        ID_MAPPER.put(
                 BANNER_SHIELD_MODEL_TYPE,
                 ShieldLibModelRenderer.Unbaked.CODEC
         );

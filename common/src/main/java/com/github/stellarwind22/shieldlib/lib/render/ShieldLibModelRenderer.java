@@ -49,24 +49,6 @@ public class ShieldLibModelRenderer implements SpecialModelRenderer<DataComponen
         return itemStack.getComponents();
     }
 
-    //TODO: REWORK FOR CUSTOM SIZED BANNER TEXTURES
-    public static void renderPatterns(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, ModelPart modelPart, Material material, boolean bl, DyeColor dyeColor, BannerPatternLayers bannerPatternLayers, boolean bl2, boolean bl3) {
-        modelPart.render(poseStack, material.buffer(multiBufferSource, RenderType::entitySolid, bl3, bl2), i, j);
-        renderPatternLayer(poseStack, multiBufferSource, i, j, modelPart, bl ? Sheets.BANNER_BASE : Sheets.SHIELD_BASE, dyeColor);
-
-        for(int k = 0; k < 16 && k < bannerPatternLayers.layers().size(); ++k) {
-            BannerPatternLayers.Layer layer = (BannerPatternLayers.Layer)bannerPatternLayers.layers().get(k);
-            Material material2 = bl ? Sheets.getBannerMaterial(layer.pattern()) : Sheets.getShieldMaterial(layer.pattern());
-            renderPatternLayer(poseStack, multiBufferSource, i, j, modelPart, material2, layer.color());
-        }
-
-    }
-
-    private static void renderPatternLayer(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, ModelPart modelPart, Material material, DyeColor dyeColor) {
-        int k = dyeColor.getTextureDiffuseColor();
-        modelPart.render(poseStack, material.buffer(multiBufferSource, RenderType::entityNoOutline), i, j, k);
-    }
-
     @Override
     public void render(@Nullable DataComponentMap componentMap, ItemDisplayContext itemDisplayContext, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, boolean bl) {
         BannerPatternLayers bannerPatternLayers = componentMap == null ? BannerPatternLayers.EMPTY:
@@ -104,6 +86,24 @@ public class ShieldLibModelRenderer implements SpecialModelRenderer<DataComponen
         }
     }
 
+    //TODO: REWORK FOR CUSTOM SIZED BANNER TEXTURES
+    public static void renderPatterns(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, ModelPart modelPart, Material material, boolean bl, DyeColor dyeColor, BannerPatternLayers bannerPatternLayers, boolean bl2, boolean bl3) {
+        modelPart.render(poseStack, material.buffer(multiBufferSource, RenderType::entitySolid, bl3, bl2), i, j);
+        renderPatternLayer(poseStack, multiBufferSource, i, j, modelPart, bl ? Sheets.BANNER_BASE : Sheets.SHIELD_BASE, dyeColor);
+
+        for(int k = 0; k < 16 && k < bannerPatternLayers.layers().size(); ++k) {
+            BannerPatternLayers.Layer layer = bannerPatternLayers.layers().get(k);
+            Material material2 = bl ? Sheets.getBannerMaterial(layer.pattern()) : Sheets.getShieldMaterial(layer.pattern());
+            renderPatternLayer(poseStack, multiBufferSource, i, j, modelPart, material2, layer.color());
+        }
+
+    }
+
+    private static void renderPatternLayer(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, ModelPart modelPart, Material material, DyeColor dyeColor) {
+        int k = dyeColor.getTextureDiffuseColor();
+        modelPart.render(poseStack, material.buffer(multiBufferSource, RenderType::entityNoOutline), i, j, k);
+    }
+
     @Override
     public void getExtents(Set<Vector3f> set) {
         PoseStack poseStack = new PoseStack();
@@ -129,7 +129,6 @@ public class ShieldLibModelRenderer implements SpecialModelRenderer<DataComponen
         public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
             ModelPart root = entityModelSet.bakeLayer(ModelLayers.SHIELD);
 
-            //TODO: FIGURE OUT HOW TO FIX THIS CODEC WEIRDNESS
             ShieldLibModel model = new ShieldLibModel(root);
             return new ShieldLibModelRenderer(
                     this.baseModel,
