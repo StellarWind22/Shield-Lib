@@ -10,7 +10,8 @@
   "mixins": [
     "ItemsMixin",
     "LivingEntityMixin",
-    "PlayerMixin"
+    "PlayerMixin",
+    "RecipeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

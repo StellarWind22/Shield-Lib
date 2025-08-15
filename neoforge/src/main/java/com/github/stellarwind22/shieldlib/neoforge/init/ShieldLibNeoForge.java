@@ -2,7 +2,6 @@ package com.github.stellarwind22.shieldlib.neoforge.init;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
-import com.github.stellarwind22.shieldlib.test.ShieldLibClientTests;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.Mod;
