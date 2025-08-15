@@ -2,6 +2,7 @@ package com.github.stellarwind22.shieldlib.test;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
+import com.github.stellarwind22.shieldlib.lib.event.ShieldPreDisableEvent;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibItem;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
@@ -35,7 +36,9 @@ public class ShieldLibTests {
     protected static RegistrySupplier<Item> BANNER_SHIELD;
 
     protected static RegistrySupplier<Enchantment> REFLECT;
+    protected static ResourceLocation REFLECT_ID = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "reflect");
     protected static RegistrySupplier<Enchantment> RECOVERY;
+    protected static ResourceLocation RECOVERY_ID = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "recovery");
 
     public static void initItems() {
 
@@ -59,6 +62,41 @@ public class ShieldLibTests {
         );
 
         TEST_ITEMS.register();
+
+        ShieldBlockEvent.EVENT.register((level, defender, source, amount, hand, itemStack) -> {
+
+            ShieldLib.LOGGER.info("Shield Block Event Ran!");
+
+            int enchantmentLevel = ShieldLibUtils.getEnchantmentLevel(REFLECT_ID, itemStack);
+
+            if(enchantmentLevel > 0) {
+                Entity attacker = source.getEntity();
+
+                if(attacker == null) {
+                    return EventResult.pass();
+                }
+
+                if(defender instanceof Player) {
+                    attacker.hurtServer(level, attacker.damageSources().playerAttack((Player) defender), amount * (0.25F * enchantmentLevel));
+                } else {
+                    attacker.hurtServer(level, attacker.damageSources().mobAttack(defender), amount * (0.25F * enchantmentLevel));
+                }
+            }
+            return EventResult.pass();
+        });
+
+        ShieldPreDisableEvent.EVENT.register(((level, attacker, defender, hand, itemStack) -> {
+
+            ShieldLib.LOGGER.info("Shield Pre Disable Event Ran!");
+
+            int enchantmentLevel = ShieldLibUtils.getEnchantmentLevel(RECOVERY_ID, itemStack);
+
+            if(enchantmentLevel > 0) {
+                ShieldLibUtils.cooldownSeconds = ShieldLibUtils.cooldownSeconds * (0.25F * enchantmentLevel);
+            }
+
+            return EventResult.pass();
+        }));
     }
 
     public static void initEnchantments() {
@@ -69,7 +107,6 @@ public class ShieldLibTests {
         List<Holder<Item>> holderList = new ArrayList<>();
         holders.forEach(holderList::add);
         HolderSet<Item> holderSet = HolderSet.direct(holderList);
-        ResourceLocation reflectId = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "reflect");
 
         REFLECT = TEST_ENCHANTMENTS.register("reflect", () -> Enchantment.enchantment(
                 Enchantment.definition(
@@ -82,24 +119,22 @@ public class ShieldLibTests {
                         EquipmentSlotGroup.HAND
                 )
 
-        ).build(reflectId));
+        ).build(REFLECT_ID));
+
+        RECOVERY = TEST_ENCHANTMENTS.register("recovery", () -> Enchantment.enchantment(
+                Enchantment.definition(
+                        holderSet,
+                        10,
+                        3,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(1, 15),
+                        5,
+                        EquipmentSlotGroup.HAND
+                )
+
+        ).build(RECOVERY_ID));
 
         TEST_ENCHANTMENTS.register();
-
-        ShieldBlockEvent.EVENT.register((defender, source, amount, hand, itemStack) -> {
-            if(ShieldLibUtils.isShieldItem(itemStack)) {
-                int level = ShieldLibUtils.getEnchantmentLevel(reflectId, itemStack);
-
-                if(level > 0) {
-                    Entity attacker = source.getEntity();
-
-                    if(attacker != null) {
-                        return EventResult.pass();
-                    }
-                }
-            }
-            return EventResult.pass();
-        });
     }
 
     private static <T extends Item> RegistrySupplier<T> registerItem(String name, Function<Item.Properties, T> constructor) {

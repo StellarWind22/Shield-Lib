@@ -21,6 +21,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class ShieldLibUtils {
 
+    public static float cooldownSeconds = 0;
+
     public static final int VANILLA_SHIELD_DURABILITY = 336;
     public static final int VANILLA_SHIELD_COOLDOWN_TICKS = 100;
     public static final int VANILLA_SHIELD_ENCHANTABILITY = 14;

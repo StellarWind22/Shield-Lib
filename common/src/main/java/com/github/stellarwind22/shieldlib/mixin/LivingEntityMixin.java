@@ -22,10 +22,8 @@ public abstract class LivingEntityMixin {
             ),
             method = "applyItemBlocking(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)F"
     )
-    private void invokeShieldBlockEvent(ServerLevel level, DamageSource source, float amount,
-                                        CallbackInfoReturnable<Float> cb, @Local(ordinal = 0) ItemStack blockingItem) {
+    private void invokeShieldBlockEvent(ServerLevel level, DamageSource source, float amount, CallbackInfoReturnable<Float> cb, @Local(ordinal = 0) ItemStack blockingItem) {
         LivingEntity defender = (LivingEntity) (Object) this;
-
-        ShieldBlockEvent.EVENT.invoker().onBlock(defender, source, amount, defender.getUsedItemHand(), blockingItem);
+        ShieldBlockEvent.EVENT.invoker().onBlock(level, defender, source, amount, defender.getUsedItemHand(), blockingItem);
     }
 }

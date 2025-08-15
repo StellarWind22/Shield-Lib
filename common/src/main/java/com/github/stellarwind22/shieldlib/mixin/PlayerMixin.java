@@ -2,7 +2,11 @@ package com.github.stellarwind22.shieldlib.mixin;
 
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfigUtil;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldDisabledEvent;
+import com.github.stellarwind22.shieldlib.lib.event.ShieldPreDisableEvent;
+import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
+import com.google.common.util.concurrent.AtomicDouble;
 import com.llamalad7.mixinextras.sugar.Local;
+import dev.architectury.event.CompoundEventResult;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -44,8 +48,9 @@ public class PlayerMixin {
                 BlocksAttacks blocksAttacks = itemStack != null ? itemStack.get(DataComponents.BLOCKS_ATTACKS): null;
 
                 if(blocksAttacks != null) {
-                    blocksAttacks.disable(level, player, blockForSeconds, itemStack);
-                    ShieldDisabledEvent.EVENT.invoker().onDisable(player, player.getUsedItemHand(), itemStack);
+                    ShieldLibUtils.cooldownSeconds = blockForSeconds;
+                    ShieldPreDisableEvent.EVENT.invoker().onPreDisable(level, attacker, player, player.getUsedItemHand(), itemStack);
+                    blocksAttacks.disable(level, player, ShieldLibUtils.cooldownSeconds, itemStack);
                 }
             }
 
@@ -64,6 +69,6 @@ public class PlayerMixin {
     )
     private void blockUsingItemHookAfterApplyShieldCooldown(ServerLevel level, LivingEntity attacker, CallbackInfo cb, @Local(ordinal = 0) ItemStack itemStack) {
         Player player = (Player) (Object) this;
-        ShieldDisabledEvent.EVENT.invoker().onDisable(player, player.getUsedItemHand(), itemStack);
+        ShieldDisabledEvent.EVENT.invoker().onDisable(level, attacker, player, player.getUsedItemHand(), itemStack);
     }
 }
