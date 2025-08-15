@@ -1,0 +1,9 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:directory",
+      "prefix": "entity/shaped_banner/",
+      "source": "entity/shaped_banner"
+    }
+  ]
+}
