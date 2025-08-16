@@ -12,7 +12,5 @@ public interface ShieldModel {
     ModelPart getRoot();
     ModelPart handle();
     ModelPart plate();
-    Shape shape();
-
-    record Shape(String name, Vector2i start) {}
+    ResourceLocation shape();
 }

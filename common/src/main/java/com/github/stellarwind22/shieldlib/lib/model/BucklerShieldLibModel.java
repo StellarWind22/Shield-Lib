@@ -54,7 +54,7 @@ public class BucklerShieldLibModel extends Model implements ShieldModel {
     }
 
     @Override
-    public Shape shape() {
-        return new Shape("buckler", new Vector2i(2, 2));
+    public ResourceLocation shape() {
+        return ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler");
     }
 }

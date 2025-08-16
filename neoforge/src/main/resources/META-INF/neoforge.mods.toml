@@ -1,17 +1,17 @@
 modLoader = "javafml"
 loaderVersion = "[2,)"
-#issueTrackerURL = ""
-license = "All Rights Reserved"
+issueTrackerURL = "https://github.com/StellarWind22/Fabric-Shield-Lib/issues"
+license = "LGPL 2.1"
 
 [[mods]]
 modId = "shieldlib"
 version = "${version}"
 displayName = "ShieldLib"
-authors = "StellarWind22, CringeStar, Rikka0w0"
+authors = "StellarWind22, CringeStar, Rikka0w0, LegibleSleet827, RDKRACZ, Jamalam360, NLxDodge, Spaceman, How-Bout-No, Draylar, ggtylerr, kanpov, LimonBlaze, Luligabi1, ExDrill, muhammedesadcomert, timoreo22, OverLordsIII, SKZGx, Starexify"
 description = '''
 Library that makes it easy to add shields with full banner & enchantment support without conflictions!
 '''
-#logoFile = ""
+logoFile = "assets/shieldlib/icon.png"
 
 [[dependencies.shieldlib]]
 modId = "neoforge"

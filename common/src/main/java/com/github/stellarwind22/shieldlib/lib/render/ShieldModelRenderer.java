@@ -1,5 +1,6 @@
 package com.github.stellarwind22.shieldlib.lib.render;
 
+import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
 import com.github.stellarwind22.shieldlib.lib.model.ShieldModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -85,7 +86,7 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
 
         for(int k = 0; k < 16 && k < bannerPatternLayers.layers().size(); ++k) {
             BannerPatternLayers.Layer layer = bannerPatternLayers.layers().get(k);
-            Material material2 = Sheets.getShieldMaterial(layer.pattern());
+            Material material2 = ShieldLibClient.getShapedBannerMaterial(this.model().shape(), layer.pattern());
             renderPatternLayer(poseStack, multiBufferSource, i, j, modelPart, material2, layer.color());
         }
 

@@ -3,6 +3,7 @@
 	"values": [
 		"minecraft:shield",
 		"shieldlib:shield",
-		"shieldlib:banner_shield"
+		"shieldlib:banner_shield",
+		"shieldlib:buckler_shield"
 	]
 }

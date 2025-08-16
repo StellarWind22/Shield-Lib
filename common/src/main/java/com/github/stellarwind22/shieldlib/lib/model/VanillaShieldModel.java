@@ -1,5 +1,6 @@
 package com.github.stellarwind22.shieldlib.lib.model;
 
+import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.Model;
@@ -41,7 +42,7 @@ public class VanillaShieldModel extends Model implements ShieldModel {
     }
 
     @Override
-    public Shape shape() {
-        return new Shape("vanilla", new Vector2i(2, 2));
+    public ResourceLocation shape() {
+        return ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "vanilla");
     }
 }

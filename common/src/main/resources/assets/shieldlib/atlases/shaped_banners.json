@@ -1,0 +1,8 @@
+{
+  "sources": [
+    {
+      "type": "directory",
+      "source": "shieldlib:entity/shaped_banners"
+    }
+  ]
+}
