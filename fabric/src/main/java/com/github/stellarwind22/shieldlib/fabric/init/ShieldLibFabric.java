@@ -1,7 +1,8 @@
 package com.github.stellarwind22.shieldlib.fabric.init;
 
+import com.github.stellarwind22.shieldlib.fabric.config.ShieldLibConfigFabric;
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
-import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -10,16 +11,16 @@ public final class ShieldLibFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         // Run our common setup.
-        ShieldLib.init(true);
+        ShieldLib.init(FabricLoader.getInstance().isDevelopmentEnvironment(),
+                () -> ShieldLibConfigFabric.enable_tooltips,
+                () -> ShieldLibConfigFabric.advanced_tooltips,
+                () -> ShieldLibConfigFabric.vanilla_shield_enchantability,
+                () -> ShieldLibConfigFabric.universal_disable);
 
-        if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            ShieldLibTests.initItems();
-            ShieldLib.LOGGER.warn("TEST CODE IS CURRENTLY RUNNING!, IF YOU ARE NOT IN A DEV ENVIRONMENT THIS IS BAD!!");
+        MidnightConfig.init(ShieldLib.MOD_ID, ShieldLibConfigFabric.class);
 
-            //Schedule stuff to run after tags are bound
-            FabricLoader.getInstance().getEntrypointContainers(ShieldLib.MOD_ID + "deferred", Runnable.class)
-                    .forEach(container -> { container.getEntrypoint().run();});
-        }
+        FabricLoader.getInstance().getEntrypointContainers(ShieldLib.MOD_ID + "deferred", Runnable.class)
+                .forEach(container -> container.getEntrypoint().run());
 
         ShieldLib.LOGGER.info("ShieldLib initialized!");
     }

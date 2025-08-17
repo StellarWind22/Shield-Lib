@@ -1,8 +1,8 @@
-package com.github.stellarwind22.shieldlib.fabric.config;
+package com.github.stellarwind22.shieldlib.neoforge.config;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 
-public class ShieldLibConfigFabric extends MidnightConfig {
+public class ShieldLibConfigNeoForge extends MidnightConfig {
 
     @Entry
     public static boolean enable_tooltips = true;
@@ -11,10 +11,10 @@ public class ShieldLibConfigFabric extends MidnightConfig {
     public static boolean advanced_tooltips = false;
 
     @Comment
-    public Comment enchantability_convention;
+    public static Comment enchantability_convention;
 
     @Entry
-    public static  int vanilla_shield_enchantability = 14;
+    public static int vanilla_shield_enchantability = 14;
 
     @Entry
     public static boolean universal_disable = false;

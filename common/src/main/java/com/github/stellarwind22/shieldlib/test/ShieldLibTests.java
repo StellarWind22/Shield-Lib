@@ -2,7 +2,6 @@ package com.github.stellarwind22.shieldlib.test;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
-import com.github.stellarwind22.shieldlib.lib.event.ShieldPreDisableEvent;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibItem;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
@@ -92,19 +91,6 @@ public class ShieldLibTests {
             }
             return EventResult.pass();
         });
-
-        ShieldPreDisableEvent.EVENT.register(((level, attacker, defender, hand, itemStack) -> {
-
-            ShieldLib.LOGGER.info("Shield Pre Disable Event Ran!");
-
-            int enchantmentLevel = ShieldLibUtils.getEnchantmentLevel(RECOVERY_ID, itemStack);
-
-            if(enchantmentLevel > 0) {
-                ShieldLibUtils.cooldownSeconds = ShieldLibUtils.cooldownSeconds * (0.25F * enchantmentLevel);
-            }
-
-            return EventResult.pass();
-        }));
     }
 
     public static void initEnchantments() {

@@ -8,11 +8,9 @@ import com.mojang.serialization.MapCodec;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MaterialMapper;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
@@ -29,16 +27,12 @@ public class ShieldLibClient {
     public static final ResourceLocation BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield");
 
     public static final ResourceLocation SHAPED_BANNER = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "textures/atlas/shaped_banners.png");
-    public static TextureAtlas SHIELD_ATLAS;
     public static final MaterialMapper SHAPED_BANNER_MAPPER = new MaterialMapper(SHAPED_BANNER, "entity/shaped_banner");
     public static final Map<ResourceLocation, Material> SHAPED_BANNER_MATERIALS = new HashMap<>();
 
     public static final ExtraCodecs.LateBoundIdMapper<ResourceLocation, MapCodec<? extends SpecialModelRenderer.Unbaked>> ID_MAPPER = SpecialModelRenderersAccessor.getIDMapper();
 
-    public static void init() {
-
-        SHIELD_ATLAS = new TextureAtlas(SHAPED_BANNER);
-        Minecraft.getInstance().getTextureManager().register(SHAPED_BANNER, SHIELD_ATLAS);
+    public static void init(boolean isDev) {
 
         ID_MAPPER.put(
                 BANNER_SHIELD_MODEL_TYPE,

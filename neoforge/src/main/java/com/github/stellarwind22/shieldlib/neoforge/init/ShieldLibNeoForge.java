@@ -2,7 +2,8 @@ package com.github.stellarwind22.shieldlib.neoforge.init;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
-import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
+import com.github.stellarwind22.shieldlib.neoforge.config.ShieldLibConfigNeoForge;
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
@@ -13,16 +14,17 @@ public final class ShieldLibNeoForge {
 
     public ShieldLibNeoForge() {
         // Run our common setup.
-        ShieldLib.init(false);
         boolean isDev = !FMLEnvironment.production;
+        ShieldLib.init(isDev,
+                () -> ShieldLibConfigNeoForge.enable_tooltips,
+                () -> ShieldLibConfigNeoForge.advanced_tooltips,
+                () -> ShieldLibConfigNeoForge.vanilla_shield_enchantability,
+                () -> ShieldLibConfigNeoForge.universal_disable);
 
-        if(isDev) {
-            ShieldLibTests.initItems();
-            ShieldLib.LOGGER.warn("TEST CODE IS CURRENTLY RUNNING!, IF YOU ARE NOT IN A DEV ENVIRONMENT THIS IS BAD!!");
-        }
+        MidnightConfig.init(ShieldLib.MOD_ID, ShieldLibConfigNeoForge.class);
 
         if(FMLLoader.getDist() == Dist.CLIENT) {
-            ShieldLibClient.init();
+            ShieldLibClient.init(isDev);
         }
 
         ShieldLib.LOGGER.info("ShieldLib initialized!");
