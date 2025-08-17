@@ -3,6 +3,7 @@ package com.github.stellarwind22.shieldlib.init;
 import com.github.stellarwind22.shieldlib.lib.model.BucklerShieldLibModel;
 import com.github.stellarwind22.shieldlib.lib.render.BucklerShieldModelRenderer;
 import com.github.stellarwind22.shieldlib.lib.render.VanillaShieldModelRenderer;
+import com.github.stellarwind22.shieldlib.mixin.SheetsAccessor;
 import com.github.stellarwind22.shieldlib.mixin.SpecialModelRenderersAccessor;
 import com.mojang.serialization.MapCodec;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
@@ -17,25 +18,23 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.block.entity.BannerPattern;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
 public class ShieldLibClient {
 
-    public static final ResourceLocation BANNER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "banner_shield");
+    public static final ResourceLocation VANILLA_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "banner_shield");
     public static final ResourceLocation BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield");
 
-    public static final ResourceLocation SHAPED_BANNER = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "textures/atlas/shaped_banners.png");
-    public static final MaterialMapper SHAPED_BANNER_MAPPER = new MaterialMapper(SHAPED_BANNER, "entity/shaped_banner");
-    public static final Map<ResourceLocation, Material> SHAPED_BANNER_MATERIALS = new HashMap<>();
+    public static final ResourceLocation SHIELD_ATLAS_LOCATION = ResourceLocation.withDefaultNamespace("textures/atlas/shield_patterns.png");
 
     public static final ExtraCodecs.LateBoundIdMapper<ResourceLocation, MapCodec<? extends SpecialModelRenderer.Unbaked>> ID_MAPPER = SpecialModelRenderersAccessor.getIDMapper();
 
     public static void init(boolean isDev) {
 
         ID_MAPPER.put(
-                BANNER_SHIELD_MODEL_TYPE,
+                VANILLA_SHIELD_MODEL_TYPE,
                 VanillaShieldModelRenderer.Unbaked.CODEC
         );
 
@@ -47,14 +46,19 @@ public class ShieldLibClient {
         EntityModelLayerRegistry.register(BucklerShieldLibModel.LOCATION, BucklerShieldLibModel::createLayer);
     }
 
-    public static Material getShapedBannerMaterial(ResourceLocation shape, Holder<BannerPattern> holder) {
-        ResourceLocation assetId = holder.value().assetId();
+    public static Material getShapedBannerMaterial(String shape, Holder<BannerPattern> bannerPattern) {
+        return getShapedBannerMaterial(shape, bannerPattern.value().assetId());
+    }
 
-        if(assetId.toString().equals("shieldlib:vanilla")) {
-            return Sheets.getShieldMaterial(holder);
+    public static Material getShapedBannerMaterial(String shape, ResourceLocation assetId) {
+        Map<ResourceLocation, Material> map = SheetsAccessor.getShieldMaterials();
+
+        if(!Objects.equals(shape, "vanilla")) {
+            assetId = assetId.withPrefix(shape + "_");
         }
 
-        ResourceLocation key = shape.withPrefix("/" + assetId.getPath());
-        return SHAPED_BANNER_MATERIALS.computeIfAbsent(key, SHAPED_BANNER_MAPPER::apply);
+        MaterialMapper mapper = Sheets.SHIELD_MAPPER;
+        Objects.requireNonNull(mapper);
+        return map.computeIfAbsent(assetId, mapper::apply);
     }
 }

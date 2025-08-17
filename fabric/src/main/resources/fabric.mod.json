@@ -46,9 +46,6 @@
     ],
     "shieldlib:deferred": [
       "com.github.stellarwind22.shieldlib.fabric.init.ShieldLibFabricDeferred"
-    ],
-    "shieldlib:deferred_client": [
-      "com.github.stellarwind22.shieldlib.fabric.init.ShieldLibFabricDeferredClient"
     ]
   },
   "mixins": [

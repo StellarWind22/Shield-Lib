@@ -1,5 +1,6 @@
 package com.github.stellarwind22.shieldlib.lib.object;
 
+import net.minecraft.client.renderer.special.SpecialModelRenderers;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+// Based on @link{net/minecraft/world/item/ShieldItem}
 public class ShieldLibItem extends Item {
 
     /**
@@ -33,6 +35,8 @@ public class ShieldLibItem extends Item {
                         Arrays.stream(repairItems).map(Item::builtInRegistryHolder).collect(Collectors.toList())
                 )
         );
+
+
     }
 
     /**

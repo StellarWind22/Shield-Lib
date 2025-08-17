@@ -2,19 +2,19 @@
   "sources": [
     {
       "type": "single",
-      "resource": "shieldlib:entity/banner_shield_base"
-    },
-    {
-      "type": "single",
-      "resource": "shieldlib:entity/banner_shield_base_nopattern"
-    },
-    {
-      "type": "single",
       "resource": "shieldlib:entity/shield_base"
     },
     {
       "type": "single",
       "resource": "shieldlib:entity/shield_base_nopattern"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/banner_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/banner_shield_base_nopattern"
     },
     {
       "type": "single",

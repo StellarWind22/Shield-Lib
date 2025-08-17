@@ -12,5 +12,5 @@ public interface ShieldModel {
     ModelPart getRoot();
     ModelPart handle();
     ModelPart plate();
-    ResourceLocation shape();
+    String shape();
 }

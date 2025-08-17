@@ -5,6 +5,7 @@
   "minVersion": "0.8",
   "client": [
     "ItemInHandRendererMixin",
+    "SheetsAccessor",
     "SpecialModelRenderersAccessor"
   ],
   "mixins": [

@@ -48,7 +48,7 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
 
         BannerPatternLayers bannerPatternLayers = componentMap == null ? BannerPatternLayers.EMPTY : componentMap.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY);
 
-        DyeColor color = componentMap == null ? null : (DyeColor) componentMap.get(DataComponents.BASE_COLOR);
+        DyeColor color = componentMap == null ? null : componentMap.get(DataComponents.BASE_COLOR);
 
         boolean bl2 = !bannerPatternLayers.layers().isEmpty() || color != null;
 
@@ -57,10 +57,7 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
 
         try {
 
-            @SuppressWarnings("deprecation")
-            Material spriteMat = bl2
-                    ? new Material(TextureAtlas.LOCATION_BLOCKS, this.baseModel())
-                    : new Material(TextureAtlas.LOCATION_BLOCKS, this.baseModelNoPat());
+            Material spriteMat = bl2 ? new Material(ShieldLibClient.SHIELD_ATLAS_LOCATION, this.baseModel()) : new Material(ShieldLibClient.SHIELD_ATLAS_LOCATION, this.baseModelNoPat());
 
             VertexConsumer vertexConsumer = spriteMat.sprite()
                     .wrap(ItemRenderer.getFoilBuffer(multiBufferSource,
@@ -82,7 +79,7 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
 
     default void renderPatterns(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, ModelPart modelPart, Material material, DyeColor dyeColor, BannerPatternLayers bannerPatternLayers, boolean bl2, boolean bl3) {
         modelPart.render(poseStack, material.buffer(multiBufferSource, RenderType::entitySolid, bl3, bl2), i, j);
-        renderPatternLayer(poseStack, multiBufferSource, i, j, modelPart, Sheets.SHIELD_BASE, dyeColor);
+        renderPatternLayer(poseStack, multiBufferSource, i, j, modelPart, ShieldLibClient.getShapedBannerMaterial(this.model().shape(), ResourceLocation.withDefaultNamespace("base")), dyeColor);
 
         for(int k = 0; k < 16 && k < bannerPatternLayers.layers().size(); ++k) {
             BannerPatternLayers.Layer layer = bannerPatternLayers.layers().get(k);
