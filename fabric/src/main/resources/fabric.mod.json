@@ -41,9 +41,6 @@
     "client": [
       "com.github.stellarwind22.shieldlib.fabric.init.ShieldLibFabricClient"
     ],
-    "shieldlib:enchantment": [
-      "com.github.stellarwind22.shieldlib.fabric.init.ShieldLibFabricEnchantment"
-    ],
     "modmenu": [
       "com.github.stellarwind22.shieldlib.fabric.config.ShieldLibModMenuIntegration"
     ]

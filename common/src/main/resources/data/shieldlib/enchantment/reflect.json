@@ -17,5 +17,6 @@
     "hand"
   ],
   "supported_items": "#shieldlib:enchantable/shield",
+  "primary_items": "#shieldlib:enchantable/shield",
   "weight": 10
 }

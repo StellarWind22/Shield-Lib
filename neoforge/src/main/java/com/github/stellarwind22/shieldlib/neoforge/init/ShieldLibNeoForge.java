@@ -2,10 +2,7 @@ package com.github.stellarwind22.shieldlib.neoforge.init;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
-import com.github.stellarwind22.shieldlib.init.ShieldLibEnchantment;
 import com.github.stellarwind22.shieldlib.neoforge.config.ShieldLibConfigNeoForge;
-import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
-import eu.midnightdust.lib.config.MidnightConfig;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -15,7 +12,7 @@ import net.neoforged.fml.loading.FMLLoader;
 @Mod(ShieldLib.MOD_ID)
 public final class ShieldLibNeoForge {
 
-    public ShieldLibNeoForge(IEventBus bus) {
+    public ShieldLibNeoForge() {
         // Run our common setup.
         boolean isDev = !FMLEnvironment.production;
         ShieldLib.init(isDev,
