@@ -49,8 +49,8 @@ public class BucklerShieldLibModel extends Model implements ShieldModel {
     }
 
     @Override
-    public ModelPart plate() {
-        return this.plate;
+    public ModelPart[] plateParts() {
+        return new ModelPart[] { this.plate};
     }
 
     @Override
