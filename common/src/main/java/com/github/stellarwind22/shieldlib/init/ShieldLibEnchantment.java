@@ -2,7 +2,7 @@ package com.github.stellarwind22.shieldlib.init;
 
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 
-public class ShieldLibDeferred {
+public class ShieldLibEnchantment {
 
     public static void init(boolean isDev) {
 

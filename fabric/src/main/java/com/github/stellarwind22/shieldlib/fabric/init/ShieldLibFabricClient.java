@@ -1,6 +1,5 @@
 package com.github.stellarwind22.shieldlib.fabric.init;
 
-import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -14,8 +13,5 @@ public final class ShieldLibFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
 
         ShieldLibClient.init(FabricLoader.getInstance().isDevelopmentEnvironment());
-
-        FabricLoader.getInstance().getEntrypointContainers(ShieldLib.MOD_ID + "deferred_client", Runnable.class)
-                .forEach(container -> container.getEntrypoint().run());
     }
 }

@@ -21,6 +21,6 @@ public class ItemsMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item$Properties;equippableUnswappable(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/Item$Properties;")
     )
     private static Item.Properties assignVanillaShieldEnchantability(Item.Properties properties) {
-        return properties.enchantable(ShieldConfigUtil.VanillaShieldEnchantability());
+        return properties.enchantable(ShieldConfigUtil.vanillaShieldEnchantability());
     }
 }

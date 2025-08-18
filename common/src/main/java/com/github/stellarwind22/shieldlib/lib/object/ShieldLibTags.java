@@ -9,6 +9,11 @@ import net.minecraft.world.item.Item;
 public class ShieldLibTags {
 
     /**
+     * Common shields item tag c:tools/shields
+     */
+    public static TagKey<Item> C_SHIELD;
+
+    /**
      * Indicate if a shield supports banners for not.
      * <p>
      * Add your modded shield to this tag if it supports banners.
@@ -33,6 +38,7 @@ public class ShieldLibTags {
     public static TagKey<Item> SHIELD_ENCHANTABLE;
 
     public static void init() {
+        C_SHIELD =             TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "tools/shield"));
         SUPPORTS_BANNER =       TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "supports_banner"));
         NO_TOOLTIP =            TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "no_tooltip"));
         SHIELD_ENCHANTABLE =    TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "enchantable/shield"));

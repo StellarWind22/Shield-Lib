@@ -17,13 +17,8 @@ public class ShieldConfigUtil {
         return result.get();
     }
 
-    public static int VanillaShieldEnchantability() {
+    public static int vanillaShieldEnchantability() {
         Supplier<Integer> result = Objects.requireNonNullElse(ShieldLib.vanillaShieldEnchantability, () -> 14);
-        return result.get();
-    }
-
-    public static boolean universalDisable() {
-        Supplier<Boolean> result = Objects.requireNonNullElse(ShieldLib.universalDisable, () -> false);
         return result.get();
     }
 }

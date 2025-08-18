@@ -18,8 +18,7 @@ public final class ShieldLibNeoForge {
         ShieldLib.init(isDev,
                 () -> ShieldLibConfigNeoForge.enable_tooltips,
                 () -> ShieldLibConfigNeoForge.advanced_tooltips,
-                () -> ShieldLibConfigNeoForge.vanilla_shield_enchantability,
-                () -> ShieldLibConfigNeoForge.universal_disable);
+                () -> ShieldLibConfigNeoForge.vanilla_shield_enchantability);
 
         MidnightConfig.init(ShieldLib.MOD_ID, ShieldLibConfigNeoForge.class);
 

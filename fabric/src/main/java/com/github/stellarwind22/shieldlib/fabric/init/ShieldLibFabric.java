@@ -14,12 +14,11 @@ public final class ShieldLibFabric implements ModInitializer {
         ShieldLib.init(FabricLoader.getInstance().isDevelopmentEnvironment(),
                 () -> ShieldLibConfigFabric.enable_tooltips,
                 () -> ShieldLibConfigFabric.advanced_tooltips,
-                () -> ShieldLibConfigFabric.vanilla_shield_enchantability,
-                () -> ShieldLibConfigFabric.universal_disable);
+                () -> ShieldLibConfigFabric.vanilla_shield_enchantability);
 
         MidnightConfig.init(ShieldLib.MOD_ID, ShieldLibConfigFabric.class);
 
-        FabricLoader.getInstance().getEntrypointContainers(ShieldLib.MOD_ID + "deferred", Runnable.class)
+        FabricLoader.getInstance().getEntrypointContainers(ShieldLib.MOD_ID + "enchantment", Runnable.class)
                 .forEach(container -> container.getEntrypoint().run());
 
         ShieldLib.LOGGER.info("ShieldLib initialized!");

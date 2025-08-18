@@ -15,18 +15,15 @@ public final class ShieldLib {
     public static Supplier<Boolean> enableTooltips;
     public static Supplier<Boolean> advancedTooltips;
     public static Supplier<Integer> vanillaShieldEnchantability;
-    public static Supplier<Boolean> universalDisable;
 
     public static void init(boolean isDev,
                             Supplier<Boolean> enableTooltips,
                             Supplier<Boolean> advancedTooltips,
-                            Supplier<Integer> vanillaShieldEnchantability,
-                            Supplier<Boolean> universalDisable) {
+                            Supplier<Integer> vanillaShieldEnchantability) {
 
         ShieldLib.enableTooltips = enableTooltips;
         ShieldLib.advancedTooltips = advancedTooltips;
         ShieldLib.vanillaShieldEnchantability = vanillaShieldEnchantability;
-        ShieldLib.universalDisable = universalDisable;
 
         // Write common init code here.
         ShieldLibTags.init();
