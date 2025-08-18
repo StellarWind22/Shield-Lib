@@ -1,11 +1,15 @@
 package com.github.stellarwind22.shieldlib.init;
 
+import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
+import com.github.stellarwind22.shieldlib.lib.event.ShieldTooltipEvent;
 import com.github.stellarwind22.shieldlib.lib.model.BucklerShieldLibModel;
+import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.lib.render.BucklerShieldModelRenderer;
 import com.github.stellarwind22.shieldlib.lib.render.VanillaShieldModelRenderer;
 import com.github.stellarwind22.shieldlib.mixin.SheetsAccessor;
 import com.github.stellarwind22.shieldlib.mixin.SpecialModelRenderersAccessor;
 import com.mojang.serialization.MapCodec;
+import dev.architectury.event.EventResult;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -14,6 +18,7 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.block.entity.BannerPattern;
@@ -42,6 +47,26 @@ public class ShieldLibClient {
                 BUCKLER_SHIELD_MODEL_TYPE,
                 BucklerShieldModelRenderer.Unbaked.CODEC
         );
+
+        ShieldTooltipEvent.EVENT.register((stack, context, flag, tooltip) -> {
+            if(stack.get(DataComponents.BLOCKS_ATTACKS) == null || stack.is(ShieldLibTags.NO_TOOLTIP)) return EventResult.pass();
+
+            switch (ShieldLibConfig.tooltip_mode) {
+
+                case DISABLED -> {
+                    return EventResult.pass();
+                }
+
+                case NORMAL -> {
+                    return EventResult.pass();
+                }
+
+                case ADVANCED -> {
+                    return EventResult.pass();
+                }
+            }
+            return EventResult.pass();
+        });
 
         EntityModelLayerRegistry.register(BucklerShieldLibModel.LOCATION, BucklerShieldLibModel::createLayer);
     }

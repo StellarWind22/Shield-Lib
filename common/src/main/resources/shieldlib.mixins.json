@@ -10,6 +10,7 @@
   ],
   "mixins": [
     "ItemsMixin",
+    "ItemStackMixin",
     "LivingEntityMixin",
     "RecipeMixin"
   ],
