@@ -24,14 +24,12 @@ subprojects {
     }
 
     repositories {
-        maven {url = "https://api.modrinth.com/maven"}
+
     }
 
     dependencies {
         minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
         mappings loom.officialMojangMappings()
-
-        modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}-fabric"
     }
 
     java {

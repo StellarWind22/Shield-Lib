@@ -2,6 +2,10 @@ architectury {
     common rootProject.enabled_platforms.split(',')
 }
 
+repositories {
+    maven {url = "https://api.modrinth.com/maven"}
+}
+
 dependencies {
     // We depend on Fabric Loader here to use the Fabric @Environment annotations,
     // which get remapped to the correct annotations on each platform.
@@ -9,4 +13,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
 
     modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
+
+    //DO NOT USE ANY FABRIC SPECIFIC CLASSES!!!
+    modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}-fabric"
 }

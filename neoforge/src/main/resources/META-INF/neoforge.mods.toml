@@ -11,7 +11,7 @@ authors = "StellarWind22, CringeStar, Rikka0w0, LegibleSleet827, RDKRACZ, Jamala
 description = '''
 Library that makes it easy to add shields with full banner & enchantment support without conflictions!
 '''
-logoFile = "assets/shieldlib/icon.png"
+logoFile = "shieldlib.png"
 
 [[dependencies.shieldlib]]
 modId = "neoforge"
