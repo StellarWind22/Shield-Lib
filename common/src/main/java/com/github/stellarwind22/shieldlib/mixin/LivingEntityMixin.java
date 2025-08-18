@@ -1,5 +1,6 @@
 package com.github.stellarwind22.shieldlib.mixin;
 
+import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldDisableEvent;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
@@ -61,13 +62,19 @@ public abstract class LivingEntityMixin {
                     secondsToDisable = result.object();
                 }
 
-                Iterable<Holder<Item>> holders = BuiltInRegistries.ITEM.getTagOrEmpty(ShieldLibTags.C_SHIELD);
+                if(ShieldLibConfig.universal_disabling) {
+                    Iterable<Holder<Item>> holders = BuiltInRegistries.ITEM.getTagOrEmpty(ShieldLibTags.C_SHIELD);
 
-                for(Holder<Item> holder : holders) {
-                    blocksAttacks.disable(level, defender, secondsToDisable, new ItemStack(holder.value()));
+                    for(Holder<Item> holder : holders) {
+                        blocksAttacks.disable(level, defender, secondsToDisable, new ItemStack(holder.value()));
+                    }
+
+                    ci.cancel();
+
+                } else {
+                    blocksAttacks.disable(level, defender, secondsToDisable, shield);
+                    ci.cancel();
                 }
-
-                ci.cancel();
             }
         }
     }
