@@ -30,6 +30,7 @@ public final class ShieldLib {
 
         if(isDev) {
             ShieldLibTests.initItems();
+            ShieldLibEnchantment.register(ShieldLibTests::initEnchantments);
             ShieldLib.LOGGER.warn("TEST CODE IS CURRENTLY RUNNING!, IF YOU ARE NOT IN A DEV ENVIRONMENT THIS IS BAD!!");
         }
     }

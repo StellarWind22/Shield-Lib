@@ -4,15 +4,12 @@ import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldDisableEvent;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibItem;
-import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
 import dev.architectury.event.CompoundEventResult;
 import dev.architectury.event.EventResult;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -23,8 +20,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 public class ShieldLibTests {
@@ -112,18 +107,13 @@ public class ShieldLibTests {
         });
     }
 
-    public static void initEnchantments() {
+    public static void initEnchantments(HolderSet<Item> holders) {
 
         TEST_ENCHANTMENTS = DeferredRegister.create(ShieldLib.MOD_ID, Registries.ENCHANTMENT);
 
-        Iterable<Holder<Item>> holders = BuiltInRegistries.ITEM.getTagOrEmpty(ShieldLibTags.SHIELD_ENCHANTABLE);
-        List<Holder<Item>> holderList = new ArrayList<>();
-        holders.forEach(holderList::add);
-        HolderSet<Item> holderSet = HolderSet.direct(holderList);
-
         REFLECT = TEST_ENCHANTMENTS.register("reflect", () -> Enchantment.enchantment(
                 Enchantment.definition(
-                        holderSet,
+                        holders,
                         10,
                         3,
                         Enchantment.dynamicCost(1, 10),
@@ -136,7 +126,7 @@ public class ShieldLibTests {
 
         RECOVERY = TEST_ENCHANTMENTS.register("recovery", () -> Enchantment.enchantment(
                 Enchantment.definition(
-                        holderSet,
+                        holders,
                         10,
                         3,
                         Enchantment.dynamicCost(1, 10),
