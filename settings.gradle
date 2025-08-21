@@ -7,8 +7,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'shieldlib'
-
 include 'common'
 include 'fabric'
 include 'neoforge'
