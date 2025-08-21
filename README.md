@@ -22,7 +22,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
         
         //Shield Lib(fabric OR neoforge replaces [LOADER])
-	modImplementation "maven.modrinth:shieldlib:v${project.shieldlib_version}-[LOADER]"
+	modImplementation "maven.modrinth:shieldlib:[LOADER]-${project.shieldlib_version}"
 }
 ```
 
