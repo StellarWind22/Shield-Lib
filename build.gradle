@@ -10,7 +10,6 @@ architectury {
 
 allprojects {
     group = rootProject.maven_group
-    version = rootProject.mod_version
 }
 
 subprojects {
@@ -20,7 +19,8 @@ subprojects {
 
     base {
         // Set up a suffixed format for the mod jar names, e.g. `example-fabric`.
-        archivesName = "$project.archives_name-$project.name"
+        archivesName = "$project.archives_name"
+        version = "$rootProject.mod_version-$rootProject.minecraft_version-$project.name"
     }
 
     repositories {
