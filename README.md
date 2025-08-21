@@ -5,7 +5,7 @@ Library that makes it easy to add shields with banner support, enchantment suppo
 
 #### put this in gradle.properties
 ```properties
-shieldlib_version=2.0-1.21.8
+shieldlib_version=2.0.0-beta-1.21.8
 ```
 
 #### build.gradle in repositories just above dependencies
@@ -22,7 +22,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
         
         //Shield Lib(fabric OR neoforge replaces [LOADER])
-	modImplementation "maven.modrinth:shieldlib:[LOADER]-${project.shieldlib_version}"
+	modImplementation "maven.modrinth:shieldlib:${project.shieldlib_version}-[LOADER]"
 }
 ```
 
