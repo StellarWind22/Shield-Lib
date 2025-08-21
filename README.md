@@ -1,5 +1,3 @@
-[![](https://jitpack.io/v/CrimsonDawn45/Fabric-Shield-Lib.svg)](https://jitpack.io/#CrimsonDawn45/Fabric-Shield-Lib)
-
 # Shield Lib
 Library that makes it easy to add shields with banner support, enchantment support, & custom shapes without conflictions!
 
@@ -10,12 +8,12 @@ Library that makes it easy to add shields with banner support, enchantment suppo
 shieldlib_version=2.0-1.21.8
 ```
 
-#### build.gradle under repositories just above dependencies
+#### build.gradle in repositories just above dependencies
 ```gradle
-maven { url = 'https://jitpack.io' }
+maven {url = "https://api.modrinth.com/maven"}
 ```
 
-### Fabric
+#### build.gradle in dependencies
 ```gradle
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -23,23 +21,14 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
         
-        //Shield Lib
-	modImplementation "com.github.StellarWind22:ShieldLib:v${project.shieldlib_version}"
+        //Shield Lib(fabric OR neoforge replaces [LOADER])
+	modImplementation "maven.modrinth:shieldlib:v${project.shieldlib_version}-[LOADER]"
 }
 ```
-
-#### **build.gradle** under dependencies
-```gradle
-modImplementation "com.github.StellarWind22:ShieldLib:v${project.shieldlib_version}"
-```
-
-### NeoForge
-#### [PLACEHOLDER]
 
 - - - -
 
 ## Documentation?
-#### Fabric: [Fabric Wiki](https://fabricmc.net/wiki/tutorial:shield).
-#### NeoForge: [PLACEHOLDER]
+#### Fabric: [Fabric Wiki(Out of date)](https://fabricmc.net/wiki/tutorial:shield).
 
 The [example mod repo](https://github.com/CrimsonDawn45/Fabric-Shield-Lib-Example-Mod) is a template repo you can use to quickly get started if your making a new mod. Although it isn't updated as frequently.
