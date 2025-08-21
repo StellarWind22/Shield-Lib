@@ -2,10 +2,8 @@ package com.github.stellarwind22.shieldlib.test;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
-import com.github.stellarwind22.shieldlib.lib.event.ShieldDisableEvent;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibItem;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
-import dev.architectury.event.CompoundEventResult;
 import dev.architectury.event.EventResult;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -83,22 +81,17 @@ public class ShieldLibTests {
             return EventResult.pass();
         });
 
-        ShieldDisableEvent.EVENT.register((level, attacker, defender, isPlayer, hand, itemStack, disableForSeconds) -> {
+        ShieldLibUtils.registerModifier(((player, shield, blocksAttacks, currentCooldown) -> {
+            int enchantmentLevel = ShieldLibUtils.getEnchantmentLevel(RECOVERY_ID, shield);
 
-            ShieldLib.LOGGER.info("Shield Pre Disable Event Ran!");
-
-            if(isPlayer) {
-                int enchantmentLevel = ShieldLibUtils.getEnchantmentLevel(RECOVERY_ID, itemStack);
-
-                if(enchantmentLevel > 0) {
-                    float result = disableForSeconds - (disableForSeconds * (0.25F * enchantmentLevel));
-                    ShieldLib.LOGGER.info("Disabling for {} seconds instead of {}!", result, disableForSeconds);
-                    return CompoundEventResult.interruptDefault(result);
-                }
+            if(enchantmentLevel > 0) {
+                float result = currentCooldown - (currentCooldown * (0.25F * enchantmentLevel));
+                ShieldLib.LOGGER.info("Disabling for {} seconds instead of {}!", result, currentCooldown);
+                return result;
             }
 
-            return CompoundEventResult.pass();
-        });
+            return  currentCooldown;
+        }));
     }
 
     private static <T extends Item> RegistrySupplier<T> registerItem(String name, Function<Item.Properties, T> constructor) {

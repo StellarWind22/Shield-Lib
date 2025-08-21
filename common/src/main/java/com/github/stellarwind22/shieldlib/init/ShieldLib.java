@@ -10,7 +10,11 @@ public final class ShieldLib {
     public static final String MOD_ID = "shieldlib";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+    public static boolean IS_DEV;
+
     public static void init(boolean isDev) {
+
+        IS_DEV = isDev;
 
         // Write common init code here.
         ShieldLibTags.init();
