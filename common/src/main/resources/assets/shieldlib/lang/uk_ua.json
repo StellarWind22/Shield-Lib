@@ -3,7 +3,7 @@
     "shieldlib.shield_tooltip.unit":"сек.",
     "shieldlib.shield_tooltip.end":"швидкість відновлення",
     "shieldlib.midnightconfig.title": " Shield Lib налаштування",
-    "shieldlib.midnightconfig.tooltip_mode":"Режим підказки",
+    "shieldlib.midnightconfig.cooldown_tooltip_mode":"Режим підказки",
     "shieldlib.midnightconfig.enchantability_convention": "Конвенція: 15 = дерево | 5 = камінь | 14 = залізо | 10 = діамант | 22 = золото",
     "shieldlib.midnightconfig.vanilla_shield_enchantability":"Зачаровуваність ванільного щита",
     "shieldlib.midnightconfig.universal_disabling":"Вимкнення універсального щита",

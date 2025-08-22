@@ -5,6 +5,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.BlocksAttacks;
 
 @FunctionalInterface
-public interface ShieldCooldownModifier {
+public interface BlocksAttacksCooldownModifier {
     float modify(Player player, ItemStack shield, BlocksAttacks blocksAttacks, float currentCooldown);
 }

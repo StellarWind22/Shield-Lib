@@ -10,11 +10,11 @@
     },
     {
       "type": "single",
-      "resource": "shieldlib:entity/banner_shield_base"
+      "resource": "shieldlib:entity/vanilla_shield_base"
     },
     {
       "type": "single",
-      "resource": "shieldlib:entity/banner_shield_base_nopattern"
+      "resource": "shieldlib:entity/vanilla_shield_base_nopattern"
     },
     {
       "type": "single",

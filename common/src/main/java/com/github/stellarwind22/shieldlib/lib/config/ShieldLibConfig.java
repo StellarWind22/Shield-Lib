@@ -5,7 +5,7 @@ import eu.midnightdust.lib.config.MidnightConfig;
 public class ShieldLibConfig extends MidnightConfig {
 
     @Entry
-    public static ToolTipMode tooltip_mode = ToolTipMode.NORMAL;
+    public static ToolTipMode cooldown_tooltip_mode = ToolTipMode.NORMAL;
     public enum ToolTipMode {
         DISABLED, NORMAL, ADVANCED
     }

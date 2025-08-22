@@ -1,6 +1,6 @@
 {   
     "shieldlib.midnightconfig.title": "Configuration de Shield Lib",
-    "shieldlib.midnightconfig.tooltip_mode":"Mode infobulles du bouclier",
+    "shieldlib.midnightconfig.cooldown_tooltip_mode":"Mode infobulles du bouclier",
     "shieldlib.midnightconfig.enchantability_convention": "Convention: 15 = Bois | 5 = Pierre | 14 = Fer | 10 = Diamant | 22 = Or",
     "shieldlib.midnightconfig.vanilla_shield_enchantability":"Enchantabilité du bouclier vanilla",
     "shieldlib.midnightconfig.universal_disabling":"Désactivation du bouclier universel",

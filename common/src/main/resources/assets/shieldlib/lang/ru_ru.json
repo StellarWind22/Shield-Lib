@@ -1,6 +1,6 @@
 {
   "shieldlib.midnightconfig.title": "Конфигурация Shield Lib",
-  "shieldlib.midnightconfig.tooltip_mode":"Режим наконечника щита",
+  "shieldlib.midnightconfig.cooldown_tooltip_mode":"Режим наконечника щита",
   "shieldlib.midnightconfig.enchantability_convention": "Условное обозначение: 15 = Дерево | 5 = Камень | 14 = железо | 10 = Алмаз | 22 = Золото",
   "shieldlib.midnightconfig.vanilla_shield_enchantability":"Сила зачарования ванильного щита",
   "shieldlib.midnightconfig.universal_disabling":"Универсальная отключение щитов ",

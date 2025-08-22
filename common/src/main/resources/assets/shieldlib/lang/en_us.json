@@ -1,6 +1,6 @@
 {   
     "shieldlib.midnightconfig.title": "Shield Lib Config",
-    "shieldlib.midnightconfig.tooltip_mode":"Tool Tip Mode",
+    "shieldlib.midnightconfig.cooldown_tooltip_mode":"Tool Tip Mode",
     "shieldlib.midnightconfig.enchantability_convention": "Convention: 15 = Wood | 5 = Stone | 14 = Iron | 10 = Diamond | 22 = Gold",
     "shieldlib.midnightconfig.vanilla_shield_enchantability":"Vanilla Shield Enchantability",
     "shieldlib.midnightconfig.universal_disabling":"Universal Shield Disabling",

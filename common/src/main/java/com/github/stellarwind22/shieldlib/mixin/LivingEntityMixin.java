@@ -1,10 +1,10 @@
 package com.github.stellarwind22.shieldlib.mixin;
 
+import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldDisableEvent;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
-import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -54,7 +54,7 @@ public abstract class LivingEntityMixin {
             BlocksAttacks blocksAttacks = shield != null ? shield.get(DataComponents.BLOCKS_ATTACKS) : null;
 
             float secondsToDisable = attacker.getSecondsToDisableBlocking();
-            secondsToDisable = ShieldLibUtils.getCooldownSecondsWithModifiers((Player) defender, shield, blocksAttacks, secondsToDisable);
+            secondsToDisable = ShieldLib.getCooldownSecondsWithModifiers((Player) defender, shield, blocksAttacks, secondsToDisable);
 
             if (secondsToDisable > 0 && blocksAttacks != null) {
 

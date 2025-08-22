@@ -6,14 +6,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.BlocksAttacks;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -22,8 +20,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Everything in this class will remain binary-compatible to the maximum extent.
  */
 public class ShieldLibUtils {
-
-    private static final List<ShieldCooldownModifier> modifiers = new ArrayList<>();
 
     public static final int VANILLA_SHIELD_DURABILITY = 336;
     public static final int VANILLA_SHIELD_COOLDOWN_TICKS = 100;
@@ -118,24 +114,5 @@ public class ShieldLibUtils {
             });
         }
         return result.get();
-    }
-
-    public static void registerModifier(ShieldCooldownModifier cooldownModifier) {
-        modifiers.add(cooldownModifier);
-    }
-
-    public static float getCooldownSecondsWithModifiers(Player player, ItemStack stack, BlocksAttacks blocksAttacks, float cooldown) {
-        for(ShieldCooldownModifier cooldownModifier : modifiers) {
-            cooldown = cooldownModifier.modify(player, stack, blocksAttacks, cooldown);
-        }
-        return cooldown;
-    }
-
-    public static float getCooldownTicksWithModifiers(Player player, ItemStack stack, BlocksAttacks blocksAttacks) {
-        float cooldown = 100.F * blocksAttacks.disableCooldownScale();
-        for(ShieldCooldownModifier cooldownModifier : modifiers) {
-            cooldown = cooldownModifier.modify(player, stack, blocksAttacks, cooldown);
-        }
-        return cooldown;
     }
 }

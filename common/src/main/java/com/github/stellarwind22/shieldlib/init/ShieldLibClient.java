@@ -4,7 +4,6 @@ import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldTooltipEvent;
 import com.github.stellarwind22.shieldlib.lib.model.BucklerShieldLibModel;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
-import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
 import com.github.stellarwind22.shieldlib.lib.render.BucklerShieldModelRenderer;
 import com.github.stellarwind22.shieldlib.lib.render.VanillaShieldModelRenderer;
 import com.github.stellarwind22.shieldlib.mixin.SheetsAccessor;
@@ -33,7 +32,7 @@ import java.util.Objects;
 @Environment(EnvType.CLIENT)
 public class ShieldLibClient {
 
-    public static final ResourceLocation VANILLA_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "banner_shield");
+    public static final ResourceLocation VANILLA_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "vanilla_shield");
     public static final ResourceLocation BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield");
 
     public static final ResourceLocation SHIELD_ATLAS_LOCATION = ResourceLocation.withDefaultNamespace("textures/atlas/shield_patterns.png");
@@ -59,7 +58,7 @@ public class ShieldLibClient {
         ShieldTooltipEvent.EVENT.register((player,stack, context, flag, tooltip) -> {
             if(stack.get(DataComponents.BLOCKS_ATTACKS) == null || stack.is(ShieldLibTags.NO_TOOLTIP)) return EventResult.pass();
 
-            switch (ShieldLibConfig.tooltip_mode) {
+            switch (ShieldLibConfig.cooldown_tooltip_mode) {
 
                 case DISABLED -> {
                     return EventResult.pass();
@@ -71,7 +70,7 @@ public class ShieldLibClient {
                     BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
 
                     if(blocksAttacks != null) {
-                        float cooldownTicks = ShieldLibUtils.getCooldownTicksWithModifiers(player, stack, blocksAttacks);
+                        float cooldownTicks = ShieldLib.getCooldownTicksWithModifiers(player, stack, blocksAttacks);
 
                         tooltip.add(Component.literal(""));
                         tooltip.add(Component.translatable("shieldlib.shield_tooltip.start")
