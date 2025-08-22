@@ -7,7 +7,7 @@
       "base": "shieldlib:item/vanilla_shield",
       "model": {
         "type": "shieldlib:vanilla_shield",
-        "texture_vanilla": "shieldlib:entity/vanilla_shield_base",
+        "texture_banner": "shieldlib:entity/vanilla_shield_base",
         "texture_default": "shieldlib:entity/vanilla_shield_base_nopattern"
       }
     },
@@ -16,7 +16,7 @@
       "base": "shieldlib:item/vanilla_shield_blocking",
       "model": {
         "type": "shieldlib:vanilla_shield",
-        "texture_vanilla": "shieldlib:entity/vanilla_shield_base",
+        "texture_banner": "shieldlib:entity/vanilla_shield_base",
         "texture_default": "shieldlib:entity/vanilla_shield_base_nopattern"
       }
     }

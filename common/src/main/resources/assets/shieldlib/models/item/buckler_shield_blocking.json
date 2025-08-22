@@ -21,7 +21,7 @@
 		},
 		"firstperson_lefthand": {
 			"rotation": [ 0, 180, -5 ],
-			"translation": [ 5, 5, -11 ],
+			"translation": [ 5, 7, -11 ],
 			"scale": [ 1.25, 1.25, 1.25 ]
 		},
 		"gui": {

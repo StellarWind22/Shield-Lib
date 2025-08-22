@@ -70,7 +70,7 @@ public class ShieldLibClient {
                     BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
 
                     if(blocksAttacks != null) {
-                        float cooldownTicks = ShieldLib.getCooldownTicksWithModifiers(player, stack, blocksAttacks);
+                        double cooldownTicks = ShieldLib.getCooldownTicksWithModifiers(player, stack, blocksAttacks);
 
                         tooltip.add(Component.literal(""));
                         tooltip.add(Component.translatable("shieldlib.shield_tooltip.start")

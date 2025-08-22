@@ -94,10 +94,10 @@ public class ShieldLibTests {
             int enchantmentLevel = ShieldLibUtils.getEnchantmentLevel(RECOVERY_ID, shield);
 
             if(enchantmentLevel > 0) {
-                return currentCooldown - (currentCooldown * (0.20F * enchantmentLevel));
+                return Math.round((currentCooldown - (currentCooldown * (0.20F * enchantmentLevel))) * 100.F) / 100.0F;
             }
 
-            return  currentCooldown;
+            return currentCooldown;
         }));
 
         ShieldLib.registerMovementModifier(((player, stack, blocksAttacks, movement) -> {

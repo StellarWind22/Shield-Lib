@@ -8,5 +8,9 @@
     "shieldlib.midnightconfig.universal_disabling_description_2":"If off, then disabling a shield will only disabling shields of the same type",
     "shieldlib.shield_tooltip.start":"When Hit by Axe",
     "shieldlib.shield_tooltip.unit":"s",
-    "shieldlib.shield_tooltip.end":"Cooldown"
+    "shieldlib.shield_tooltip.end":"Cooldown",
+    "tag.item.c.tools.shield": "Shield",
+    "tag.item.shieldlib.supports_banner": "Supports Banner",
+    "tag.item.shieldlib.no_tooltip": "No Tooltip",
+    "tag.item.shieldlib.enchantable.shield": "Shield Enchantable"
 }

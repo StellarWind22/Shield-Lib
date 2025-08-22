@@ -1,7 +1,7 @@
 {
 	"gui_light": "front",
 	"textures": {
-		"particle": "shieldlib:entity/banner_shield_base_nopattern"
+		"particle": "shieldlib:entity/vanilla_shield_base_nopattern"
 	},
 	"display": {
 		"thirdperson_righthand": {
