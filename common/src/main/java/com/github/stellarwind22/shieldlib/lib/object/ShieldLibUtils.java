@@ -12,6 +12,7 @@ import net.minecraft.world.item.component.BlocksAttacks;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -80,6 +81,12 @@ public class ShieldLibUtils {
                 .component(DataComponents.BREAK_SOUND, SoundEvents.SHIELD_BREAK);
     }
 
+    public static Item.Properties withShieldComponent(Item.Properties properties, BlocksAttacks blocksAttacks) {
+        return properties
+                .equippableUnswappable(EquipmentSlot.OFFHAND)
+                .component(DataComponents.BLOCKS_ATTACKS, blocksAttacks);
+    }
+
     public static BlocksAttacks withCooldownTicks(int cooldownTicks) {
         return withCooldownTicks(VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownTicks);
     }
@@ -94,6 +101,33 @@ public class ShieldLibUtils {
                 in.blockDelaySeconds(),
                 (float)cooldownTicks / 100.F,
                 in.damageReductions(),
+                in.itemDamage(),
+                in.bypassedBy(),
+                in.blockSound(),
+                in.disableSound()
+        );
+    }
+
+    public static BlocksAttacks withHorizontalAngle(BlocksAttacks in, float angle) {
+
+        List<BlocksAttacks.DamageReduction> reductions = new ArrayList<>(in.damageReductions());
+        List<BlocksAttacks.DamageReduction> newReductions = new ArrayList<>();
+
+        for(BlocksAttacks.DamageReduction reduction : reductions) {
+            newReductions.add(
+                    new BlocksAttacks.DamageReduction(
+                            angle,
+                            reduction.type(),
+                            reduction.base(),
+                            reduction.factor()
+                    )
+            );
+        }
+
+        return new BlocksAttacks(
+                in.blockDelaySeconds(),
+                in.blockDelaySeconds(),
+                newReductions,
                 in.itemDamage(),
                 in.bypassedBy(),
                 in.blockSound(),
