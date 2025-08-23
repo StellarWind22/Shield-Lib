@@ -10,6 +10,6 @@ public interface ShieldModel {
     RenderType getRenderType(ResourceLocation location);
     ModelPart getRoot();
     ModelPart handle();
-    ModelPart[] plateParts();
+    ModelPart plate();
     String shape();
 }

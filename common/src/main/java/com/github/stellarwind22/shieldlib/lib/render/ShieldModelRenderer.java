@@ -63,18 +63,11 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
 
             this.model().handle().render(poseStack, vertexConsumer, i, j);
 
+
             if(bl2) {
-
-                for(ModelPart platePart : this.model().plateParts()) {
-                    renderPatterns(poseStack, multiBufferSource, i, j, platePart,
-                            spriteMat, Objects.requireNonNullElse(color, DyeColor.WHITE),
-                            bannerPatternLayers, bl, false);
-                }
+                renderPatterns(poseStack, multiBufferSource, i, j, this.model().plate(), spriteMat, Objects.requireNonNullElse(color, DyeColor.WHITE), bannerPatternLayers, bl, false);
             } else {
-
-                for(ModelPart platePart : this.model().plateParts()) {
-                    platePart.render(poseStack, vertexConsumer, i, j);
-                }
+                this.model().plate().render(poseStack, vertexConsumer, i, j);
             }
         } finally {
             poseStack.popPose();

@@ -4,6 +4,7 @@
 		"minecraft:shield",
 		"shieldlib:shield",
 		"shieldlib:vanilla_shield",
-		"shieldlib:buckler_shield"
+		"shieldlib:buckler_shield",
+        "shieldlib:heater_shield"
 	]
 }

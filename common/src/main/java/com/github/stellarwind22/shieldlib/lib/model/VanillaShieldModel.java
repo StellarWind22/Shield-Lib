@@ -19,28 +19,9 @@ public class VanillaShieldModel extends Model implements ShieldModel {
         this.handle = root.getChild("handle");
     }
 
-    @Override
-    public RenderType getRenderType(ResourceLocation location) {
-        return this.renderType(location);
-    }
-
-    @Override
-    public ModelPart getRoot() {
-        return this.root;
-    }
-
-    @Override
-    public ModelPart handle() {
-        return this.handle;
-    }
-
-    @Override
-    public ModelPart[] plateParts() {
-        return new ModelPart[] { this.plate};
-    }
-
-    @Override
-    public String shape() {
-        return "vanilla";
-    }
+    @Override public RenderType getRenderType(ResourceLocation location) {return this.renderType(location);}
+    @Override public ModelPart getRoot() {return this.root;}
+    @Override public ModelPart handle() { return this.handle; }
+    @Override public ModelPart plate() { return this.plate; }
+    @Override public String shape() { return "vanilla"; }
 }

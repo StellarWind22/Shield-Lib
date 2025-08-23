@@ -3,8 +3,10 @@ package com.github.stellarwind22.shieldlib.init;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldTooltipEvent;
 import com.github.stellarwind22.shieldlib.lib.model.BucklerShieldLibModel;
+import com.github.stellarwind22.shieldlib.lib.model.HeaterShieldModel;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.lib.render.BucklerShieldModelRenderer;
+import com.github.stellarwind22.shieldlib.lib.render.HeaterShieldModelRenderer;
 import com.github.stellarwind22.shieldlib.lib.render.VanillaShieldModelRenderer;
 import com.github.stellarwind22.shieldlib.mixin.SheetsAccessor;
 import com.github.stellarwind22.shieldlib.mixin.SpecialModelRenderersAccessor;
@@ -34,6 +36,7 @@ public class ShieldLibClient {
 
     public static final ResourceLocation VANILLA_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "vanilla_shield");
     public static final ResourceLocation BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield");
+    public static final ResourceLocation HEATER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield");
 
     public static final ResourceLocation SHIELD_ATLAS_LOCATION = ResourceLocation.withDefaultNamespace("textures/atlas/shield_patterns.png");
 
@@ -55,6 +58,14 @@ public class ShieldLibClient {
                 BucklerShieldModelRenderer.Unbaked.CODEC
         );
 
+        ID_MAPPER.put(
+                HEATER_SHIELD_MODEL_TYPE,
+                HeaterShieldModelRenderer.Unbaked.CODEC
+        );
+
+        EntityModelLayerRegistry.register(BucklerShieldLibModel.LOCATION, BucklerShieldLibModel::createLayer);
+        EntityModelLayerRegistry.register(HeaterShieldModel.LOCATION, HeaterShieldModel::createLayer);
+
         ShieldTooltipEvent.EVENT.register((player,stack, context, flag, tooltip) -> {
             if(stack.get(DataComponents.BLOCKS_ATTACKS) == null || stack.is(ShieldLibTags.NO_TOOLTIP)) return EventResult.pass();
 
@@ -64,7 +75,7 @@ public class ShieldLibClient {
                     return EventResult.pass();
                 }
 
-                case NORMAL, ADVANCED -> {
+                case NORMAL, COMPACT -> {
                     if(!stack.has(DataComponents.BLOCKS_ATTACKS)) return EventResult.pass();
 
                     BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
@@ -98,8 +109,6 @@ public class ShieldLibClient {
             }
             return EventResult.pass();
         });
-
-        EntityModelLayerRegistry.register(BucklerShieldLibModel.LOCATION, BucklerShieldLibModel::createLayer);
     }
 
     public static Material getShapedBannerMaterial(String shape, Holder<BannerPattern> bannerPattern) {

@@ -26,6 +26,7 @@ public class ShieldLibTests {
     protected static RegistrySupplier<Item> VANILLA_SHIELD;
     protected static RegistrySupplier<Item> COMPONENT_SHIELD;
     protected static RegistrySupplier<Item> BUCKLER_SHIELD;
+    protected static RegistrySupplier<Item> HEATER_SHIELD;
 
     protected static ResourceLocation REFLECT_ID = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "reflect");
     protected static ResourceLocation RECOVERY_ID = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "recovery");
@@ -61,12 +62,25 @@ public class ShieldLibTests {
         BUCKLER_SHIELD = registerItem("buckler_shield",
                 props -> new ShieldLibItem(
                         ShieldLibUtils.withShieldComponent(
-                                ShieldLibUtils.vanillaShieldProperties(props),
+                                ShieldLibUtils.vanillaShieldProperties(props).durability(269),
+                                ShieldLibUtils.withHorizontalAngle(
+                                        ShieldLibUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT,
+                                        29.7F
+                                )),
+                        50,
+                        ShieldLibUtils.VANILLA_SHIELD_ENCHANTABILITY,
+                        Items.OAK_PLANKS
+                ));
+
+        HEATER_SHIELD = registerItem("heater_shield",
+                props -> new ShieldLibItem(
+                        ShieldLibUtils.withShieldComponent(
+                                ShieldLibUtils.vanillaShieldProperties(props).durability(302),
                                 ShieldLibUtils.withHorizontalAngle(
                                         ShieldLibUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT,
                                         45.0F
                                 )),
-                        ShieldLibUtils.VANILLA_SHIELD_COOLDOWN_TICKS,
+                        70,
                         ShieldLibUtils.VANILLA_SHIELD_ENCHANTABILITY,
                         Items.OAK_PLANKS
                 ));
@@ -110,6 +124,9 @@ public class ShieldLibTests {
             //Undo slowdown from blocking if buckler
             if(id.equals(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield"))) {
                 return movement.scale(3.3F);
+            }
+            if(id.equals(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield"))) {
+                return movement.scale(2.5F);
             }
             return movement;
         }));
