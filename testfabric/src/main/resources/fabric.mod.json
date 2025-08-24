@@ -13,10 +13,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.stellarwind22.shieldlib.init.TestFabric"
+      "com.github.stellarwind22.testfabric.init.TestFabric"
     ],
     "client": [
-      "com.github.stellarwind22.shieldlib.init.TestFabricClient"
+      "com.github.stellarwind22.testfabric.init.TestFabricClient"
     ]
   },
   "mixins": [],

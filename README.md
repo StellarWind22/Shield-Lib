@@ -5,7 +5,7 @@ Library that makes it easy to add shields with banner support, enchantment suppo
 
 #### put this in gradle.properties
 ```properties
-shieldlib_version=2.0.0-beta.2-1.21.8
+shieldlib_version=2.0.0-beta.5-1.21.8
 ```
 
 #### build.gradle in repositories just above dependencies
@@ -16,10 +16,7 @@ maven {url = "https://api.modrinth.com/maven"}
 #### build.gradle in dependencies
 ```gradle
 dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	//Platform specific stuff here
         
         //Shield Lib(fabric OR neoforge replaces [LOADER])
 	modImplementation "maven.modrinth:shieldlib:${project.shieldlib_version}-[LOADER]"
