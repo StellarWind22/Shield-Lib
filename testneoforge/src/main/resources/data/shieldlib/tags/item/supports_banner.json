@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "shieldlib:component_shield",
+    "shieldlib:tower_shield",
+    "shieldlib:buckler_shield",
+    "shieldlib:heater_shield",
+    "shieldlib:spiked_tower_shield",
+    "shieldlib:spiked_buckler_shield",
+    "shieldlib:spiked_heater_shield"
+  ]
+}

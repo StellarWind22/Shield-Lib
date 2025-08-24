@@ -125,6 +125,10 @@ public class ShieldLibTests {
         }));
     }
 
+    public static void initClient() {
+
+    }
+
     private static <T extends Item> RegistrySupplier<T> registerItem(String name, Function<Item.Properties, T> constructor) {
         return TEST_ITEMS.register(name, () -> {
             ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, name));
