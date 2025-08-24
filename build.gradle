@@ -12,6 +12,24 @@ allprojects {
     group = rootProject.maven_group
 }
 
+project(":testfabric") {
+    evaluationDependsOn(":fabric")
+
+    // Only force the build of :fabric before testfabric config
+    tasks.named("build") {
+        dependsOn(":fabric:build")
+    }
+}
+
+project(":testneoforge") {
+    evaluationDependsOn(":neoforge")
+
+    // Only force the build of :neoforge before testneoforge config
+    tasks.named("build") {
+        dependsOn(":neoforge:build")
+    }
+}
+
 subprojects {
     apply plugin: 'dev.architectury.loom'
     apply plugin: 'architectury-plugin'
