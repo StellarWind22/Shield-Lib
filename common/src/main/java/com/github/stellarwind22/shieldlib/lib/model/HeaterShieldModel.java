@@ -13,8 +13,6 @@ public class HeaterShieldModel extends Model implements ShieldModel {
 
     private final ModelPart handle;
     private final ModelPart plate;
-
-
     public static final ModelLayerLocation LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield"), "main");
 
     public HeaterShieldModel(ModelPart root) {

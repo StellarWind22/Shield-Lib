@@ -2,12 +2,9 @@ package com.github.stellarwind22.shieldlib.init;
 
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldTooltipEvent;
-import com.github.stellarwind22.shieldlib.lib.model.BucklerShieldLibModel;
-import com.github.stellarwind22.shieldlib.lib.model.HeaterShieldModel;
+import com.github.stellarwind22.shieldlib.lib.model.*;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
-import com.github.stellarwind22.shieldlib.lib.render.BucklerShieldModelRenderer;
-import com.github.stellarwind22.shieldlib.lib.render.HeaterShieldModelRenderer;
-import com.github.stellarwind22.shieldlib.lib.render.VanillaShieldModelRenderer;
+import com.github.stellarwind22.shieldlib.lib.render.*;
 import com.github.stellarwind22.shieldlib.mixin.SheetsAccessor;
 import com.github.stellarwind22.shieldlib.mixin.SpecialModelRenderersAccessor;
 import com.mojang.serialization.MapCodec;
@@ -37,6 +34,9 @@ public class ShieldLibClient {
     public static final ResourceLocation VANILLA_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "vanilla_shield");
     public static final ResourceLocation BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield");
     public static final ResourceLocation HEATER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield");
+    public static final ResourceLocation SPIKED_VANILLA_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_vanilla_shield");
+    public static final ResourceLocation SPIKED_BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_buckler_shield");
+    public static final ResourceLocation SPIKED_HEATER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_heater_shield");
 
     public static final ResourceLocation SHIELD_ATLAS_LOCATION = ResourceLocation.withDefaultNamespace("textures/atlas/shield_patterns.png");
 
@@ -63,8 +63,26 @@ public class ShieldLibClient {
                 HeaterShieldModelRenderer.Unbaked.CODEC
         );
 
-        EntityModelLayerRegistry.register(BucklerShieldLibModel.LOCATION, BucklerShieldLibModel::createLayer);
-        EntityModelLayerRegistry.register(HeaterShieldModel.LOCATION, HeaterShieldModel::createLayer);
+        ID_MAPPER.put(
+                SPIKED_VANILLA_SHIELD_MODEL_TYPE,
+                SpikedVanillaShieldModelRenderer.Unbaked.CODEC
+        );
+
+        ID_MAPPER.put(
+                SPIKED_BUCKLER_SHIELD_MODEL_TYPE,
+                SpikedBucklerShieldModelRenderer.Unbaked.CODEC
+        );
+
+        ID_MAPPER.put(
+                SPIKED_HEATER_SHIELD_MODEL_TYPE,
+                SpikedHeaterShieldModelRenderer.Unbaked.CODEC
+        );
+
+        EntityModelLayerRegistry.register(BucklerShieldLibModel.LOCATION,       BucklerShieldLibModel::createLayer);
+        EntityModelLayerRegistry.register(HeaterShieldModel.LOCATION,           HeaterShieldModel::createLayer);
+        EntityModelLayerRegistry.register(SpikedVanillaShieldModel.LOCATION,    SpikedVanillaShieldModel::createLayer);
+        EntityModelLayerRegistry.register(SpikedBucklerShieldModel.LOCATION,    SpikedBucklerShieldModel::createLayer);
+        EntityModelLayerRegistry.register(SpikedHeaterShieldModel.LOCATION,     SpikedHeaterShieldModel::createLayer);
 
         ShieldTooltipEvent.EVENT.register((player,stack, context, flag, tooltip) -> {
             if(stack.get(DataComponents.BLOCKS_ATTACKS) == null || stack.is(ShieldLibTags.NO_TOOLTIP)) return EventResult.pass();

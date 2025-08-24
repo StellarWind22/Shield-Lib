@@ -1,5 +1,6 @@
 package com.github.stellarwind22.shieldlib.init;
 
+import com.github.stellarwind22.shieldlib.lib.component.ShieldLibDataComponents;
 import com.github.stellarwind22.shieldlib.lib.object.BlocksAttacksCooldownModifier;
 import com.github.stellarwind22.shieldlib.lib.object.BlocksAttacksMovementModifier;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
@@ -30,6 +31,23 @@ public final class ShieldLib {
 
         // Write common init code here.
         ShieldLibTags.init();
+        ShieldLibDataComponents.init();
+
+        ShieldLib.registerMovementModifier(((player, stack, blocksAttacks, movement) -> {
+
+            if(stack.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) {
+                ShieldLibDataComponents.ShieldInformation shieldInformation = stack.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
+                assert shieldInformation != null;
+
+                if(shieldInformation.isType("buckler")) {
+                    return movement.scale(3.3F);
+                }
+                else if(shieldInformation.isType("heater")) {
+                    return movement.scale(2.5F);
+                }
+            }
+            return movement;
+        }));
 
         if(isDev) {
             ShieldLibTests.init();

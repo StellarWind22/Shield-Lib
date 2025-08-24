@@ -1,7 +1,7 @@
 package com.github.stellarwind22.shieldlib.lib.render;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
-import com.github.stellarwind22.shieldlib.lib.model.HeaterShieldModel;
+import com.github.stellarwind22.shieldlib.lib.model.SpikedVanillaShieldModel;
 import com.github.stellarwind22.shieldlib.lib.model.ShieldModel;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -15,13 +15,13 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
-public class HeaterShieldModelRenderer implements ShieldModelRenderer {
+public class SpikedVanillaShieldModelRenderer implements ShieldModelRenderer {
 
     private final ResourceLocation baseModel, baseModelNoPat;
-    private final HeaterShieldModel model;
-    public static final ModelLayerLocation HEATER_MODEL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield"), "main");
+    private final SpikedVanillaShieldModel model;
+    public static final ModelLayerLocation SPIKED_VANILLA_MODEL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_vanilla_shield"), "main");
 
-    public HeaterShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, HeaterShieldModel model) {
+    public SpikedVanillaShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, SpikedVanillaShieldModel model) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
@@ -44,23 +44,23 @@ public class HeaterShieldModelRenderer implements ShieldModelRenderer {
 
     public record Unbaked(ResourceLocation baseModel, ResourceLocation baseModelNoPat) implements SpecialModelRenderer.Unbaked {
 
-        public static final MapCodec<HeaterShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
+        public static final MapCodec<SpikedVanillaShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        ResourceLocation.CODEC.fieldOf("texture_banner").forGetter(HeaterShieldModelRenderer.Unbaked::baseModel),
-                        ResourceLocation.CODEC.fieldOf("texture_default").forGetter(HeaterShieldModelRenderer.Unbaked::baseModelNoPat)
-                ).apply(instance, HeaterShieldModelRenderer.Unbaked::new)
+                        ResourceLocation.CODEC.fieldOf("texture_banner").forGetter(SpikedVanillaShieldModelRenderer.Unbaked::baseModel),
+                        ResourceLocation.CODEC.fieldOf("texture_default").forGetter(SpikedVanillaShieldModelRenderer.Unbaked::baseModelNoPat)
+                ).apply(instance, SpikedVanillaShieldModelRenderer.Unbaked::new)
         );
 
         @Override
-        public @NotNull MapCodec<HeaterShieldModelRenderer.Unbaked> type() {
+        public @NotNull MapCodec<SpikedVanillaShieldModelRenderer.Unbaked> type() {
             return CODEC;
         }
 
         @Override
         public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(HEATER_MODEL_LAYER);
-            HeaterShieldModel model = new HeaterShieldModel(root);
-            return new HeaterShieldModelRenderer(
+            ModelPart root = entityModelSet.bakeLayer(SPIKED_VANILLA_MODEL_LAYER);
+            SpikedVanillaShieldModel model = new SpikedVanillaShieldModel(root);
+            return new SpikedVanillaShieldModelRenderer(
                     this.baseModel,
                     this.baseModelNoPat,
                     model

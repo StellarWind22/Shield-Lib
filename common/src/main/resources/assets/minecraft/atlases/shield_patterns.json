@@ -31,6 +31,30 @@
     {
       "type": "single",
       "resource": "shieldlib:entity/heater_shield_base_nopattern"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_vanilla_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_vanilla_shield_base_nopattern"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_buckler_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_buckler_shield_base_nopattern"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_heater_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_heater_shield_base_nopattern"
     }
   ]
 }
