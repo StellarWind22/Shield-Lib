@@ -1,6 +1,6 @@
 package com.github.stellarwind22.shieldlib.lib.render;
 
-import com.github.stellarwind22.shieldlib.lib.model.VanillaShieldModel;
+import com.github.stellarwind22.shieldlib.lib.model.TowerShieldModel;
 import com.github.stellarwind22.shieldlib.lib.model.ShieldModel;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -14,12 +14,12 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
-public class VanillaShieldModelRenderer implements ShieldModelRenderer {
+public class TowerShieldModelRenderer implements ShieldModelRenderer {
 
     private final ResourceLocation baseModel, baseModelNoPat;
-    private final VanillaShieldModel model;
+    private final TowerShieldModel model;
 
-    public VanillaShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, VanillaShieldModel model) {
+    public TowerShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, TowerShieldModel model) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
@@ -42,23 +42,23 @@ public class VanillaShieldModelRenderer implements ShieldModelRenderer {
 
     public record Unbaked(ResourceLocation baseModel, ResourceLocation baseModelNoPat) implements SpecialModelRenderer.Unbaked {
 
-        public static final MapCodec<VanillaShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
+        public static final MapCodec<TowerShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        ResourceLocation.CODEC.fieldOf("texture_banner").forGetter(VanillaShieldModelRenderer.Unbaked::baseModel),
-                        ResourceLocation.CODEC.fieldOf("texture_default").forGetter(VanillaShieldModelRenderer.Unbaked::baseModelNoPat)
-                ).apply(instance, VanillaShieldModelRenderer.Unbaked::new)
+                        ResourceLocation.CODEC.fieldOf("texture_banner").forGetter(TowerShieldModelRenderer.Unbaked::baseModel),
+                        ResourceLocation.CODEC.fieldOf("texture_default").forGetter(TowerShieldModelRenderer.Unbaked::baseModelNoPat)
+                ).apply(instance, TowerShieldModelRenderer.Unbaked::new)
         );
 
         @Override
-        public @NotNull MapCodec<VanillaShieldModelRenderer.Unbaked> type() {
+        public @NotNull MapCodec<TowerShieldModelRenderer.Unbaked> type() {
             return CODEC;
         }
 
         @Override
         public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
             ModelPart root = entityModelSet.bakeLayer(ModelLayers.SHIELD);
-            VanillaShieldModel model = new VanillaShieldModel(root);
-            return new VanillaShieldModelRenderer(
+            TowerShieldModel model = new TowerShieldModel(root);
+            return new TowerShieldModelRenderer(
                     this.baseModel,
                     this.baseModelNoPat,
                     model

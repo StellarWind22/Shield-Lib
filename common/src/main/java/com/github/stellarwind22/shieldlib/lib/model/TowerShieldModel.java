@@ -8,12 +8,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 @Environment(EnvType.CLIENT)
-public class VanillaShieldModel extends Model implements ShieldModel {
+public class TowerShieldModel extends Model implements ShieldModel {
 
     private final ModelPart plate;
     private final ModelPart handle;
 
-    public VanillaShieldModel(ModelPart root) {
+    public TowerShieldModel(ModelPart root) {
         super(root, RenderType::entitySolid);
         this.plate = root.getChild("plate");
         this.handle = root.getChild("handle");
@@ -23,5 +23,5 @@ public class VanillaShieldModel extends Model implements ShieldModel {
     @Override public ModelPart getRoot() {return this.root;}
     @Override public ModelPart handle() { return this.handle; }
     @Override public ModelPart plate() { return this.plate; }
-    @Override public String shape() { return "vanilla"; }
+    @Override public String shape() { return "tower"; }
 }

@@ -1,7 +1,7 @@
 {
 	"gui_light": "front",
 	"textures": {
-		"particle": "shieldlib:entity/spiked_vanilla_shield_base_nopattern"
+		"particle": "shieldlib:entity/spiked_tower_shield_base_nopattern"
 	},
 	"display": {
 		"thirdperson_righthand": {

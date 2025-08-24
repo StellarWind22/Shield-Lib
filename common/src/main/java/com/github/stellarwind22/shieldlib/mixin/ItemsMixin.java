@@ -1,7 +1,9 @@
 package com.github.stellarwind22.shieldlib.mixin;
 
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
+import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import org.objectweb.asm.Opcodes;
@@ -21,6 +23,9 @@ public class ItemsMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item$Properties;equippableUnswappable(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/Item$Properties;")
     )
     private static Item.Properties assignVanillaShieldEnchantability(Item.Properties properties) {
-        return properties.enchantable(ShieldLibConfig.vanilla_shield_enchantability);
+        return properties
+                .durability(ShieldLibConfig.vanilla_shield_durability)
+                .enchantable(ShieldLibConfig.vanilla_shield_enchantability)
+                .component(DataComponents.BLOCKS_ATTACKS, ShieldLibUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT);
     }
 }

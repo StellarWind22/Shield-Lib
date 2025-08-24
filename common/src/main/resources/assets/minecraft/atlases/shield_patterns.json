@@ -10,11 +10,11 @@
     },
     {
       "type": "single",
-      "resource": "shieldlib:entity/vanilla_shield_base"
+      "resource": "shieldlib:entity/tower_shield_base"
     },
     {
       "type": "single",
-      "resource": "shieldlib:entity/vanilla_shield_base_nopattern"
+      "resource": "shieldlib:entity/tower_shield_base_nopattern"
     },
     {
       "type": "single",
@@ -34,11 +34,11 @@
     },
     {
       "type": "single",
-      "resource": "shieldlib:entity/spiked_vanilla_shield_base"
+      "resource": "shieldlib:entity/spiked_tower_shield_base"
     },
     {
       "type": "single",
-      "resource": "shieldlib:entity/spiked_vanilla_shield_base_nopattern"
+      "resource": "shieldlib:entity/spiked_tower_shield_base_nopattern"
     },
     {
       "type": "single",

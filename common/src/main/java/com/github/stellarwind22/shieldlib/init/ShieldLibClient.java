@@ -31,10 +31,10 @@ import java.util.Objects;
 @Environment(EnvType.CLIENT)
 public class ShieldLibClient {
 
-    public static final ResourceLocation VANILLA_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "vanilla_shield");
+    public static final ResourceLocation TOWER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "tower_shield");
     public static final ResourceLocation BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield");
     public static final ResourceLocation HEATER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield");
-    public static final ResourceLocation SPIKED_VANILLA_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_vanilla_shield");
+    public static final ResourceLocation SPIKED_TOWER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_tower_shield");
     public static final ResourceLocation SPIKED_BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_buckler_shield");
     public static final ResourceLocation SPIKED_HEATER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_heater_shield");
 
@@ -49,8 +49,8 @@ public class ShieldLibClient {
         IS_DEV = isDev;
 
         ID_MAPPER.put(
-                VANILLA_SHIELD_MODEL_TYPE,
-                VanillaShieldModelRenderer.Unbaked.CODEC
+                TOWER_SHIELD_MODEL_TYPE,
+                TowerShieldModelRenderer.Unbaked.CODEC
         );
 
         ID_MAPPER.put(
@@ -64,8 +64,8 @@ public class ShieldLibClient {
         );
 
         ID_MAPPER.put(
-                SPIKED_VANILLA_SHIELD_MODEL_TYPE,
-                SpikedVanillaShieldModelRenderer.Unbaked.CODEC
+                SPIKED_TOWER_SHIELD_MODEL_TYPE,
+                SpikedTowerShieldModelRenderer.Unbaked.CODEC
         );
 
         ID_MAPPER.put(
@@ -80,7 +80,7 @@ public class ShieldLibClient {
 
         EntityModelLayerRegistry.register(BucklerShieldLibModel.LOCATION,       BucklerShieldLibModel::createLayer);
         EntityModelLayerRegistry.register(HeaterShieldModel.LOCATION,           HeaterShieldModel::createLayer);
-        EntityModelLayerRegistry.register(SpikedVanillaShieldModel.LOCATION,    SpikedVanillaShieldModel::createLayer);
+        EntityModelLayerRegistry.register(SpikedTowerShieldModel.LOCATION,    SpikedTowerShieldModel::createLayer);
         EntityModelLayerRegistry.register(SpikedBucklerShieldModel.LOCATION,    SpikedBucklerShieldModel::createLayer);
         EntityModelLayerRegistry.register(SpikedHeaterShieldModel.LOCATION,     SpikedHeaterShieldModel::createLayer);
 
@@ -99,28 +99,20 @@ public class ShieldLibClient {
                     BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
 
                     if(blocksAttacks != null) {
-                        double cooldownTicks = ShieldLib.getCooldownTicksWithModifiers(player, stack, blocksAttacks);
+                        float cooldownTicks = ShieldLib.getCooldownTicksWithModifiers(player, stack, blocksAttacks);
 
                         tooltip.add(Component.literal(""));
                         tooltip.add(Component.translatable("shieldlib.shield_tooltip.start")
                                 .append(Component.literal(":"))
                                 .withStyle(ChatFormatting.GRAY));
 
-                        String cooldown = String.valueOf((Double) (cooldownTicks / 20.0D));
-                        char[] splitCooldown = cooldown.toCharArray();
-                        if (splitCooldown.length >= 3) {
-                            if(splitCooldown[2] == '0') {
-                                if(!(splitCooldown.length >= 4)) {
-                                    cooldown = String.valueOf(splitCooldown[0]);
-                                }
-                            }
-                        }
-
-                        tooltip.add(Component.literal(" " + cooldown)
-                                .withStyle(ChatFormatting.DARK_GREEN)
-                                .append(Component.translatable("shieldlib.shield_tooltip.unit"))
-                                .append(" ")
-                                .append(Component.translatable("shieldlib.shield_tooltip.end")));
+                        tooltip.add(
+                                Component.literal(" " + String.valueOf(cooldownTicks / 20.0F).replaceAll("\\.0*$", ""))
+                                        .withStyle(ChatFormatting.DARK_GREEN)
+                                        .append(Component.translatable("shieldlib.shield_tooltip.unit"))
+                                        .append(" ")
+                                        .append(Component.translatable("shieldlib.shield_tooltip.end"))
+                        );
                     }
                 }
 
@@ -136,7 +128,7 @@ public class ShieldLibClient {
     public static Material getShapedBannerMaterial(String shape, ResourceLocation assetId) {
         Map<ResourceLocation, Material> map = SheetsAccessor.getShieldMaterials();
 
-        if(!Objects.equals(shape, "vanilla")) {
+        if(!Objects.equals(shape, "tower")) {
             assetId = assetId.withPrefix(shape + "_");
         }
 

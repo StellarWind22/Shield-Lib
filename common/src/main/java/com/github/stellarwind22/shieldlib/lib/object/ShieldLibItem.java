@@ -33,8 +33,19 @@ public class ShieldLibItem extends Item {
                         Arrays.stream(repairItems).map(Item::builtInRegistryHolder).collect(Collectors.toList())
                 )
         );
+    }
 
-
+    /**
+     * @param properties        item properties(INCLUDE YOUR OWN BlocksAttacks/ShieldInformation components!).
+     * @param repairItems       item(s) for repairing shield.
+     */
+    @SuppressWarnings("deprecation")
+    public ShieldLibItem(Properties properties, Item... repairItems) {
+        this(properties,
+                HolderSet.direct(
+                        Arrays.stream(repairItems).map(Item::builtInRegistryHolder).collect(Collectors.toList())
+                )
+        );
     }
 
     /**
@@ -45,11 +56,20 @@ public class ShieldLibItem extends Item {
     @SuppressWarnings("unused")
     public ShieldLibItem(Properties properties, int cooldownTicks, ToolMaterial material) {
         this(
-                properties.durability(material.durability()),
+                properties,
                 cooldownTicks,
                 material.enchantmentValue(),
                 material.repairItems()
         );
+    }
+
+    /**
+     * @param properties    item properties(INCLUDE YOUR OWN BlocksAttacks/ShieldInformation components!).
+     * @param material      tool material.
+     */
+    @SuppressWarnings("unused")
+    public ShieldLibItem(Properties properties, ToolMaterial material) {
+        this(properties.enchantable(material.enchantmentValue()), material.repairItems());
     }
 
     /**
@@ -70,6 +90,14 @@ public class ShieldLibItem extends Item {
     }
 
     /**
+     * @param properties        item properties(INCLUDE YOUR OWN BlocksAttacks/ShieldInformation components!).
+     * @param repairItemTag     item tag for repairing shield.
+     */
+    public ShieldLibItem(Properties properties, TagKey<Item> repairItemTag) {
+        this(properties, BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.ITEM).getOrThrow(repairItemTag));
+    }
+
+    /**
      * @param properties        item properties.
      * @param cooldownTicks     ticks shield will be in cooldown after disabled.
      * @param enchantability    enchantability of shield. Vanilla: 14
@@ -85,6 +113,14 @@ public class ShieldLibItem extends Item {
                         )
                 )
         );
+    }
+
+    /**
+     * @param properties        item properties(INCLUDE YOUR OWN BlocksAttacks/ShieldInformation components!).
+     * @param repairItems       list of items/tags for repairing shield.
+     */
+    public ShieldLibItem(Properties properties, @Nullable HolderSet<Item> repairItems) {
+        super(attachRepairable(properties, repairItems));
     }
 
     @Override

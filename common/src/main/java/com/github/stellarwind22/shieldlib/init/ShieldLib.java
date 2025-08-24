@@ -1,12 +1,15 @@
 package com.github.stellarwind22.shieldlib.init;
 
+import com.github.stellarwind22.shieldlib.lib.component.ShieldInformation;
 import com.github.stellarwind22.shieldlib.lib.component.ShieldLibDataComponents;
+import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.object.BlocksAttacksCooldownModifier;
 import com.github.stellarwind22.shieldlib.lib.object.BlocksAttacksMovementModifier;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.BlocksAttacks;
 import net.minecraft.world.phys.Vec2;
 import org.slf4j.Logger;
@@ -35,18 +38,33 @@ public final class ShieldLib {
 
         ShieldLib.registerMovementModifier(((player, stack, blocksAttacks, movement) -> {
 
+            if(stack.is(Items.SHIELD)) {
+                return movement.scale(ShieldLibConfig.vanilla_shield_movement_multiplier * 5.0F);
+            }
+
             if(stack.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) {
-                ShieldLibDataComponents.ShieldInformation shieldInformation = stack.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
+                ShieldInformation shieldInformation = stack.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
                 assert shieldInformation != null;
 
+                if(shieldInformation.isType("vanilla")) {
+                    return movement.scale(ShieldLibConfig.tower_movement_multiplier * 5.0F);
+                }
                 if(shieldInformation.isType("buckler")) {
-                    return movement.scale(3.3F);
+                    return movement.scale(ShieldLibConfig.buckler_movement_multiplier * 5.0F);
                 }
                 else if(shieldInformation.isType("heater")) {
-                    return movement.scale(2.5F);
+                    return movement.scale(ShieldLibConfig.heater_movement_multiplier * 5.0F);
                 }
             }
             return movement;
+        }));
+
+        ShieldLib.registerCooldownModifier(((player, stack, blocksAttacks, currentCooldown) -> {
+
+            if(stack.is(Items.SHIELD)) {
+                return currentCooldown * ((float) ShieldLibConfig.vanilla_shield_cooldown_ticks / 100.0F);
+            }
+            return currentCooldown;
         }));
 
         if(isDev) {

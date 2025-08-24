@@ -1,7 +1,7 @@
 package com.github.stellarwind22.shieldlib.test;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
-import com.github.stellarwind22.shieldlib.lib.component.ShieldLibDataComponents;
+import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibItem;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
@@ -16,7 +16,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
-import java.util.List;
 import java.util.function.Function;
 
 public class ShieldLibTests {
@@ -24,11 +23,11 @@ public class ShieldLibTests {
     protected static DeferredRegister<Item> TEST_ITEMS;
 
     protected static RegistrySupplier<Item> SHIELD;
-    protected static RegistrySupplier<Item> VANILLA_SHIELD;
+    protected static RegistrySupplier<Item> TOWER_SHIELD;
     protected static RegistrySupplier<Item> COMPONENT_SHIELD;
     protected static RegistrySupplier<Item> BUCKLER_SHIELD;
     protected static RegistrySupplier<Item> HEATER_SHIELD;
-    protected static RegistrySupplier<Item> SPIKED_VANILLA_SHIELD;
+    protected static RegistrySupplier<Item> SPIKED_TOWER_SHIELD;
     protected static RegistrySupplier<Item> SPIKED_BUCKLER_SHIELD;
     protected static RegistrySupplier<Item> SPIKED_HEATER_SHIELD;
 
@@ -42,121 +41,52 @@ public class ShieldLibTests {
         SHIELD = registerItem("shield",
                 props -> new ShieldLibItem(
                         props.durability(200),
-                        100,
+                        ShieldLibConfig.vanilla_shield_cooldown_ticks,
                         9,
                         Items.OAK_PLANKS,
                         Items.SPRUCE_PLANKS));
 
-        VANILLA_SHIELD = registerItem("vanilla_shield",
+        TOWER_SHIELD = registerItem("tower_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.vanillaShieldProperties(props)
-                                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(),
-                                        new ShieldLibDataComponents.ShieldInformation(
-                                                "vanilla",
-                                                List.of("none")
-                                        )
-                                ),
-                        ShieldLibUtils.VANILLA_SHIELD_COOLDOWN_TICKS,
-                        ShieldLibUtils.VANILLA_SHIELD_ENCHANTABILITY,
+                        ShieldLibUtils.towerShieldProperties(props, ShieldLibConfig.vanilla_shield_cooldown_ticks).durability(336),
                         Items.OAK_PLANKS
                 )
         );
 
         COMPONENT_SHIELD = registerItem("component_shield",
                 props -> new Item(
-                        ShieldLibUtils.vanillaShieldProperties(props)
+                        ShieldLibUtils.towerShieldProperties(props, ShieldLibConfig.vanilla_shield_cooldown_ticks)
                                 .repairable(Items.OAK_PLANKS)
-                                .enchantable(ShieldLibUtils.VANILLA_SHIELD_ENCHANTABILITY)
+                                .enchantable(14)
                 ));
 
         BUCKLER_SHIELD = registerItem("buckler_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.withShieldComponent(
-                                ShieldLibUtils.vanillaShieldProperties(props).durability(269),
-                                ShieldLibUtils.withHorizontalAngle(
-                                        ShieldLibUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT,
-                                        29.7F
-                                ))
-                                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(),
-                                        new ShieldLibDataComponents.ShieldInformation(
-                                                "buckler",
-                                                List.of("none")
-                                        )
-                                ),
-                        50,
-                        ShieldLibUtils.VANILLA_SHIELD_ENCHANTABILITY,
+                        ShieldLibUtils.bucklerShieldProperties(props, 50).durability(269),
                         Items.OAK_PLANKS
                 ));
 
         HEATER_SHIELD = registerItem("heater_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.withShieldComponent(
-                                ShieldLibUtils.vanillaShieldProperties(props).durability(302),
-                                ShieldLibUtils.withHorizontalAngle(
-                                        ShieldLibUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT,
-                                        45.0F
-                                ))
-                                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(),
-                                        new ShieldLibDataComponents.ShieldInformation(
-                                                "heater",
-                                                List.of("none")
-                                        )
-                                ),
-                        70,
-                        ShieldLibUtils.VANILLA_SHIELD_ENCHANTABILITY,
+                        ShieldLibUtils.heaterShieldProperties(props, 70).durability(302),
                         Items.OAK_PLANKS
                 ));
 
-        SPIKED_VANILLA_SHIELD = registerItem("spiked_vanilla_shield",
+        SPIKED_TOWER_SHIELD = registerItem("spiked_tower_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.vanillaShieldProperties(props)
-                                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(),
-                                        new ShieldLibDataComponents.ShieldInformation(
-                                                "vanilla",
-                                                List.of("spiked")
-                                        )
-                                ),
-                        ShieldLibUtils.VANILLA_SHIELD_COOLDOWN_TICKS,
-                        ShieldLibUtils.VANILLA_SHIELD_ENCHANTABILITY,
+                        ShieldLibUtils.spikedTowerShieldProperties(props, ShieldLibConfig.vanilla_shield_cooldown_ticks).durability(336),
                         Items.OAK_PLANKS
-                )
-        );
+                ));
 
         SPIKED_BUCKLER_SHIELD = registerItem("spiked_buckler_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.withShieldComponent(
-                                        ShieldLibUtils.vanillaShieldProperties(props).durability(269),
-                                        ShieldLibUtils.withHorizontalAngle(
-                                                ShieldLibUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT,
-                                                29.7F
-                                        ))
-                                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(),
-                                        new ShieldLibDataComponents.ShieldInformation(
-                                                "buckler",
-                                                List.of("spiked")
-                                        )
-                                ),
-                        50,
-                        ShieldLibUtils.VANILLA_SHIELD_ENCHANTABILITY,
+                        ShieldLibUtils.spikedBucklerShieldProperties(props, 50).durability(269),
                         Items.OAK_PLANKS
                 ));
 
         SPIKED_HEATER_SHIELD = registerItem("spiked_heater_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.withShieldComponent(
-                                        ShieldLibUtils.vanillaShieldProperties(props).durability(302),
-                                        ShieldLibUtils.withHorizontalAngle(
-                                                ShieldLibUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT,
-                                                45.0F
-                                        ))
-                                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(),
-                                        new ShieldLibDataComponents.ShieldInformation(
-                                                "heater",
-                                                List.of("spiked")
-                                        )
-                                ),
-                        70,
-                        ShieldLibUtils.VANILLA_SHIELD_ENCHANTABILITY,
+                        ShieldLibUtils.spikedHeaterShieldProperties(props, 70).durability(302),
                         Items.OAK_PLANKS
                 ));
 

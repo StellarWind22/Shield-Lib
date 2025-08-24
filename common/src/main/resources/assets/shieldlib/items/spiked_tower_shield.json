@@ -1,0 +1,24 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "property": "minecraft:using_item",
+    "on_false": {
+      "type": "minecraft:special",
+      "base": "shieldlib:item/spiked_tower_shield",
+      "model": {
+        "type": "shieldlib:spiked_tower_shield",
+        "texture_banner": "shieldlib:entity/spiked_tower_shield_base",
+        "texture_default": "shieldlib:entity/spiked_tower_shield_base_nopattern"
+      }
+    },
+    "on_true": {
+      "type": "minecraft:special",
+      "base": "shieldlib:item/spiked_tower_shield_blocking",
+      "model": {
+        "type": "shieldlib:spiked_tower_shield",
+        "texture_banner": "shieldlib:entity/spiked_tower_shield_base",
+        "texture_default": "shieldlib:entity/spiked_tower_shield_base_nopattern"
+      }
+    }
+  }
+}

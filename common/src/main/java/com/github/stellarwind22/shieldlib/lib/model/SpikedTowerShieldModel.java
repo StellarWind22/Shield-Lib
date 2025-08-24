@@ -9,13 +9,13 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
-public class SpikedVanillaShieldModel extends Model implements ShieldModel {
+public class SpikedTowerShieldModel extends Model implements ShieldModel {
 
     private final ModelPart plate;
     private final ModelPart handle;
-    public static final ModelLayerLocation LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_vanilla_shield"), "main");
+    public static final ModelLayerLocation LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_tower_shield"), "main");
 
-    public SpikedVanillaShieldModel(ModelPart root) {
+    public SpikedTowerShieldModel(ModelPart root) {
         super(root, RenderType::entitySolid);
         this.plate = root.getChild("plate");
         this.handle = root.getChild("handle");
@@ -36,7 +36,7 @@ public class SpikedVanillaShieldModel extends Model implements ShieldModel {
                 .texOffs(42, 0).addBox(3.0F, 2.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(42, 3).addBox(3.0F, 7.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition handle = partdefinition.addOrReplaceChild("handle", CubeListBuilder.create().texOffs(26, 0).addBox(-1.0F, -3.0F, -1.0F, 2.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        partdefinition.addOrReplaceChild("handle", CubeListBuilder.create().texOffs(26, 0).addBox(-1.0F, -3.0F, -1.0F, 2.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
@@ -45,5 +45,5 @@ public class SpikedVanillaShieldModel extends Model implements ShieldModel {
     @Override public ModelPart getRoot() {return this.root;}
     @Override public ModelPart handle() { return this.handle; }
     @Override public ModelPart plate() { return this.plate; }
-    @Override public String shape() { return "vanilla"; }
+    @Override public String shape() { return "tower"; }
 }
