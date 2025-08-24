@@ -7,6 +7,7 @@ import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.lib.render.*;
 import com.github.stellarwind22.shieldlib.mixin.SheetsAccessor;
 import com.github.stellarwind22.shieldlib.mixin.SpecialModelRenderersAccessor;
+import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import com.mojang.serialization.MapCodec;
 import dev.architectury.event.EventResult;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
@@ -119,6 +120,10 @@ public class ShieldLibClient {
             }
             return EventResult.pass();
         });
+
+        if(IS_DEV) {
+            ShieldLibTests.initClient();
+        }
     }
 
     public static Material getShapedBannerMaterial(String shape, Holder<BannerPattern> bannerPattern) {

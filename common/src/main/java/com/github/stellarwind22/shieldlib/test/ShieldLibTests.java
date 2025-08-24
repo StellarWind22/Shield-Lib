@@ -1,4 +1,4 @@
-package com.github.stellarwind22.testfabric;
+package com.github.stellarwind22.shieldlib.test;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;

@@ -17,3 +17,9 @@ dependencies {
     //DO NOT USE ANY FABRIC SPECIFIC CLASSES!!!
     modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}-fabric"
 }
+
+sourceSets {
+    dev {
+        resources.srcDir("src/dev/resources")
+    }
+}

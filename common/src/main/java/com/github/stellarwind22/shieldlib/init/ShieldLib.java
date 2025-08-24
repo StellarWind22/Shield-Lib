@@ -6,6 +6,7 @@ import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.object.BlocksAttacksCooldownModifier;
 import com.github.stellarwind22.shieldlib.lib.object.BlocksAttacksMovementModifier;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
+import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -65,6 +66,10 @@ public final class ShieldLib {
             }
             return currentCooldown;
         }));
+
+        if(IS_DEV) {
+            ShieldLibTests.init();
+        }
     }
 
     public static void registerCooldownModifier(BlocksAttacksCooldownModifier cooldownModifier) {
