@@ -1,0 +1,39 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+issueTrackerURL = "https://github.com/StellarWind22/Fabric-Shield-Lib/issues"
+license = "LGPL 2.1"
+
+[[mods]]
+modId = "testneoforge"
+version = "1.0.0"
+displayName = "TestNeoForge"
+authors = "StellarWind22"
+description = '''
+'''
+
+[[dependencies.testneoforge]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.testneoforge]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.8,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.testneoforge]]
+modId = "architectury"
+type = "required"
+versionRange = "[17.0.8,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.testneoforge]]
+modId = "shieldlib"
+type = "required"
+ordering = "AFTER"
+side = "BOTH"

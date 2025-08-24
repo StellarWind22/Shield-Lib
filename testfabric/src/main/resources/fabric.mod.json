@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "shieldlib",
+  "version": "1.0.0",
+  "name": "TestFabric",
+  "description": "",
+  "authors": [
+    "StellarWind22"
+  ],
+  "contributors":[],
+  "contact": {},
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.github.stellarwind22.shieldlib.init.TestFabric"
+    ],
+    "client": [
+      "com.github.stellarwind22.shieldlib.init.TestFabricClient"
+    ]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.17.1",
+    "minecraft": "~1.21.8",
+    "java": ">=21",
+    "architectury": ">=17.0.8",
+    "fabric-api": "*",
+    "shieldlib": "*"
+  }
+}

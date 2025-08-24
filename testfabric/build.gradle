@@ -24,12 +24,17 @@ configurations {
     }
 }
 
+repositories {
+    maven {url = "https://api.modrinth.com/maven"}
+}
+
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
     modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
     modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
-
+    modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}-fabric"
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
+    modImplementation(project(path: ':fabric', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 }
 
