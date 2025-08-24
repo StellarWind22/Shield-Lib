@@ -7,6 +7,10 @@ architectury {
     fabric()
 }
 
+tasks.configureEach {
+    dependsOn(":fabric:jar")
+}
+
 configurations {
     common {
         canBeResolved = true

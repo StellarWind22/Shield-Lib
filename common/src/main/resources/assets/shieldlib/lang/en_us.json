@@ -14,7 +14,7 @@
     "shieldlib.midnightconfig.vanilla_shield_enchantability": "Vanilla Shield Enchantability",
     "shieldlib.midnightconfig.vanilla_shield_movement_multiplier": "Vanilla Movement Multiplier",
     "shieldlib.midnightconfig.vanilla_shield_blocking_angle": "Vanilla Shield Blocking Angle",
-    "shieldlib.midnightconfig.tower_cooldown_ticks": "Vanilla Shield Cooldown Ticks",
+    "shieldlib.midnightconfig.vanilla_shield_cooldown_ticks": "Vanilla Shield Cooldown Ticks",
     "shieldlib.midnightconfig.tower_movement_multiplier": "Tower Movement Multiplier",
     "shieldlib.midnightconfig.tower_blocking_angle": "Tower Blocking Angle",
     "shieldlib.midnightconfig.buckler_movement_multiplier": "Buckler Movement Multiplier",

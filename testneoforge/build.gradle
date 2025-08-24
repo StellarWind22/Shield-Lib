@@ -7,6 +7,10 @@ architectury {
     neoForge()
 }
 
+tasks.configureEach {
+    dependsOn(":neoforge:build")
+}
+
 configurations {
     common {
         canBeResolved = true
