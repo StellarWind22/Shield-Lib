@@ -99,6 +99,10 @@ tasks.register("stripDebugResources") {
             }
         }
     }
+
+    doLast {
+        delete(tmpDir)
+    }
 }
 
 tasks.register("jarProduction", org.gradle.jvm.tasks.Jar) {
