@@ -25,62 +25,88 @@ dependencies {
     modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}-fabric"
 }
 
-tasks.named("processResources") {
-    // Only run for production builds
-    onlyIf {
-        project.hasProperty("production") && project.property("production").toString().toBoolean()
-    }
+tasks.register("stripDebugResources") {
+    group = "build"
+    description = "Remove debug entries and files for production build"
 
-    def tagDirs = [
-            "data/**/tags/item",
-            "data/**/tags/item/enchantable",
-            "data/**/tags/item/tools"
-    ]
+    def tmpDir = file("$projectDir/tmp")
 
-    // JSON entries to remove from tags
-    def entriesToRemove = [
-            "shieldlib:shield",
-            "shieldlib:component_shield",
-            "shieldlib:tower_shield",
-            "shieldlib:buckler_shield",
-            "shieldlib:heater_shield",
-            "shieldlib:spiked_tower_shield",
-            "shieldlib:spiked_buckler_shield",
-            "shieldlib:spiked_heater_shield"
-    ]
+    doFirst {
+        def rootDir = file("$projectDir/src/main/resources/data")
+        tmpDir.mkdirs()
 
-    def debugDirs = [
-            "data/**/enchantment"
-    ]
+        copy {
+            from "src/main/resources"
+            into tmpDir
+        }
 
-    def debugFiles = [
-            "recovery.json",
-            "reflect.json"
-    ]
+        def tagDirs = [
+                "minecraft/tags/item",
+                "shieldlib/tags/item",
+                "minecraft/tags/item/enchantable",
+                "shieldlib/tags/item/enchantable",
+                "c/tags/item/tools"
+        ]
 
-    // Remove entries from tag JSONs
-    tagDirs.each { dir ->
-        filesMatching("$dir/*.json") { details ->
-            def file = file(details.file)
-            def json = new JsonSlurper().parse(file)
-            if (json.values instanceof List) {
-                json.values.removeAll { it in entriesToRemove }
-                details.filter { _ ->
-                    JsonOutput.prettyPrint(JsonOutput.toJson(json))
+        def entriesToRemove = [
+                "shieldlib:shield",
+                "shieldlib:component_shield",
+                "shieldlib:tower_shield",
+                "shieldlib:buckler_shield",
+                "shieldlib:heater_shield",
+                "shieldlib:spiked_tower_shield",
+                "shieldlib:spiked_buckler_shield",
+                "shieldlib:spiked_heater_shield"
+        ]
+
+        def debugDirs = [
+                "shieldlib/enchantment"
+        ]
+
+        def debugFiles = [
+                "recovery.json",
+                "reflect.json"
+        ]
+
+        // Process tag JSONs
+        tagDirs.each { dir ->
+            fileTree(new File(tmpDir, dir)).matching { include "*.json" }.each { file ->
+                def json = new JsonSlurper().parse(file)
+                if (json.values instanceof List) {
+                    json.values.removeAll { it in entriesToRemove }
+                    file.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
+                    println("Stripped debug items from: $file")
                 }
-                println("Stripped debug items from: $file")
+            }
+        }
+
+        // Delete debug files
+        debugDirs.each { dir ->
+            def fullDir = new File(tmpDir, dir)
+            if(fullDir.exists() && fullDir.isDirectory()) {
+                debugFiles.each {debugFile ->
+                    fullDir.eachFileMatch(debugFile) { file ->
+                        file.delete()
+                        print("Deleted file: $file from build.")
+                    }
+                }
             }
         }
     }
 
-    debugDirs.each { dir ->
-        debugFiles.each {file ->
-            filesMatching("$dir/$file") { details ->
-                details.exclude()
-                println("Excluding debug file from JAR: ${details.file}")
-            }
+    doLast {
+        tasks.named("jar") {
+            from(tmpDir)
         }
     }
 }
+
+
+// Make the main build task depend on this if production
+tasks.named("build") {
+    dependsOn("stripDebugResources")
+}
+
+
 
 

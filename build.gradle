@@ -64,17 +64,3 @@ subprojects {
         }
     }
 }
-
-tasks.register("buildProduction") {
-    group = "build"
-    description = "Builds the production jar with debug items stripped."
-
-    doFirst {
-        project.ext.set("production", true)
-        println("Production build enabled")
-    }
-
-    // Depend on all subprojects' build tasks
-    dependsOn(subprojects*.tasks*.build.flatten())
-}
-

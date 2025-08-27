@@ -103,16 +103,14 @@ public class ShieldLibClient {
                         float cooldownTicks = ShieldLib.getCooldownTicksWithModifiers(player, stack, blocksAttacks);
 
                         tooltip.add(Component.literal(""));
-                        tooltip.add(Component.translatable("shieldlib.shield_tooltip.start")
+                        tooltip.add(Component.translatable("shieldlib.shield_tooltip.head")
                                 .append(Component.literal(":"))
                                 .withStyle(ChatFormatting.GRAY));
 
+                        String cooldown = String.valueOf(cooldownTicks / 20.0F).replaceAll("\\.0*$", "");
+                        String cooldownTranslated = String.format(Component.translatable("shieldlib.shield_tooltip.body").getString(), cooldown);
                         tooltip.add(
-                                Component.literal(" " + String.valueOf(cooldownTicks / 20.0F).replaceAll("\\.0*$", ""))
-                                        .withStyle(ChatFormatting.DARK_GREEN)
-                                        .append(Component.translatable("shieldlib.shield_tooltip.unit"))
-                                        .append(" ")
-                                        .append(Component.translatable("shieldlib.shield_tooltip.end"))
+                                Component.literal(" " + cooldownTranslated).withStyle(ChatFormatting.DARK_GREEN)
                         );
                     }
                 }
