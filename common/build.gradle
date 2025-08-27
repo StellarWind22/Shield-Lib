@@ -1,3 +1,10 @@
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
+plugins {
+    id 'com.github.johnrengelman.shadow'
+}
+
 architectury {
     common rootProject.enabled_platforms.split(',')
 }
@@ -18,8 +25,62 @@ dependencies {
     modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}-fabric"
 }
 
-sourceSets {
-    dev {
-        resources.srcDir("src/dev/resources")
+tasks.named("processResources") {
+    // Only run for production builds
+    onlyIf {
+        project.hasProperty("production") && project.property("production").toString().toBoolean()
+    }
+
+    def tagDirs = [
+            "data/**/tags/item",
+            "data/**/tags/item/enchantable",
+            "data/**/tags/item/tools"
+    ]
+
+    // JSON entries to remove from tags
+    def entriesToRemove = [
+            "shieldlib:shield",
+            "shieldlib:component_shield",
+            "shieldlib:tower_shield",
+            "shieldlib:buckler_shield",
+            "shieldlib:heater_shield",
+            "shieldlib:spiked_tower_shield",
+            "shieldlib:spiked_buckler_shield",
+            "shieldlib:spiked_heater_shield"
+    ]
+
+    def debugDirs = [
+            "data/**/enchantment"
+    ]
+
+    def debugFiles = [
+            "recovery.json",
+            "reflect.json"
+    ]
+
+    // Remove entries from tag JSONs
+    tagDirs.each { dir ->
+        filesMatching("$dir/*.json") { details ->
+            def file = file(details.file)
+            def json = new JsonSlurper().parse(file)
+            if (json.values instanceof List) {
+                json.values.removeAll { it in entriesToRemove }
+                details.filter { _ ->
+                    JsonOutput.prettyPrint(JsonOutput.toJson(json))
+                }
+                println("Stripped debug items from: $file")
+            }
+        }
+    }
+
+    debugDirs.each { dir ->
+        debugFiles.each {file ->
+            filesMatching("$dir/$file") { details ->
+                details.exclude()
+                println("Excluding debug file from JAR: ${details.file}")
+            }
+        }
     }
 }
+
+
