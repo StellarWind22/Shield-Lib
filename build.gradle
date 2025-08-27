@@ -20,105 +20,6 @@ subprojects {
     apply plugin: 'architectury-plugin'
     apply plugin: 'maven-publish'
 
-    if(name == "common") {
-        tasks.register("stripDebugResources") {
-            group = "build"
-            description = "Remove debug entries and files for production build"
-
-            def tmpDir = file("$projectDir/tmp")
-
-            doFirst {
-                tmpDir.mkdirs()
-
-                copy {
-                    from "src/main/resources"
-                    into tmpDir
-                }
-
-                var tagDirs = [
-                        "minecraft/tags/item",
-                        "shieldlib/tags/item",
-                        "minecraft/tags/item/enchantable",
-                        "shieldlib/tags/item/enchantable",
-                        "c/tags/item/tools"
-                ]
-
-                var entriesToRemove = [
-                        "shieldlib:shield",
-                        "shieldlib:component_shield",
-                        "shieldlib:tower_shield",
-                        "shieldlib:buckler_shield",
-                        "shieldlib:heater_shield",
-                        "shieldlib:spiked_tower_shield",
-                        "shieldlib:spiked_buckler_shield",
-                        "shieldlib:spiked_heater_shield"
-                ]
-
-                var debugDirs = [
-                        "data/shieldlib/enchantment"
-                ]
-
-                var debugFiles = [
-                        "recovery.json",
-                        "reflect.json"
-                ]
-
-                // Process tag JSONs
-                tagDirs.each { dir ->
-                    var fullDir = file("$tmpDir/data/$dir")
-                    if(fullDir.exists() && fullDir.isDirectory()) {
-                        fullDir.eachFileMatch(~/.+\.json$/) { jsonFile ->
-                            def json = new JsonSlurper().parse(jsonFile)
-
-                            if(json.values instanceof List) {
-
-                                entriesToRemove.each {entry ->
-                                    json.values.remove(entry)
-                                }
-
-                                jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
-                                println("Stripped debug entries from: $jsonFile.")
-                            }
-                        }
-                    }
-                }
-
-                // Delete debug files
-                debugDirs.each { dir ->
-                    var fullDir = file("$tmpDir/$dir")
-                    debugFiles.each { debugFile ->
-                        var fullFileDir = file("$fullDir/$debugFile")
-                        if(fullFileDir.exists() && fullFileDir.isFile()) {
-                            fullFileDir.delete()
-                            println("Deleted debug file: $fullFileDir.")
-                        }
-                    }
-                }
-            }
-        }
-
-        tasks.register("jarProduction", org.gradle.jvm.tasks.Jar) {
-            group = "build"
-            description = "Build production JAR with stripped resources"
-
-            dependsOn("stripDebugResources", "classes")
-
-            from("$projectDir/tmp")
-            from(project.sourceSets.main.output) {
-                include("**/*.class")
-            }
-        }
-    }
-
-    tasks.register("buildProduction") {
-        group = "build"
-        description = "Builds production jars for all modules"
-
-        dependsOn(":common:jarProduction")
-        dependsOn(":fabric:build")
-        dependsOn(":neoforge:build")
-    }
-
     base {
         // Set up a suffixed format for the mod jar names, e.g. `example-fabric`.
         archivesName = "$project.archives_name"
@@ -165,4 +66,13 @@ subprojects {
             // retrieving dependencies.
         }
     }
+}
+
+tasks.register("buildProduction") {
+    group = "build"
+    description = "Builds production jars for all modules"
+
+    dependsOn(":common:jarProduction")
+    dependsOn(":fabric:jarProduction")
+    dependsOn(":neoforge:jarProduction")
 }

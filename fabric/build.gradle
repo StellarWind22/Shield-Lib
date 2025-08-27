@@ -63,3 +63,36 @@ shadowJar {
 remapJar {
     input.set shadowJar.archiveFile
 }
+
+tasks.register("extractRemappedJar", Copy) {
+    dependsOn("remapJar")
+
+    from(zipTree(remapJar.archiveFile))
+    into(layout.buildDirectory.dir("tmp/remapped"))
+
+    exclude 'data/**'
+    exclude 'assets/**'
+}
+
+tasks.register("jarProduction", Jar) {
+    group = "build"
+    description = "Build production JAR for Fabric using stripped common resources"
+
+    dependsOn(":common:jarProduction", "extractRemappedJar")
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    // Include extracted remapped content
+    from(layout.buildDirectory.dir("tmp/remapped"))
+
+    // Include stripped resources
+    from(project(':common').file('tmp')) {
+        include 'data/**'
+        include 'assets/**'
+        include '*.json'
+    }
+
+    doLast {
+        delete(layout.buildDirectory.dir("tmp/remapped"))
+    }
+}
