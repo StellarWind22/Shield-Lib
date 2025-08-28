@@ -53,7 +53,6 @@
     "fabricloader": ">=0.17.1",
     "minecraft": "~1.21.8",
     "java": ">=21",
-    "architectury": ">=17.0.8",
-    "fabric-api": "*"
+    "architectury": ">=17.0.8"
   }
 }

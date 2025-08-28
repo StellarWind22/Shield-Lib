@@ -113,10 +113,6 @@ tasks.register("jarProduction", org.gradle.jvm.tasks.Jar) {
     from(project.sourceSets.main.output) {
         include("**/*.class")
     }
-
-    doLast {
-        delete("$projectDir/tmp")
-    }
 }
 
 
