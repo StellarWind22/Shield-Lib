@@ -27,9 +27,11 @@ public class ShieldLibTests {
     protected static RegistrySupplier<Item> COMPONENT_SHIELD;
     protected static RegistrySupplier<Item> BUCKLER_SHIELD;
     protected static RegistrySupplier<Item> HEATER_SHIELD;
+    protected static RegistrySupplier<Item> TARGE_SHIELD;
     protected static RegistrySupplier<Item> SPIKED_TOWER_SHIELD;
     protected static RegistrySupplier<Item> SPIKED_BUCKLER_SHIELD;
     protected static RegistrySupplier<Item> SPIKED_HEATER_SHIELD;
+    protected static RegistrySupplier<Item> SPIKED_TARGE_SHIELD;
 
     protected static ResourceLocation REFLECT_ID = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "reflect");
     protected static ResourceLocation RECOVERY_ID = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "recovery");
@@ -72,6 +74,12 @@ public class ShieldLibTests {
                         Items.OAK_PLANKS
                 ));
 
+        TARGE_SHIELD = registerItem("targe_shield",
+                props -> new ShieldLibItem(
+                        ShieldLibUtils.targeShieldProperties(props, 120).durability(436),
+                        Items.OAK_PLANKS
+                ));
+
         SPIKED_TOWER_SHIELD = registerItem("spiked_tower_shield",
                 props -> new ShieldLibItem(
                         ShieldLibUtils.spikedTowerShieldProperties(props, ShieldLibConfig.vanilla_shield_cooldown_ticks).durability(336),
@@ -87,6 +95,12 @@ public class ShieldLibTests {
         SPIKED_HEATER_SHIELD = registerItem("spiked_heater_shield",
                 props -> new ShieldLibItem(
                         ShieldLibUtils.spikedHeaterShieldProperties(props, 70).durability(302),
+                        Items.OAK_PLANKS
+                ));
+
+        SPIKED_TARGE_SHIELD = registerItem("spiked_targe_shield",
+                props -> new ShieldLibItem(
+                        ShieldLibUtils.spikedTargeShieldProperties(props, 120).durability(436),
                         Items.OAK_PLANKS
                 ));
 

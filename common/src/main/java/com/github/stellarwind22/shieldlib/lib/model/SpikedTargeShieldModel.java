@@ -28,21 +28,23 @@ public class SpikedTargeShieldModel extends Model implements ShieldModel {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partDefinition = meshdefinition.getRoot();
 
-        PartDefinition plate = partDefinition.addOrReplaceChild("plate", CubeListBuilder.create().texOffs(0, 0).addBox(-7.0F, -7.0F, -2.0F, 14.0F, 14.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 15).addBox(-5.0F, -8.0F, -2.0F, 10.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 17).addBox(-5.0F, 7.0F, -2.0F, 10.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 19).addBox(-8.0F, -5.0F, -2.0F, 1.0F, 10.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 19).addBox(7.0F, -5.0F, -2.0F, 1.0F, 10.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 13.0F, -1.0F));
+        PartDefinition plate = partDefinition.addOrReplaceChild("plate", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -8.0F, -2.0F, 16.0F, 16.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 17).addBox(-6.0F, -9.0F, -2.0F, 12.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 19).addBox(-6.0F, 8.0F, -2.0F, 12.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 21).addBox(-9.0F, -6.0F, -2.0F, 1.0F, 12.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 21).addBox(8.0F, -6.0F, -2.0F, 1.0F, 12.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        plate.addOrReplaceChild("hub", CubeListBuilder.create().texOffs(4, 19).addBox(-2.0F, -13.0F, -4.0F, 4.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 11.0F, 1.0F));
+        plate.addOrReplaceChild("hub", CubeListBuilder.create().texOffs(4, 21).addBox(-2.0F, -13.0F, -4.0F, 4.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 11.0F, 1.0F));
 
-        plate.addOrReplaceChild("spikes", CubeListBuilder.create().texOffs(40, 0).addBox(-5.0F, -5.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
-                .texOffs(46, 3).addBox(-5.0F, 4.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
-                .texOffs(40, 0).addBox(4.0F, -5.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
-                .texOffs(46, 3).addBox(4.0F, 4.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
-                .texOffs(52, 0).addBox(-1.0F, -1.0F, -5.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        plate.addOrReplaceChild("spikes", CubeListBuilder.create().texOffs(44, 0).addBox(-6.0F, -6.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(50, 0).addBox(-7.0F, -1.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(50, 3).addBox(-6.0F, 5.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(44, 0).addBox(5.0F, -6.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(50, 0).addBox(6.0F, -1.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(50, 3).addBox(5.0F, 5.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(56, 0).addBox(-1.0F, -1.0F, -5.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        partDefinition.addOrReplaceChild("handle", CubeListBuilder.create().texOffs(30, 0).addBox(-1.0F, -3.0F, -1.0F, 2.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 13.0F, -1.0F));
+        partDefinition.addOrReplaceChild("handle", CubeListBuilder.create().texOffs(30, 0).addBox(-1.0F, -3.0F, -1.0F, 2.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
     }

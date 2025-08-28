@@ -1,5 +1,6 @@
 package com.github.stellarwind22.shieldlib.lib.render;
 
+import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.model.ShieldModel;
 import com.github.stellarwind22.shieldlib.lib.model.TargeShieldModel;
 import com.mojang.serialization.MapCodec;
@@ -7,7 +8,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -18,6 +19,7 @@ public class TargeShieldModelRenderer implements ShieldModelRenderer {
 
     private final ResourceLocation baseModel, baseModelNoPat;
     private final TargeShieldModel model;
+    public static final ModelLayerLocation TARGE_MODEL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "targe_shield"), "main");
 
     public TargeShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, TargeShieldModel model) {
         this.baseModel = baseModel;
@@ -56,7 +58,7 @@ public class TargeShieldModelRenderer implements ShieldModelRenderer {
 
         @Override
         public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(ModelLayers.SHIELD);
+            ModelPart root = entityModelSet.bakeLayer(TARGE_MODEL_LAYER);
             TargeShieldModel model = new TargeShieldModel(root);
             return new TargeShieldModelRenderer(
                     this.baseModel,

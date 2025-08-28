@@ -52,8 +52,11 @@ public final class ShieldLib {
                 if(shieldInformation.isType("buckler")) {
                     return movement.scale(ShieldLibConfig.buckler_movement_multiplier * 5.0F);
                 }
-                else if(shieldInformation.isType("heater")) {
+                if(shieldInformation.isType("heater")) {
                     return movement.scale(ShieldLibConfig.heater_movement_multiplier * 5.0F);
+
+                } else if (shieldInformation.isType("targe")) {
+                    return movement.scale(ShieldLibConfig.targe_movement_multiplier * 5.0F);
                 }
             }
             return movement;

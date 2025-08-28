@@ -1,5 +1,6 @@
 package com.github.stellarwind22.shieldlib.lib.render;
 
+import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.model.ShieldModel;
 import com.github.stellarwind22.shieldlib.lib.model.SpikedTargeShieldModel;
 import com.mojang.serialization.MapCodec;
@@ -7,7 +8,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -18,6 +19,7 @@ public class SpikedTargeShieldModelRenderer implements ShieldModelRenderer {
 
     private final ResourceLocation baseModel, baseModelNoPat;
     private final SpikedTargeShieldModel model;
+    public static final ModelLayerLocation SPIKED_TARGE_MODEL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_targe_shield"), "main");
 
     public SpikedTargeShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, SpikedTargeShieldModel model) {
         this.baseModel = baseModel;
@@ -56,7 +58,7 @@ public class SpikedTargeShieldModelRenderer implements ShieldModelRenderer {
 
         @Override
         public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(ModelLayers.SHIELD);
+            ModelPart root = entityModelSet.bakeLayer(SPIKED_TARGE_MODEL_LAYER);
             SpikedTargeShieldModel model = new SpikedTargeShieldModel(root);
             return new SpikedTargeShieldModelRenderer(
                     this.baseModel,

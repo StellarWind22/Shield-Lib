@@ -21,6 +21,8 @@
     "shieldlib.midnightconfig.buckler_blocking_angle": "Multiplicateur de mouvement du bocle",
     "shieldlib.midnightconfig.heater_movement_multiplier": "Multiplicateur de mouvement de l'écu",
     "shieldlib.midnightconfig.heater_blocking_angle": "Multiplicateur de mouvement de l'écu",
+    "shieldlib.midnightconfig.targe_movement_multiplier": "Targe Movement Multiplier",
+    "shieldlib.midnightconfig.targe_blocking_angle": "Targe Blocking Angle",
     "shieldlib.midnightconfig.spiked_damage": "Dégats des piques",
     "shieldlib.shield_tooltip.head": "Au coup de hache",
     "shieldlib.shield_tooltip.body": "%ss secondes de recharge",

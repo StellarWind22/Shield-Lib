@@ -78,6 +78,20 @@ public class ShieldLibUtils {
     public static final ShieldInformation HEATER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("heater", List.of("none"));
     public static final ShieldInformation SPIKED_HEATER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("heater", List.of("spiked"));
 
+    public static final BlocksAttacks TARGE_SHIELD_BLOCKS_ATTACKS_COMPONENT =
+            new BlocksAttacks(
+                    0.25F,
+                    1.0F,
+                    List.of(new BlocksAttacks.DamageReduction(ShieldLibConfig.targe_blocking_angle, Optional.empty(), 0.0F, 1.0F)),
+                    new BlocksAttacks.ItemDamageFunction(3.0F, 1.0F, 1.0F),
+                    Optional.of(DamageTypeTags.BYPASSES_SHIELD),
+                    Optional.of(SoundEvents.SHIELD_BLOCK),
+                    Optional.of(SoundEvents.SHIELD_BREAK)
+            );
+
+    public static final ShieldInformation TARGE_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("targe", List.of("none"));
+    public static final ShieldInformation SPIKED_TARGE_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("targe", List.of("spiked"));
+
     /**
      * @param itemStack stack to check.
      * @return true if itemStack can be considered a shield.
@@ -135,6 +149,14 @@ public class ShieldLibUtils {
         );
     }
 
+    public static Item.Properties targeShieldProperties(Item.Properties properties, int cooldownTicks) {
+        return defaultShieldProperties(properties
+                .component(DataComponents.BLOCKS_ATTACKS, withCooldownTicks(TARGE_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownTicks))
+                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), TARGE_SHIELD_INFORMATION_COMPONENT
+                )
+        );
+    }
+
     public static Item.Properties spikedTowerShieldProperties(Item.Properties properties, int cooldownTicks) {
         return defaultShieldProperties(properties
                 .component(DataComponents.BLOCKS_ATTACKS, withCooldownTicks(TOWER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownTicks))
@@ -155,6 +177,14 @@ public class ShieldLibUtils {
         return defaultShieldProperties(properties
                 .component(DataComponents.BLOCKS_ATTACKS, withCooldownTicks(HEATER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownTicks))
                 .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), SPIKED_HEATER_SHIELD_INFORMATION_COMPONENT
+                )
+        );
+    }
+
+    public static Item.Properties spikedTargeShieldProperties(Item.Properties properties, int cooldownTicks) {
+        return defaultShieldProperties(properties
+                .component(DataComponents.BLOCKS_ATTACKS, withCooldownTicks(TARGE_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownTicks))
+                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), SPIKED_TARGE_SHIELD_INFORMATION_COMPONENT
                 )
         );
     }
