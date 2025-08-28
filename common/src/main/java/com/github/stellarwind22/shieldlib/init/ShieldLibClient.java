@@ -35,9 +35,11 @@ public class ShieldLibClient {
     public static final ResourceLocation TOWER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "tower_shield");
     public static final ResourceLocation BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield");
     public static final ResourceLocation HEATER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield");
+    public static final ResourceLocation TARGE_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "targe_shield");
     public static final ResourceLocation SPIKED_TOWER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_tower_shield");
     public static final ResourceLocation SPIKED_BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_buckler_shield");
     public static final ResourceLocation SPIKED_HEATER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_heater_shield");
+    public static final ResourceLocation SPIKED_TARGE_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_targe_shield");
 
     public static final ResourceLocation SHIELD_ATLAS_LOCATION = ResourceLocation.withDefaultNamespace("textures/atlas/shield_patterns.png");
 
@@ -65,6 +67,11 @@ public class ShieldLibClient {
         );
 
         ID_MAPPER.put(
+                TARGE_SHIELD_MODEL_TYPE,
+                TargeShieldModelRenderer.Unbaked.CODEC
+        );
+
+        ID_MAPPER.put(
                 SPIKED_TOWER_SHIELD_MODEL_TYPE,
                 SpikedTowerShieldModelRenderer.Unbaked.CODEC
         );
@@ -79,11 +86,18 @@ public class ShieldLibClient {
                 SpikedHeaterShieldModelRenderer.Unbaked.CODEC
         );
 
+        ID_MAPPER.put(
+                SPIKED_TARGE_SHIELD_MODEL_TYPE,
+                SpikedTargeShieldModelRenderer.Unbaked.CODEC
+        );
+
         EntityModelLayerRegistry.register(BucklerShieldLibModel.LOCATION,       BucklerShieldLibModel::createLayer);
         EntityModelLayerRegistry.register(HeaterShieldModel.LOCATION,           HeaterShieldModel::createLayer);
-        EntityModelLayerRegistry.register(SpikedTowerShieldModel.LOCATION,    SpikedTowerShieldModel::createLayer);
+        EntityModelLayerRegistry.register(TargeShieldModel.LOCATION,            TargeShieldModel::createLayer);
+        EntityModelLayerRegistry.register(SpikedTowerShieldModel.LOCATION,      SpikedTowerShieldModel::createLayer);
         EntityModelLayerRegistry.register(SpikedBucklerShieldModel.LOCATION,    SpikedBucklerShieldModel::createLayer);
         EntityModelLayerRegistry.register(SpikedHeaterShieldModel.LOCATION,     SpikedHeaterShieldModel::createLayer);
+        EntityModelLayerRegistry.register(SpikedTargeShieldModel.LOCATION,      SpikedTargeShieldModel::createLayer);
 
         ShieldTooltipEvent.EVENT.register((player,stack, context, flag, tooltip) -> {
             if(stack.get(DataComponents.BLOCKS_ATTACKS) == null || stack.is(ShieldLibTags.NO_TOOLTIP)) return EventResult.pass();

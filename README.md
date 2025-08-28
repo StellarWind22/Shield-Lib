@@ -18,7 +18,7 @@ maven {url = "https://api.modrinth.com/maven"}
 dependencies {
 	//Platform specific stuff here
         
-        //Shield Lib(fabric OR neoforge replaces [LOADER])
+    //Shield Lib(fabric OR neoforge replaces [LOADER])
 	modImplementation "maven.modrinth:shieldlib:${project.shieldlib_version}-[LOADER]"
 }
 ```
