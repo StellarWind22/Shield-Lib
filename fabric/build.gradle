@@ -89,7 +89,6 @@ tasks.register("jarProduction", Jar) {
     from(project(':common').file('tmp')) {
         include 'data/**'
         include 'assets/**'
-        include '*.json'
     }
 
     doLast {

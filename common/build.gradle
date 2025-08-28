@@ -101,10 +101,6 @@ tasks.register("stripDebugResources") {
             }
         }
     }
-
-    doLast {
-        delete(tmpDir)
-    }
 }
 
 tasks.register("jarProduction", org.gradle.jvm.tasks.Jar) {
@@ -116,6 +112,10 @@ tasks.register("jarProduction", org.gradle.jvm.tasks.Jar) {
     from("$projectDir/tmp")
     from(project.sourceSets.main.output) {
         include("**/*.class")
+    }
+
+    doLast {
+        delete("$projectDir/tmp")
     }
 }
 
