@@ -25,6 +25,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.component.BlocksAttacks;
 import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.phys.Vec2;
 
 import java.util.Map;
 import java.util.Objects;
@@ -117,18 +118,59 @@ public class ShieldLibClient {
                         float cooldownTicks = ShieldLib.getCooldownTicksWithModifiers(player, stack, blocksAttacks);
 
                         tooltip.add(Component.literal(""));
-                        tooltip.add(Component.translatable("shieldlib.shield_tooltip.head")
+
+                        String translated = String.format(Component.translatable("shieldlib.cooldown_tooltip.head").getString(), "Axe");
+
+                        tooltip.add(Component.literal(translated)
                                 .append(Component.literal(":"))
                                 .withStyle(ChatFormatting.GRAY));
 
                         String cooldown = String.valueOf(cooldownTicks / 20.0F).replaceAll("\\.0*$", "");
-                        String cooldownTranslated = String.format(Component.translatable("shieldlib.shield_tooltip.body").getString(), cooldown);
+                        String cooldownTranslated = String.format(Component.translatable("shieldlib.cooldown_tooltip.body").getString(), cooldown);
                         tooltip.add(
                                 Component.literal(" " + cooldownTranslated).withStyle(ChatFormatting.DARK_GREEN)
                         );
                     }
                 }
+            }
 
+            switch (ShieldLibConfig.movement_tooltip_mode) {
+                case DISABLED -> {
+                    return EventResult.pass();
+                }
+
+                case NORMAL, COMPACT -> {
+                    if(!stack.has(DataComponents.BLOCKS_ATTACKS)) return EventResult.pass();
+
+                    BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
+
+                    if(blocksAttacks != null) {
+                        float movementMult = (ShieldLib.getMovementWithModifiers(player, stack, blocksAttacks, new Vec2(1,1)).x / 5.0F) - 1.0F;
+
+                        if(movementMult == 0) {
+                            break;
+                        }
+
+                        tooltip.add(Component.literal(""));
+                        tooltip.add(Component.translatable("shieldlib.movement_tooltip.head")
+                                .append(Component.literal(":"))
+                                .withStyle(ChatFormatting.GRAY));
+
+                        String multStr = String.valueOf(movementMult * 100.0F).replaceAll("\\.0*$", "") + "%";
+
+                        if(movementMult > 0) {
+                            String movement = ("+" + multStr);
+                            String movementTranslated = String.format(Component.translatable("shieldlib.movement_tooltip.body").getString(), movement);
+
+                            tooltip.add(Component.literal(" " + movementTranslated).withStyle(ChatFormatting.BLUE));
+
+                        } else if (movementMult < 0) {
+
+                            String movementTranslated = String.format(Component.translatable("shieldlib.movement_tooltip.body").getString(), multStr);
+                            tooltip.add(Component.literal(" " + movementTranslated).withStyle(ChatFormatting.RED));
+                        }
+                    }
+                }
             }
             return EventResult.pass();
         });

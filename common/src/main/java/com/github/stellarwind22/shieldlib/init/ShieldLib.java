@@ -46,7 +46,7 @@ public final class ShieldLib {
                 ShieldInformation shieldInformation = stack.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
                 assert shieldInformation != null;
 
-                if(shieldInformation.isType("vanilla")) {
+                if(shieldInformation.isType("tower")) {
                     return movement.scale(ShieldLibConfig.tower_movement_multiplier * 5.0F);
                 }
                 if(shieldInformation.isType("buckler")) {
