@@ -47,8 +47,8 @@ public class ShieldLibUtils {
                     Optional.of(SoundEvents.SHIELD_BREAK)
             );
 
-    public static final ShieldInformation TOWER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("tower", List.of("none"));
-    public static final ShieldInformation SPIKED_TOWER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("tower", List.of("spiked"));
+    public static final ShieldInformation TOWER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("tower", List.of("config"));
+    public static final ShieldInformation SPIKED_TOWER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("tower", List.of("spiked", "config"));
 
     public static final BlocksAttacks BUCKLER_SHIELD_BLOCKS_ATTACKS_COMPONENT =
             new BlocksAttacks(
@@ -61,8 +61,8 @@ public class ShieldLibUtils {
                     Optional.of(SoundEvents.SHIELD_BREAK)
             );
 
-    public static final ShieldInformation BUCKLER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("buckler", List.of("none"));
-    public static final ShieldInformation SPIKED_BUCKLER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("buckler", List.of("spiked"));
+    public static final ShieldInformation BUCKLER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("buckler", List.of("config"));
+    public static final ShieldInformation SPIKED_BUCKLER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("buckler", List.of("spiked", "config"));
 
     public static final BlocksAttacks HEATER_SHIELD_BLOCKS_ATTACKS_COMPONENT =
             new BlocksAttacks(
@@ -75,8 +75,8 @@ public class ShieldLibUtils {
                     Optional.of(SoundEvents.SHIELD_BREAK)
             );
 
-    public static final ShieldInformation HEATER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("heater", List.of("none"));
-    public static final ShieldInformation SPIKED_HEATER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("heater", List.of("spiked"));
+    public static final ShieldInformation HEATER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("heater", List.of("config"));
+    public static final ShieldInformation SPIKED_HEATER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("heater", List.of("spiked", "config"));
 
     public static final BlocksAttacks TARGE_SHIELD_BLOCKS_ATTACKS_COMPONENT =
             new BlocksAttacks(
@@ -89,8 +89,8 @@ public class ShieldLibUtils {
                     Optional.of(SoundEvents.SHIELD_BREAK)
             );
 
-    public static final ShieldInformation TARGE_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("targe", List.of("none"));
-    public static final ShieldInformation SPIKED_TARGE_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("targe", List.of("spiked"));
+    public static final ShieldInformation TARGE_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("targe", List.of("config"));
+    public static final ShieldInformation SPIKED_TARGE_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("targe", List.of("spiked", "config"));
 
     /**
      * @param itemStack stack to check.

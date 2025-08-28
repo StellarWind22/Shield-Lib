@@ -46,16 +46,16 @@ public final class ShieldLib {
                 ShieldInformation shieldInformation = stack.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
                 assert shieldInformation != null;
 
-                if(shieldInformation.isType("tower")) {
+                if(shieldInformation.isType("tower") && shieldInformation.hasFeature("config")) {
                     return movement.scale(ShieldLibConfig.tower_movement_multiplier * 5.0F);
                 }
-                if(shieldInformation.isType("buckler")) {
+                if(shieldInformation.isType("buckler") && shieldInformation.hasFeature("config")) {
                     return movement.scale(ShieldLibConfig.buckler_movement_multiplier * 5.0F);
                 }
-                if(shieldInformation.isType("heater")) {
+                if(shieldInformation.isType("heater") && shieldInformation.hasFeature("config")) {
                     return movement.scale(ShieldLibConfig.heater_movement_multiplier * 5.0F);
 
-                } else if (shieldInformation.isType("targe")) {
+                } else if (shieldInformation.isType("targe") && shieldInformation.hasFeature("config")) {
                     return movement.scale(ShieldLibConfig.targe_movement_multiplier * 5.0F);
                 }
             }

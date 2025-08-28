@@ -1,6 +1,4 @@
 # Getting Started(Architectury)
-
----
 **This tutorial assumes you are using Intellij(Highly Recommended)!**
 
 ## Setup:

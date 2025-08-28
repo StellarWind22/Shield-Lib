@@ -119,11 +119,9 @@ public class ShieldLibClient {
 
                         tooltip.add(Component.literal(""));
 
-                        String translated = String.format(Component.translatable("shieldlib.cooldown_tooltip.head").getString(), "Axe");
+                        String translated = String.format(Component.translatable("shieldlib.cooldown_tooltip.head").getString(), Component.translatable("tag.item.c.tools.axe").getString());
 
-                        tooltip.add(Component.literal(translated)
-                                .append(Component.literal(":"))
-                                .withStyle(ChatFormatting.GRAY));
+                        tooltip.add(Component.literal(translated).withStyle(ChatFormatting.GRAY));
 
                         String cooldown = String.valueOf(cooldownTicks / 20.0F).replaceAll("\\.0*$", "");
                         String cooldownTranslated = String.format(Component.translatable("shieldlib.cooldown_tooltip.body").getString(), cooldown);
@@ -152,11 +150,9 @@ public class ShieldLibClient {
                         }
 
                         tooltip.add(Component.literal(""));
-                        tooltip.add(Component.translatable("shieldlib.movement_tooltip.head")
-                                .append(Component.literal(":"))
-                                .withStyle(ChatFormatting.GRAY));
+                        tooltip.add(Component.translatable("shieldlib.movement_tooltip.head").withStyle(ChatFormatting.GRAY));
 
-                        String multStr = String.valueOf(movementMult * 100.0F).replaceAll("\\.0*$", "") + "%";
+                        String multStr = String.valueOf(movementMult * 100.0F).replaceAll("\\.0*$", "");
 
                         if(movementMult > 0) {
                             String movement = ("+" + multStr);
