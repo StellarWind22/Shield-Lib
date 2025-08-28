@@ -5,7 +5,7 @@ Library that makes it easy to add shields with banner support, enchantment suppo
 
 #### put this in gradle.properties
 ```properties
-shieldlib_version=2.0.0-beta.5-1.21.8
+shieldlib_version=2.0.0-beta.6-1.21.8
 ```
 
 #### build.gradle in repositories just above dependencies
