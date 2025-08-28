@@ -3,10 +3,15 @@ package com.github.stellarwind22.shieldlib.init;
 import com.github.stellarwind22.shieldlib.lib.component.ShieldInformation;
 import com.github.stellarwind22.shieldlib.lib.component.ShieldLibDataComponents;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
+import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
 import com.github.stellarwind22.shieldlib.lib.object.BlocksAttacksCooldownModifier;
 import com.github.stellarwind22.shieldlib.lib.object.BlocksAttacksMovementModifier;
+import com.github.stellarwind22.shieldlib.lib.object.ShieldLibDamageTypes;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
+import dev.architectury.event.EventResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -34,6 +39,7 @@ public final class ShieldLib {
 
         // Write common init code here.
         ShieldLibTags.init();
+        ShieldLibDamageTypes.init();
         ShieldLibDataComponents.init();
 
         ShieldLib.registerMovementModifier(((player, stack, blocksAttacks, movement) -> {
@@ -73,6 +79,38 @@ public final class ShieldLib {
         if(IS_DEV) {
             ShieldLibTests.init();
         }
+
+        ShieldBlockEvent.EVENT.register(((level, defender, source, amount, hand, shield) -> {
+
+            if(shield.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) {
+                ShieldInformation shieldInformation = shield.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
+                assert shieldInformation != null;
+
+                Entity attacker = source.getEntity();
+                if(attacker == null) {
+                    return EventResult.pass();
+                }
+
+                if(shieldInformation.isType("tower") && shieldInformation.hasFeature("spiked") && shieldInformation.hasFeature("config")) {
+
+                    attacker.hurtServer(level, new DamageSource(ShieldLibDamageTypes.HIT_SPIKED_SHIELD, defender), ShieldLibConfig.tower_spiked_hit_damage);
+                }
+                if(shieldInformation.isType("buckler") && shieldInformation.hasFeature("spiked") && shieldInformation.hasFeature("config")) {
+
+                    attacker.hurtServer(level, new DamageSource(ShieldLibDamageTypes.HIT_SPIKED_SHIELD, defender), ShieldLibConfig.buckler_spiked_hit_damage);
+                }
+                if(shieldInformation.isType("heater") && shieldInformation.hasFeature("spiked") && shieldInformation.hasFeature("config")) {
+
+                    attacker.hurtServer(level, new DamageSource(ShieldLibDamageTypes.HIT_SPIKED_SHIELD, defender), ShieldLibConfig.heater_spiked_hit_damage);
+
+                } else if (shieldInformation.isType("targe") && shieldInformation.hasFeature("spiked") && shieldInformation.hasFeature("config")) {
+
+                    attacker.hurtServer(level, new DamageSource(ShieldLibDamageTypes.HIT_SPIKED_SHIELD, defender), ShieldLibConfig.targe_spiked_hit_damage);
+                }
+            }
+
+            return EventResult.pass();
+        }));
     }
 
     public static void registerCooldownModifier(BlocksAttacksCooldownModifier cooldownModifier) {
