@@ -35,7 +35,7 @@ public class ShieldLibConfig extends MidnightConfig {
     @Entry(category = SHIELDS, min = 0F, max = 360F, isSlider = true) public static float  buckler_blocking_angle = 90;
     @Entry(category = SHIELDS, min = 0F, max = 2.0F, isSlider = true) public static float  heater_movement_multiplier = 0.5F;
     @Entry(category = SHIELDS, min = 0F, max = 360F, isSlider = true) public static float  heater_blocking_angle = 29.7F;
-    @Entry(category = SHIELDS, min = 0F, max = 2.0F, isSlider = true) public static float  targe_movement_multiplier = 0.2F;
+    @Entry(category = SHIELDS, min = 0F, max = 2.0F, isSlider = true) public static float  targe_movement_multiplier = 0.15F;
     @Entry(category = SHIELDS, min = 0F, max = 360F, isSlider = true) public static float  targe_blocking_angle = 110.0F;
     @Entry(category = SHIELDS, min = 0) public static int spiked_damage = 2;
 }
