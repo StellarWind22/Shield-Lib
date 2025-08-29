@@ -33,7 +33,7 @@ public interface ShieldEvents {
     }
 
     interface ShieldAttack {
-        void onAttack(ServerLevel level, DamageSource source, LivingEntity target, float amount, InteractionHand hand, ItemStack shield);
+        void onAttack(ServerLevel level, DamageSource source, LivingEntity target, float amount, ItemStack shield);
     }
 
     interface ShieldCollide {

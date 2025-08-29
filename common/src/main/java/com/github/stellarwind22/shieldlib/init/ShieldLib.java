@@ -13,11 +13,13 @@ import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import com.mojang.datafixers.util.Pair;
 import dev.architectury.event.EventResult;
+import dev.architectury.event.events.common.EntityEvent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -105,34 +107,6 @@ public final class ShieldLib {
             return EventResult.pass();
         }));
 
-        ShieldEvents.BLOCK_FAIL.register(((level, defender, source, amount, hand, shield) -> {
-            if(!ShieldLibConfig.buckler_blocks_arrows) {
-
-                //Safely grab components
-                if (!shield.has(ShieldDataComponents.SHIELD_INFORMATION.get())) return;
-                if (!shield.has(DataComponents.BLOCKS_ATTACKS)) return;
-
-                ShieldInformation shieldInfo = shield.get(ShieldDataComponents.SHIELD_INFORMATION.get());
-                BlocksAttacks blocksAttacks = shield.get(DataComponents.BLOCKS_ATTACKS);
-
-                assert shieldInfo != null;
-                assert blocksAttacks != null;
-
-                Entity entity = source.getDirectEntity();
-
-                //If arrow & buckler
-                if(entity instanceof AbstractArrow && shieldInfo.isType("buckler")) {
-
-                    blocksAttacks.hurtBlockingItem(level, shield, defender, hand, amount);
-
-                    if(source.getEntity() instanceof LivingEntity attacker) {
-                        ShieldEvents.DISABLE.invoker().onDisable(level, attacker, defender, defender instanceof Player, hand, shield, 1F);
-                    }
-                    blocksAttacks.disable(level, defender, 1F, shield);
-                }
-            }
-        }));
-
         ShieldEvents.BLOCK.register((level, defender, source, amount, hand, shield) -> {
             if (!shield.has(ShieldDataComponents.SHIELD_INFORMATION.get())) return;
 
@@ -160,6 +134,34 @@ public final class ShieldLib {
                 );
             }
         });
+
+        ShieldEvents.BLOCK_FAIL.register(((level, defender, source, amount, hand, shield) -> {
+            if(!ShieldLibConfig.buckler_blocks_arrows) {
+
+                //Safely grab components
+                if (!shield.has(ShieldDataComponents.SHIELD_INFORMATION.get())) return;
+                if (!shield.has(DataComponents.BLOCKS_ATTACKS)) return;
+
+                ShieldInformation shieldInfo = shield.get(ShieldDataComponents.SHIELD_INFORMATION.get());
+                BlocksAttacks blocksAttacks = shield.get(DataComponents.BLOCKS_ATTACKS);
+
+                assert shieldInfo != null;
+                assert blocksAttacks != null;
+
+                Entity entity = source.getDirectEntity();
+
+                //If arrow & buckler
+                if(entity instanceof AbstractArrow && shieldInfo.isType("buckler")) {
+
+                    blocksAttacks.hurtBlockingItem(level, shield, defender, hand, amount);
+
+                    if(source.getEntity() instanceof LivingEntity attacker) {
+                        ShieldEvents.DISABLE.invoker().onDisable(level, attacker, defender, defender instanceof Player, hand, shield, 1F);
+                    }
+                    blocksAttacks.disable(level, defender, 1F, shield);
+                }
+            }
+        }));
 
         ShieldEvents.COLLIDE.register((level, player, collider, withinAngle, hand, shield) -> {
             if (!shield.has(ShieldDataComponents.SHIELD_INFORMATION.get())) return;
@@ -195,6 +197,13 @@ public final class ShieldLib {
                     level.playSound(null, player.getX(), player.getY(), player.getZ(), blockSound, SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
             }
+        });
+
+        EntityEvent.LIVING_HURT.register((target, source, amount) -> {
+            if(source.getEntity() instanceof LivingEntity attacker && target.level() instanceof ServerLevel serverLevel) {
+                ShieldEvents.ATTACK.invoker().onAttack(serverLevel, source, target, amount, attacker.getWeaponItem());
+            }
+            return EventResult.pass();
         });
 
         if(IS_DEV) {
