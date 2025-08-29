@@ -36,6 +36,21 @@ public class ShieldLibItem extends Item {
     }
 
     /**
+     * @param properties        item properties.
+     * @param cooldownTicks     ticks shield will be in cooldown after disabled.
+     * @param enchantability    enchantability of shield. Vanilla: 14
+     * @param repairItems       item(s) for repairing shield.
+     */
+    @Deprecated
+    public ShieldLibItem(Properties properties, int cooldownTicks, int enchantability, Item... repairItems) {
+        this(properties, cooldownTicks, enchantability,
+                HolderSet.direct(
+                        Arrays.stream(repairItems).map(Item::builtInRegistryHolder).collect(Collectors.toList())
+                )
+        );
+    }
+
+    /**
      * @param properties        item properties(INCLUDE YOUR OWN BlocksAttacks/ShieldInformation components!).
      * @param repairItems       item(s) for repairing shield.
      */
@@ -58,6 +73,21 @@ public class ShieldLibItem extends Item {
         this(
                 properties,
                 cooldownSeconds,
+                material.enchantmentValue(),
+                material.repairItems()
+        );
+    }
+
+    /**
+     * @param properties    item properties
+     * @param cooldownTicks ticks shield will be disabled for after disabled.
+     * @param material      tool material.
+     */
+    @Deprecated
+    public ShieldLibItem(Properties properties, int cooldownTicks, ToolMaterial material) {
+        this(
+                properties,
+                cooldownTicks,
                 material.enchantmentValue(),
                 material.repairItems()
         );
@@ -90,6 +120,24 @@ public class ShieldLibItem extends Item {
     }
 
     /**
+     * @param properties        item properties.
+     * @param cooldownTicks     ticks shield will be in cooldown after disabled.
+     * @param enchantability    enchantability of shield. Vanilla: 14
+     * @param repairItemTag     item tag for repairing shield.
+     */
+    @Deprecated
+    public ShieldLibItem(Properties properties, int cooldownTicks, int enchantability, TagKey<Item> repairItemTag) {
+        this(
+                properties,
+                cooldownTicks,
+                enchantability,
+                BuiltInRegistries
+                        .acquireBootstrapRegistrationLookup(BuiltInRegistries.ITEM)
+                        .getOrThrow(repairItemTag)
+        );
+    }
+
+    /**
      * @param properties        item properties(INCLUDE YOUR OWN BlocksAttacks/ShieldInformation components!).
      * @param repairItemTag     item tag for repairing shield.
      */
@@ -110,6 +158,25 @@ public class ShieldLibItem extends Item {
                         ShieldLibUtils.withCooldownSeconds(
                                 ShieldLibUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT,
                                 cooldownSeconds
+                        )
+                )
+        );
+    }
+
+    /**
+     * @param properties        item properties.
+     * @param cooldownTicks     ticks shield will be in cooldown after disabled.
+     * @param enchantability    enchantability of shield. Vanilla: 14
+     * @param repairItems       list of items/tags for repairing shield.
+     */
+    @Deprecated
+    public ShieldLibItem(Properties properties, int cooldownTicks, int enchantability, @Nullable HolderSet<Item> repairItems) {
+        super(attachRepairable(ShieldLibUtils.defaultShieldProperties(properties), repairItems)
+                .enchantable(enchantability)
+                .component(DataComponents.BLOCKS_ATTACKS,
+                        ShieldLibUtils.withCooldownTicks(
+                                ShieldLibUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT,
+                                cooldownTicks
                         )
                 )
         );
