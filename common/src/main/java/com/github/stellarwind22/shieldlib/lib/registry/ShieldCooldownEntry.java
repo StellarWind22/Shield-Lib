@@ -1,7 +1,7 @@
 package com.github.stellarwind22.shieldlib.lib.registry;
 
+import com.github.stellarwind22.shieldlib.lib.component.ShieldDataComponents;
 import com.github.stellarwind22.shieldlib.lib.component.ShieldInformation;
-import com.github.stellarwind22.shieldlib.lib.component.ShieldLibDataComponents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
@@ -26,8 +26,8 @@ public record ShieldCooldownEntry(ShieldInformation shieldInformation, TagKey<It
 
         } else {
             //Grab information component safely
-            if(!stack.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) return false;
-            stackShieldInformation = stack.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
+            if(!stack.has(ShieldDataComponents.SHIELD_INFORMATION.get())) return false;
+            stackShieldInformation = stack.get(ShieldDataComponents.SHIELD_INFORMATION.get());
             assert stackShieldInformation != null;
         }
 

@@ -61,9 +61,4 @@ public class ShieldLibTags {
         NO_TOOLTIP =            TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "no_tooltip"));
         SHIELD_ENCHANTABLE =    TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "enchantable/shield"));
     }
-
-    public static String getTranslationKey(TagKey<Item> key) {
-        ResourceLocation location = key.location();
-        return "tag.item." + location.getNamespace() + "." + location.getPath().replace('/', '.');
-    }
 }

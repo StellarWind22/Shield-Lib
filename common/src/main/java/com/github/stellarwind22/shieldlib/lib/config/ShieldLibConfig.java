@@ -13,14 +13,10 @@ public class ShieldLibConfig extends MidnightConfig {
     /**
      * Main Category
      */
-    @Entry(category = MAIN) public static tooltip_mode cooldown_tooltip_mode = tooltip_mode.NORMAL;
-    @Entry(category = MAIN) public static tooltip_mode movement_tooltip_mode = tooltip_mode.DISABLED;
+    @Entry(category = MAIN) public static boolean show_cooldown_tooltip = true;
+    @Entry(category = MAIN) public static boolean show_movement_tooltip = false;
     @SuppressWarnings("unused") @Comment(category = MAIN, centered = true) public static Comment universal_disabling_description;
     @Entry(category = MAIN) public static boolean universal_disabling = true;
-
-    public enum tooltip_mode {
-        DISABLED, NORMAL, COMPACT
-    }
 
     /**
      * Shields Category

@@ -8,7 +8,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
 
 import java.util.List;
-import java.util.Objects;
 
 public record ShieldInformation(String type, List<String> features) {
 
@@ -26,7 +25,7 @@ public record ShieldInformation(String type, List<String> features) {
     );
 
     public boolean isType(String type) {
-        return Objects.equals(this.type, type);
+        return this.type.equals(type);
     }
 
     public boolean hasFeature(String feature) {

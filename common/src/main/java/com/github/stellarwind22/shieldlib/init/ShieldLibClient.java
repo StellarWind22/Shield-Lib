@@ -2,12 +2,15 @@ package com.github.stellarwind22.shieldlib.init;
 
 import com.github.stellarwind22.shieldlib.lib.client.model.*;
 import com.github.stellarwind22.shieldlib.lib.client.render.*;
+import com.github.stellarwind22.shieldlib.lib.component.ShieldDataComponents;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.client.event.ShieldClientEvents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
+import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
 import com.github.stellarwind22.shieldlib.mixin.client.SheetsAccessor;
 import com.github.stellarwind22.shieldlib.mixin.client.SpecialModelRenderersAccessor;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import net.fabricmc.api.EnvType;
@@ -23,11 +26,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.component.BlocksAttacks;
+import net.minecraft.world.item.component.Weapon;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.phys.Vec2;
 
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Environment(EnvType.CLIENT)
 public class ShieldLibClient {
@@ -102,66 +105,90 @@ public class ShieldLibClient {
         ShieldClientEvents.TOOLTIP.register((player, stack, context, flag, tooltip) -> {
             if(stack.get(DataComponents.BLOCKS_ATTACKS) == null || stack.is(ShieldLibTags.NO_TOOLTIP)) return;
 
-            switch (ShieldLibConfig.cooldown_tooltip_mode) {
+            if(ShieldLibConfig.show_cooldown_tooltip) {
 
-                case DISABLED -> { return; }
+                if(!stack.has(DataComponents.BLOCKS_ATTACKS)) return;
+                BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
+                assert blocksAttacks != null;
 
-                case NORMAL, COMPACT -> {
-                    if(!stack.has(DataComponents.BLOCKS_ATTACKS)) return;
+                Set<Pair<String, Float>> translations;
 
-                    BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
+                if(stack.has(ShieldDataComponents.SHIELD_INFORMATION.get())) {
 
-                    if(blocksAttacks != null) {
-                        float cooldownSeconds = ShieldLib.getCooldownSecondsWithModifiers(player, stack, blocksAttacks);
+                    translations = ShieldLib.getTagTranslations(stack.get(ShieldDataComponents.SHIELD_INFORMATION.get()));
 
-                        tooltip.add(Component.literal(""));
+                } else {
 
-                        String translated = String.format(Component.translatable("shieldlib.cooldown_tooltip.head").getString(), Component.translatable("tag.item.c.tools.axe").getString());
+                    //Always add axes by default
+                    translations = new HashSet<>();
+                    translations.add(new Pair<>(ShieldLibUtils.getTranslationKey(ShieldLibTags.C_AXE), Weapon.AXE_DISABLES_BLOCKING_FOR_SECONDS));
+                }
 
-                        tooltip.add(Component.literal(translated).withStyle(ChatFormatting.GRAY));
+                if(translations.size() > 1) {
+                    tooltip.add(Component.literal(""));
+                    tooltip.add(Component.translatable("shieldlib.cooldown_tooltip.head").withStyle(ChatFormatting.GRAY));
 
+                    for(Pair<String, Float> translation : translations) {
+
+                        float cooldownSeconds = ShieldLib.getCooldownSecondsWithModifiers(player, stack, blocksAttacks, translation.getSecond());
+
+                        String tag = Component.translatable(translation.getFirst()).getString();
                         String cooldown = String.valueOf(cooldownSeconds).replaceAll("\\.0*$", "");
-                        String cooldownTranslated = String.format(Component.translatable("shieldlib.cooldown_tooltip.body").getString(), cooldown);
+                        String bodyTranslated = String.format(Component.translatable("shieldlib.cooldown_tooltip.body").getString(), tag, cooldown);
+
                         tooltip.add(
-                                Component.literal(" " + cooldownTranslated).withStyle(ChatFormatting.DARK_GREEN)
+                                Component.literal(" " + bodyTranslated).withStyle(ChatFormatting.DARK_GREEN)
                         );
                     }
+
+                } else if(translations.size() == 1) {
+
+                    Pair<String, Float> translation = translations.iterator().next();
+
+                    tooltip.add(Component.literal(""));
+                    String headTranslated = String.format(Component.translatable("shieldlib.cooldown_tooltip.head.single").getString(), Component.translatable(translation.getFirst()).getString());
+
+                    tooltip.add(
+                            Component.literal(headTranslated)
+                                    .withStyle(ChatFormatting.GRAY)
+                    );
+
+                    float cooldownSeconds = ShieldLib.getCooldownSecondsWithModifiers(player, stack, blocksAttacks, translation.getSecond());
+
+                    String cooldown = String.valueOf(cooldownSeconds).replaceAll("\\.0*$", "");
+                    String bodyTranslated = String.format(Component.translatable("shieldlib.cooldown_tooltip.body.single").getString(), cooldown);
+
+                    tooltip.add(
+                            Component.literal(" " + bodyTranslated).withStyle(ChatFormatting.DARK_GREEN)
+                    );
                 }
             }
 
-            switch (ShieldLibConfig.movement_tooltip_mode) {
-                case DISABLED -> {
+            if(ShieldLibConfig.show_movement_tooltip) {
+                if (!stack.has(DataComponents.BLOCKS_ATTACKS)) return;
+
+                BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
+                assert blocksAttacks != null;
+
+                float movementMultiplier = (ShieldLib.getMovementWithModifiers(player, stack, blocksAttacks, new Vec2(1, 1)).x / 5.0F) - 1.0F;
+
+                if (movementMultiplier == 0) {
+                    return;
                 }
 
-                case NORMAL, COMPACT -> {
-                    if(!stack.has(DataComponents.BLOCKS_ATTACKS)) return;
+                tooltip.add(Component.literal(""));
+                tooltip.add(Component.translatable("shieldlib.movement_tooltip.head").withStyle(ChatFormatting.GRAY));
 
-                    BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
+                String multiplierStr = String.valueOf(movementMultiplier * 100.0F).replaceAll("\\.0*$", "");
 
-                    if(blocksAttacks != null) {
-                        float movementMultiplier = (ShieldLib.getMovementWithModifiers(player, stack, blocksAttacks, new Vec2(1,1)).x / 5.0F) - 1.0F;
+                if (movementMultiplier > 0) {
+                        String movement = ("+" + multiplierStr);
+                        String movementTranslated = String.format(Component.translatable("shieldlib.movement_tooltip.body").getString(), movement);
+                        tooltip.add(Component.literal(" " + movementTranslated).withStyle(ChatFormatting.BLUE));
 
-                        if(movementMultiplier == 0) {
-                            break;
-                        }
-
-                        tooltip.add(Component.literal(""));
-                        tooltip.add(Component.translatable("shieldlib.movement_tooltip.head").withStyle(ChatFormatting.GRAY));
-
-                        String multiplierStr = String.valueOf(movementMultiplier * 100.0F).replaceAll("\\.0*$", "");
-
-                        if(movementMultiplier > 0) {
-                            String movement = ("+" + multiplierStr);
-                            String movementTranslated = String.format(Component.translatable("shieldlib.movement_tooltip.body").getString(), movement);
-
-                            tooltip.add(Component.literal(" " + movementTranslated).withStyle(ChatFormatting.BLUE));
-
-                        } else if (movementMultiplier < 0) {
-
-                            String movementTranslated = String.format(Component.translatable("shieldlib.movement_tooltip.body").getString(), multiplierStr);
-                            tooltip.add(Component.literal(" " + movementTranslated).withStyle(ChatFormatting.RED));
-                        }
-                    }
+                } else if (movementMultiplier < 0) {
+                        String movementTranslated = String.format(Component.translatable("shieldlib.movement_tooltip.body").getString(), multiplierStr);
+                        tooltip.add(Component.literal(" " + movementTranslated).withStyle(ChatFormatting.RED));
                 }
             }
         });

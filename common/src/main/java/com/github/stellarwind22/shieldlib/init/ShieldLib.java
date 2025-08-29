@@ -1,7 +1,7 @@
 package com.github.stellarwind22.shieldlib.init;
 
+import com.github.stellarwind22.shieldlib.lib.component.ShieldDataComponents;
 import com.github.stellarwind22.shieldlib.lib.component.ShieldInformation;
-import com.github.stellarwind22.shieldlib.lib.component.ShieldLibDataComponents;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldEvents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
@@ -11,6 +11,7 @@ import com.github.stellarwind22.shieldlib.lib.registry.ShieldMovementModifier;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibDamage;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
+import com.mojang.datafixers.util.Pair;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.Holder;
@@ -50,29 +51,7 @@ public final class ShieldLib {
 
         // Write common init code here.
         ShieldLibTags.init();
-        ShieldLibDataComponents.init();
-
-        ShieldLib.registerMovementModifier((player, stack, blocksAttacks, movement) -> {
-
-            if (stack.is(Items.SHIELD)) {
-                return movement.scale(ShieldLibConfig.vanilla_shield_movement_multiplier * 5.0f);
-            }
-
-            if (!stack.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) return movement;
-
-            ShieldInformation shieldInfo = stack.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
-            if (shieldInfo == null || !shieldInfo.hasFeature("config")) return movement;
-
-            float multiplier = switch (shieldInfo.type()) {
-                case "tower" -> ShieldLibConfig.tower_movement_multiplier;
-                case "buckler" -> ShieldLibConfig.buckler_movement_multiplier;
-                case "heater" -> ShieldLibConfig.heater_movement_multiplier;
-                case "targe" -> ShieldLibConfig.targe_movement_multiplier;
-                default -> 1.0F;
-            };
-
-            return movement.scale(multiplier * 5.0F);
-        });
+        ShieldDataComponents.init();
 
         ShieldLib.registerCooldownEntry(
                 new ShieldCooldownEntry(ShieldLibUtils.VANILLA_SHIELD_INFORMATION_COMPONENT,               ShieldLibTags.C_AXE,  () -> ShieldLibConfig.vanilla_shield_cooldown_seconds),
@@ -82,14 +61,35 @@ public final class ShieldLib {
                 new ShieldCooldownEntry(ShieldLibUtils.CONFIG_TARGE_SHIELD_INFORMATION_COMPONENT,          ShieldLibTags.C_AXE,  () -> ShieldLibConfig.targe_default_cooldown_seconds)
         );
 
-        if(IS_DEV) {
-            ShieldLibTests.init();
-        }
+        ShieldLib.registerMovementModifier((player, stack, blocksAttacks, movement) -> {
+
+            if (stack.is(Items.SHIELD)) {
+                return movement.scale(ShieldLibConfig.vanilla_shield_movement_multiplier * 5.0f);
+            }
+
+            if (!stack.has(ShieldDataComponents.SHIELD_INFORMATION.get())) return movement;
+
+            ShieldInformation shieldInfo = stack.get(ShieldDataComponents.SHIELD_INFORMATION.get());
+            if (shieldInfo == null || !shieldInfo.hasFeature("config")) return movement;
+
+            float multiplier = switch (shieldInfo.type()) {
+                case "tower" -> ShieldLibConfig.tower_movement_multiplier;
+                case "buckler" -> ShieldLibConfig.buckler_movement_multiplier;
+                case "heater" -> ShieldLibConfig.heater_movement_multiplier;
+                case "targe" -> ShieldLibConfig.targe_movement_multiplier;
+                default -> 0F;
+            };
+
+            //Don't modify anything if there isn't a multiplier
+            if(multiplier <= 0F) return  movement;
+
+            return movement.scale(multiplier * 5F);
+        });
 
         ShieldEvents.BLOCK.register((level, defender, source, amount, hand, shield) -> {
-            if (!shield.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) return;
+            if (!shield.has(ShieldDataComponents.SHIELD_INFORMATION.get())) return;
 
-            ShieldInformation shieldInfo = shield.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
+            ShieldInformation shieldInfo = shield.get(ShieldDataComponents.SHIELD_INFORMATION.get());
             if (shieldInfo == null) return;
 
             if (!(shieldInfo.hasFeature("spiked") && shieldInfo.hasFeature("config"))) return;
@@ -115,10 +115,10 @@ public final class ShieldLib {
         });
 
         ShieldEvents.COLLIDE.register((level, player, collider, withinAngle, hand, shield) -> {
-            if (!shield.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) return;
+            if (!shield.has(ShieldDataComponents.SHIELD_INFORMATION.get())) return;
             if (!withinAngle) return;
 
-            ShieldInformation shieldInfo = shield.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
+            ShieldInformation shieldInfo = shield.get(ShieldDataComponents.SHIELD_INFORMATION.get());
             if (shieldInfo == null) return;
 
             boolean spiked = shieldInfo.hasFeature("spiked") && shieldInfo.hasFeature("config");
@@ -149,6 +149,9 @@ public final class ShieldLib {
             }
         });
 
+        if(IS_DEV) {
+            ShieldLibTests.init();
+        }
     }
 
     @SuppressWarnings("unused")
@@ -175,9 +178,10 @@ public final class ShieldLib {
         return 0;
     }
 
-    public static float getCooldownSeconds(ShieldInformation shieldInformation, BlocksAttacks blocksAttacks) {
+    @SuppressWarnings("unused")
+    public static float getCooldownSeconds(ItemStack shield, BlocksAttacks blocksAttacks) {
         for(ShieldCooldownEntry cooldownEntry : cooldownEntries) {
-            if(cooldownEntry.matchShield(shieldInformation)) return cooldownEntry.cooldown().get();
+            if(cooldownEntry.matchShield(shield)) return cooldownEntry.cooldown().get();
         }
         return blocksAttacks.disableCooldownScale() * 5.0F;
     }
@@ -196,26 +200,14 @@ public final class ShieldLib {
         return cooldown;
     }
 
-    public static float getCooldownSecondsWithModifiers(Player player, ItemStack stack, BlocksAttacks blocksAttacks) {
-        float cooldown = blocksAttacks.disableCooldownScale() * 5.0F;
-
-        if(stack.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) {
-            cooldown = getCooldownSeconds(stack.get(ShieldLibDataComponents.SHIELD_INFORMATION.get()), blocksAttacks);
-        }
-
-        for(ShieldCooldownModifier cooldownModifier : cooldownModifiers) {
-            cooldown = cooldownModifier.modify(player, stack, blocksAttacks, cooldown);
-        }
-        return cooldown;
-    }
-
     @Environment(EnvType.CLIENT)
-    public static Set<String> getTagTranslationKeys(ShieldInformation shieldInformation) {
-        Set<String> set = new HashSet<>();
+    public static Set<Pair<String, Float>> getTagTranslations(ShieldInformation shieldInformation) {
+        Set<Pair<String, Float>> set = new HashSet<>();
 
         cooldownEntries.forEach((cooldownEntry) -> {
-            if(cooldownEntry.matchShield(shieldInformation)) set.add(ShieldLibTags.getTranslationKey(cooldownEntry.tag()));
+            if(cooldownEntry.matchShield(shieldInformation)) set.add(new Pair<>(ShieldLibUtils.getTranslationKey(cooldownEntry.tag()), cooldownEntry.cooldown().get()));
         });
+
         return set;
     }
 }

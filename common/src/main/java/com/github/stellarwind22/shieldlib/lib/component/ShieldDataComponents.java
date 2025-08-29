@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.UnaryOperator;
 
-public class ShieldLibDataComponents {
+public class ShieldDataComponents {
 
     private static DeferredRegister<DataComponentType<?>> SHIELD_COMPONENTS;
     public static RegistrySupplier<DataComponentType<ShieldInformation>> SHIELD_INFORMATION;
