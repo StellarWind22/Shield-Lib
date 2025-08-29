@@ -5,7 +5,6 @@ import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibItem;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
-import dev.architectury.event.EventResult;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
@@ -116,7 +115,7 @@ public class ShieldLibTests {
                 Entity attacker = source.getEntity();
 
                 if(attacker == null) {
-                    return EventResult.pass();
+                    return;
                 }
 
                 if(defender instanceof Player) {
@@ -125,7 +124,6 @@ public class ShieldLibTests {
                     attacker.hurtServer(level, attacker.damageSources().mobAttack(defender), amount * (0.25F * enchantmentLevel));
                 }
             }
-            return EventResult.pass();
         });
 
         ShieldLib.registerCooldownModifier(((player, shield, blocksAttacks, currentCooldown) -> {

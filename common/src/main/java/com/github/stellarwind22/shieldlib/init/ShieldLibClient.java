@@ -9,7 +9,6 @@ import com.github.stellarwind22.shieldlib.mixin.SheetsAccessor;
 import com.github.stellarwind22.shieldlib.mixin.SpecialModelRenderersAccessor;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import com.mojang.serialization.MapCodec;
-import dev.architectury.event.EventResult;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -101,16 +100,14 @@ public class ShieldLibClient {
         EntityModelLayerRegistry.register(SpikedTargeShieldModel.LOCATION,      SpikedTargeShieldModel::createLayer);
 
         ShieldTooltipEvent.EVENT.register((player,stack, context, flag, tooltip) -> {
-            if(stack.get(DataComponents.BLOCKS_ATTACKS) == null || stack.is(ShieldLibTags.NO_TOOLTIP)) return EventResult.pass();
+            if(stack.get(DataComponents.BLOCKS_ATTACKS) == null || stack.is(ShieldLibTags.NO_TOOLTIP)) return;
 
             switch (ShieldLibConfig.cooldown_tooltip_mode) {
 
-                case DISABLED -> {
-                    return EventResult.pass();
-                }
+                case DISABLED -> { return; }
 
                 case NORMAL, COMPACT -> {
-                    if(!stack.has(DataComponents.BLOCKS_ATTACKS)) return EventResult.pass();
+                    if(!stack.has(DataComponents.BLOCKS_ATTACKS)) return;
 
                     BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
 
@@ -134,41 +131,39 @@ public class ShieldLibClient {
 
             switch (ShieldLibConfig.movement_tooltip_mode) {
                 case DISABLED -> {
-                    return EventResult.pass();
                 }
 
                 case NORMAL, COMPACT -> {
-                    if(!stack.has(DataComponents.BLOCKS_ATTACKS)) return EventResult.pass();
+                    if(!stack.has(DataComponents.BLOCKS_ATTACKS)) return;
 
                     BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
 
                     if(blocksAttacks != null) {
-                        float movementMult = (ShieldLib.getMovementWithModifiers(player, stack, blocksAttacks, new Vec2(1,1)).x / 5.0F) - 1.0F;
+                        float movementMultiplier = (ShieldLib.getMovementWithModifiers(player, stack, blocksAttacks, new Vec2(1,1)).x / 5.0F) - 1.0F;
 
-                        if(movementMult == 0) {
+                        if(movementMultiplier == 0) {
                             break;
                         }
 
                         tooltip.add(Component.literal(""));
                         tooltip.add(Component.translatable("shieldlib.movement_tooltip.head").withStyle(ChatFormatting.GRAY));
 
-                        String multStr = String.valueOf(movementMult * 100.0F).replaceAll("\\.0*$", "");
+                        String multiplierStr = String.valueOf(movementMultiplier * 100.0F).replaceAll("\\.0*$", "");
 
-                        if(movementMult > 0) {
-                            String movement = ("+" + multStr);
+                        if(movementMultiplier > 0) {
+                            String movement = ("+" + multiplierStr);
                             String movementTranslated = String.format(Component.translatable("shieldlib.movement_tooltip.body").getString(), movement);
 
                             tooltip.add(Component.literal(" " + movementTranslated).withStyle(ChatFormatting.BLUE));
 
-                        } else if (movementMult < 0) {
+                        } else if (movementMultiplier < 0) {
 
-                            String movementTranslated = String.format(Component.translatable("shieldlib.movement_tooltip.body").getString(), multStr);
+                            String movementTranslated = String.format(Component.translatable("shieldlib.movement_tooltip.body").getString(), multiplierStr);
                             tooltip.add(Component.literal(" " + movementTranslated).withStyle(ChatFormatting.RED));
                         }
                     }
                 }
             }
-            return EventResult.pass();
         });
 
         if(IS_DEV) {
