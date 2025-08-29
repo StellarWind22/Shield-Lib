@@ -25,6 +25,7 @@
     "shieldlib.midnightconfig.buckler_default_cooldown_seconds": "Buckler Default Cooldown Seconds",
     "shieldlib.midnightconfig.buckler_spiked_hit_damage": "Spiked Buckler Hit Damage",
     "shieldlib.midnightconfig.buckler_spiked_collide_damage": "Spiked Buckler Collision Damage",
+    "shieldlib.midnightconfig.buckler_blocks_arrows": "Buckler Blocks Arrows",
     "shieldlib.midnightconfig.heater_section": "Heater Shields:",
     "shieldlib.midnightconfig.heater_movement_multiplier": "Heater Movement Multiplier",
     "shieldlib.midnightconfig.heater_blocking_angle": "Heater Blocking Angle",
