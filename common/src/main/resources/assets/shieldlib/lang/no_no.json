@@ -1,8 +1,8 @@
 {
   "shieldlib.midnightconfig.title": "ShieldLib-innstillinger",
   "shieldlib.midnightconfig.category.main": "Hovedinnstillinger",
-  "shieldlib.midnightconfig.show_cooldown_tooltip": "Vis nedkjølingstips",
-  "shieldlib.midnightconfig.show_movement_tooltip": "Vis bevegelsestips",
+  "shieldlib.midnightconfig.show_cooldown_tooltip": "Vis nedkjølings-tooltip",
+  "shieldlib.midnightconfig.show_movement_tooltip": "Vis bevegelses-tooltip",
   "shieldlib.midnightconfig.universal_disabling": "Global skjolddeaktivering",
   "shieldlib.midnightconfig.universal_disabling_description": "Når et skjold deaktiveres, deaktiveres alle skjoldtyper.",
   "shieldlib.midnightconfig.category.shields": "Skjold",
