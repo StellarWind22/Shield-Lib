@@ -35,4 +35,11 @@ public record ShieldInformation(String type, List<String> features) {
         }
         return false;
     }
+
+    public boolean hasFeatures(List<String> features) {
+        for(String feature : features) {
+            if(!hasFeature(feature)) return false;
+        }
+        return true;
+    }
 }

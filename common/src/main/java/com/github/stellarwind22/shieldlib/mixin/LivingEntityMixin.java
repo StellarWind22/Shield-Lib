@@ -33,8 +33,8 @@ public abstract class LivingEntityMixin {
             method = "applyItemBlocking(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)F"
     )
     private void applyItemBlocking(ServerLevel level, DamageSource source, float amount, CallbackInfoReturnable<Float> cb, @Local(ordinal = 0) ItemStack blockingItem) {
-        LivingEntity defender = (LivingEntity) (Object) this;
-        ShieldEvents.BLOCK.invoker().onBlock(level, defender, source, amount, defender.getUsedItemHand(), blockingItem);
+        LivingEntity self = (LivingEntity) (Object) this;
+        ShieldEvents.BLOCK.invoker().onBlock(level, self, source, amount, self.getUsedItemHand(), blockingItem);
     }
 
     @Inject(
@@ -44,35 +44,45 @@ public abstract class LivingEntityMixin {
     )
     private void blockUsingItem(ServerLevel level, LivingEntity attacker, CallbackInfo ci) {
 
-        LivingEntity defender = (LivingEntity) (Object) this;
-        boolean isPlayer = defender instanceof Player;
+        LivingEntity self = (LivingEntity) (Object) this;
+        boolean isPlayer = self instanceof Player;
 
         if(isPlayer) {
 
-            ItemStack shield = defender.getItemBlockingWith();
+            ItemStack shield = self.getItemBlockingWith();
             BlocksAttacks blocksAttacks = shield != null ? shield.get(DataComponents.BLOCKS_ATTACKS) : null;
 
             float secondsToDisable = attacker.getSecondsToDisableBlocking();
-            secondsToDisable = ShieldLib.getCooldownSecondsWithModifiers((Player) defender, shield, blocksAttacks, secondsToDisable);
+            secondsToDisable = ShieldLib.getCooldownSecondsWithModifiers((Player) self, shield, blocksAttacks, secondsToDisable);
 
             if (secondsToDisable > 0 && blocksAttacks != null) {
 
-                ShieldEvents.DISABLE.invoker().onDisable(level, attacker, defender, isPlayer, defender.getUsedItemHand(), shield, secondsToDisable);
+                ShieldEvents.DISABLE.invoker().onDisable(level, attacker, self, isPlayer, self.getUsedItemHand(), shield, secondsToDisable);
 
                 if(ShieldLibConfig.universal_disabling) {
                     Iterable<Holder<Item>> holders = BuiltInRegistries.ITEM.getTagOrEmpty(ShieldLibTags.C_SHIELD);
 
                     for(Holder<Item> holder : holders) {
-                        blocksAttacks.disable(level, defender, secondsToDisable, new ItemStack(holder.value()));
+                        blocksAttacks.disable(level, self, secondsToDisable, new ItemStack(holder.value()));
                     }
 
                     ci.cancel();
 
                 } else {
-                    blocksAttacks.disable(level, defender, secondsToDisable, shield);
+                    blocksAttacks.disable(level, self, secondsToDisable, shield);
                     ci.cancel();
                 }
             }
+        }
+    }
+
+    @Inject(at = @At("TAIL"), method = "getSecondsToDisableBlocking", cancellable = true)
+    private void secondsToDisableBlocking(CallbackInfoReturnable<Float> cir) {
+        LivingEntity self = (LivingEntity) (Object) this;
+        float cooldown = ShieldLib.getCooldownSeconds(self.level().registryAccess(), self.getWeaponItem());
+
+        if(cooldown != cir.getReturnValue()) {
+            cir.setReturnValue(cooldown);
         }
     }
 }

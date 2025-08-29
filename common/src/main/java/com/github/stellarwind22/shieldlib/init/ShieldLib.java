@@ -4,12 +4,15 @@ import com.github.stellarwind22.shieldlib.lib.component.ShieldInformation;
 import com.github.stellarwind22.shieldlib.lib.component.ShieldLibDataComponents;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldEvents;
-import com.github.stellarwind22.shieldlib.lib.object.BlocksAttacksCooldownModifier;
-import com.github.stellarwind22.shieldlib.lib.object.BlocksAttacksMovementModifier;
+import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
+import com.github.stellarwind22.shieldlib.lib.registry.ShieldCooldownEntry;
+import com.github.stellarwind22.shieldlib.lib.registry.ShieldCooldownModifier;
+import com.github.stellarwind22.shieldlib.lib.registry.ShieldMovementModifier;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibDamage;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -28,8 +31,9 @@ import java.util.List;
 
 public final class ShieldLib {
 
-    private static final List<BlocksAttacksCooldownModifier> cooldownModifiers = new ArrayList<>();
-    private static final List<BlocksAttacksMovementModifier> movementModifiers = new ArrayList<>();
+    private static final List<ShieldCooldownModifier> cooldownModifiers = new ArrayList<>();
+    private static final List<ShieldMovementModifier> movementModifiers = new ArrayList<>();
+    private static final List<ShieldCooldownEntry> cooldownEntries = new ArrayList<>();
 
     public static final String MOD_ID = "shieldlib";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -66,13 +70,18 @@ public final class ShieldLib {
             return movement.scale(multiplier * 5.0F);
         });
 
-        ShieldLib.registerCooldownModifier(((player, stack, blocksAttacks, currentCooldown) -> {
-
-            if(stack.is(Items.SHIELD)) {
-                return currentCooldown * (ShieldLibConfig.vanilla_shield_cooldown_seconds / 5.0F);
-            }
-            return currentCooldown;
-        }));
+        ShieldLib.registerCooldownEntry(
+                new ShieldCooldownEntry(ShieldLibUtils.VANILLA_SHIELD_INFORMATION_COMPONENT,               ShieldLibTags.C_AXE,  () -> ShieldLibConfig.vanilla_shield_cooldown_seconds),
+                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_TOWER_SHIELD_INFORMATION_COMPONENT,          ShieldLibTags.C_AXE,  () -> ShieldLibConfig.tower_default_cooldown_seconds),
+                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_BUCKLER_SHIELD_INFORMATION_COMPONENT,        ShieldLibTags.C_AXE,  () -> ShieldLibConfig.buckler_default_cooldown_seconds),
+                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_HEATER_SHIELD_INFORMATION_COMPONENT,         ShieldLibTags.C_AXE,  () -> ShieldLibConfig.heater_default_cooldown_seconds),
+                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_TARGE_SHIELD_INFORMATION_COMPONENT,          ShieldLibTags.C_AXE,  () -> ShieldLibConfig.targe_default_cooldown_seconds),
+                new ShieldCooldownEntry(ShieldLibUtils.VANILLA_SHIELD_INFORMATION_COMPONENT,               ShieldLibTags.C_AXES, () -> ShieldLibConfig.vanilla_shield_cooldown_seconds),
+                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_TOWER_SHIELD_INFORMATION_COMPONENT,          ShieldLibTags.C_AXES, () -> ShieldLibConfig.tower_default_cooldown_seconds),
+                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_BUCKLER_SHIELD_INFORMATION_COMPONENT,        ShieldLibTags.C_AXES, () -> ShieldLibConfig.buckler_default_cooldown_seconds),
+                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_HEATER_SHIELD_INFORMATION_COMPONENT,         ShieldLibTags.C_AXES, () -> ShieldLibConfig.heater_default_cooldown_seconds),
+                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_TARGE_SHIELD_INFORMATION_COMPONENT,          ShieldLibTags.C_AXES, () -> ShieldLibConfig.targe_default_cooldown_seconds)
+        );
 
         if(IS_DEV) {
             ShieldLibTests.init();
@@ -143,25 +152,46 @@ public final class ShieldLib {
 
     }
 
+    @SuppressWarnings("unused")
+    public static void registerCooldownEntry(ShieldCooldownEntry entry) {
+        cooldownEntries.add(entry);
+    }
 
+    public static void registerCooldownEntry(ShieldCooldownEntry... entries) {
+        cooldownEntries.addAll(List.of(entries));
+    }
 
-    public static void registerCooldownModifier(BlocksAttacksCooldownModifier cooldownModifier) {
+    public static void registerCooldownModifier(ShieldCooldownModifier cooldownModifier) {
         cooldownModifiers.add(cooldownModifier);
     }
 
-    public static void registerMovementModifier(BlocksAttacksMovementModifier movementModifier) {
+    public static void registerMovementModifier(ShieldMovementModifier movementModifier) {
         movementModifiers.add(movementModifier);
     }
 
+    public static float getCooldownSeconds(RegistryAccess access, ItemStack weapon) {
+        for(ShieldCooldownEntry cooldownEntry : cooldownEntries) {
+            if(cooldownEntry.matchWeapon(access, weapon)) return cooldownEntry.cooldown().get();
+        }
+        return 0;
+    }
+
+    public static float getCooldownSeconds(ShieldInformation shieldInformation, BlocksAttacks blocksAttacks) {
+        for(ShieldCooldownEntry cooldownEntry : cooldownEntries) {
+            if(cooldownEntry.matchShield(shieldInformation)) return cooldownEntry.cooldown().get();
+        }
+        return blocksAttacks.disableCooldownScale() * 5.0F;
+    }
+
     public static Vec2 getMovementWithModifiers(Player player, ItemStack stack, BlocksAttacks blocksAttacks, Vec2 movement) {
-        for(BlocksAttacksMovementModifier movementModifier : movementModifiers) {
+        for(ShieldMovementModifier movementModifier : movementModifiers) {
             movement = movementModifier.modify(player, stack, blocksAttacks, movement);
         }
         return movement;
     }
 
     public static float getCooldownSecondsWithModifiers(Player player, ItemStack stack, BlocksAttacks blocksAttacks, float cooldown) {
-        for(BlocksAttacksCooldownModifier cooldownModifier : cooldownModifiers) {
+        for(ShieldCooldownModifier cooldownModifier : cooldownModifiers) {
             cooldown = cooldownModifier.modify(player, stack, blocksAttacks, cooldown);
         }
         return cooldown;
@@ -169,7 +199,12 @@ public final class ShieldLib {
 
     public static float getCooldownSecondsWithModifiers(Player player, ItemStack stack, BlocksAttacks blocksAttacks) {
         float cooldown = blocksAttacks.disableCooldownScale() * 5.0F;
-        for(BlocksAttacksCooldownModifier cooldownModifier : cooldownModifiers) {
+
+        if(stack.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) {
+            cooldown = getCooldownSeconds(stack.get(ShieldLibDataComponents.SHIELD_INFORMATION.get()), blocksAttacks);
+        }
+
+        for(ShieldCooldownModifier cooldownModifier : cooldownModifiers) {
             cooldown = cooldownModifier.modify(player, stack, blocksAttacks, cooldown);
         }
         return cooldown;

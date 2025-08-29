@@ -36,6 +36,8 @@ public class ShieldLibUtils {
                     Optional.of(SoundEvents.SHIELD_BREAK)
             );
 
+    public static final ShieldInformation VANILLA_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("vanilla", List.of("config"));
+
     public static final BlocksAttacks TOWER_SHIELD_BLOCKS_ATTACKS_COMPONENT =
             new BlocksAttacks(
                     0.25F,
@@ -47,8 +49,10 @@ public class ShieldLibUtils {
                     Optional.of(SoundEvents.SHIELD_BREAK)
             );
 
-    public static final ShieldInformation TOWER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("tower", List.of("config"));
-    public static final ShieldInformation SPIKED_TOWER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("tower", List.of("spiked", "config"));
+    public static final ShieldInformation TOWER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("tower", List.of());
+    public static final ShieldInformation CONFIG_TOWER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("tower", List.of("config"));
+    public static final ShieldInformation SPIKED_TOWER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("tower", List.of("spiked"));
+    public static final ShieldInformation CONFIG_SPIKED_TOWER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("tower", List.of("spiked", "config"));
 
     public static final BlocksAttacks BUCKLER_SHIELD_BLOCKS_ATTACKS_COMPONENT =
             new BlocksAttacks(
@@ -61,8 +65,10 @@ public class ShieldLibUtils {
                     Optional.of(SoundEvents.SHIELD_BREAK)
             );
 
-    public static final ShieldInformation BUCKLER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("buckler", List.of("config"));
-    public static final ShieldInformation SPIKED_BUCKLER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("buckler", List.of("spiked", "config"));
+    public static final ShieldInformation BUCKLER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("buckler", List.of());
+    public static final ShieldInformation CONFIG_BUCKLER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("buckler", List.of("config"));
+    public static final ShieldInformation SPIKED_BUCKLER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("buckler", List.of("spiked"));
+    public static final ShieldInformation CONFIG_SPIKED_BUCKLER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("buckler", List.of("spiked", "config"));
 
     public static final BlocksAttacks HEATER_SHIELD_BLOCKS_ATTACKS_COMPONENT =
             new BlocksAttacks(
@@ -75,8 +81,10 @@ public class ShieldLibUtils {
                     Optional.of(SoundEvents.SHIELD_BREAK)
             );
 
-    public static final ShieldInformation HEATER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("heater", List.of("config"));
-    public static final ShieldInformation SPIKED_HEATER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("heater", List.of("spiked", "config"));
+    public static final ShieldInformation HEATER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("heater", List.of());
+    public static final ShieldInformation CONFIG_HEATER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("heater", List.of("config"));
+    public static final ShieldInformation SPIKED_HEATER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("heater", List.of("spiked"));
+    public static final ShieldInformation CONFIG_SPIKED_HEATER_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("heater", List.of("spiked", "config"));
 
     public static final BlocksAttacks TARGE_SHIELD_BLOCKS_ATTACKS_COMPONENT =
             new BlocksAttacks(
@@ -89,8 +97,10 @@ public class ShieldLibUtils {
                     Optional.of(SoundEvents.SHIELD_BREAK)
             );
 
-    public static final ShieldInformation TARGE_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("targe", List.of("config"));
-    public static final ShieldInformation SPIKED_TARGE_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("targe", List.of("spiked", "config"));
+    public static final ShieldInformation TARGE_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("targe", List.of());
+    public static final ShieldInformation CONFIG_TARGE_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("targe", List.of("config"));
+    public static final ShieldInformation SPIKED_TARGE_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("targe", List.of("spiked"));
+    public static final ShieldInformation CONFIG_SPIKED_TARGE_SHIELD_INFORMATION_COMPONENT = new ShieldInformation("targe", List.of("spiked", "config"));
 
     /**
      * @param itemStack stack to check.
@@ -125,6 +135,7 @@ public class ShieldLibUtils {
         return item.builtInRegistryHolder().is(ShieldLibTags.SUPPORTS_BANNER);
     }
 
+    @SuppressWarnings("unused")
     public static Item.Properties towerShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
                 .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(TOWER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
@@ -133,6 +144,16 @@ public class ShieldLibUtils {
         );
     }
 
+
+    public static Item.Properties towerShieldProperties(Item.Properties properties) {
+        return defaultShieldProperties(properties
+                .component(DataComponents.BLOCKS_ATTACKS, TOWER_SHIELD_BLOCKS_ATTACKS_COMPONENT)
+                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), CONFIG_TOWER_SHIELD_INFORMATION_COMPONENT
+                )
+        );
+    }
+
+    @SuppressWarnings("unused")
     public static Item.Properties bucklerShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
                 .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(BUCKLER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
@@ -141,6 +162,15 @@ public class ShieldLibUtils {
         );
     }
 
+    public static Item.Properties bucklerShieldProperties(Item.Properties properties) {
+        return defaultShieldProperties(properties
+                .component(DataComponents.BLOCKS_ATTACKS, BUCKLER_SHIELD_BLOCKS_ATTACKS_COMPONENT)
+                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), CONFIG_BUCKLER_SHIELD_INFORMATION_COMPONENT
+                )
+        );
+    }
+
+    @SuppressWarnings("unused")
     public static Item.Properties heaterShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
                 .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(HEATER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
@@ -149,6 +179,15 @@ public class ShieldLibUtils {
         );
     }
 
+    public static Item.Properties heaterShieldProperties(Item.Properties properties) {
+        return defaultShieldProperties(properties
+                .component(DataComponents.BLOCKS_ATTACKS, HEATER_SHIELD_BLOCKS_ATTACKS_COMPONENT)
+                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), CONFIG_HEATER_SHIELD_INFORMATION_COMPONENT
+                )
+        );
+    }
+
+    @SuppressWarnings("unused")
     public static Item.Properties targeShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
                 .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(TARGE_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
@@ -157,6 +196,15 @@ public class ShieldLibUtils {
         );
     }
 
+    public static Item.Properties targeShieldProperties(Item.Properties properties) {
+        return defaultShieldProperties(properties
+                .component(DataComponents.BLOCKS_ATTACKS, TARGE_SHIELD_BLOCKS_ATTACKS_COMPONENT)
+                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), CONFIG_TARGE_SHIELD_INFORMATION_COMPONENT
+                )
+        );
+    }
+
+    @SuppressWarnings("unused")
     public static Item.Properties spikedTowerShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
                 .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(TOWER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
@@ -165,6 +213,16 @@ public class ShieldLibUtils {
         );
     }
 
+
+    public static Item.Properties spikedTowerShieldProperties(Item.Properties properties) {
+        return defaultShieldProperties(properties
+                .component(DataComponents.BLOCKS_ATTACKS, TOWER_SHIELD_BLOCKS_ATTACKS_COMPONENT)
+                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), CONFIG_SPIKED_TOWER_SHIELD_INFORMATION_COMPONENT
+                )
+        );
+    }
+
+    @SuppressWarnings("unused")
     public static Item.Properties spikedBucklerShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
                 .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(BUCKLER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
@@ -173,6 +231,16 @@ public class ShieldLibUtils {
         );
     }
 
+
+    public static Item.Properties spikedBucklerShieldProperties(Item.Properties properties) {
+        return defaultShieldProperties(properties
+                .component(DataComponents.BLOCKS_ATTACKS, BUCKLER_SHIELD_BLOCKS_ATTACKS_COMPONENT)
+                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), CONFIG_SPIKED_BUCKLER_SHIELD_INFORMATION_COMPONENT
+                )
+        );
+    }
+
+    @SuppressWarnings("unused")
     public static Item.Properties spikedHeaterShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
                 .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(HEATER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
@@ -181,10 +249,29 @@ public class ShieldLibUtils {
         );
     }
 
+
+    public static Item.Properties spikedHeaterShieldProperties(Item.Properties properties) {
+        return defaultShieldProperties(properties
+                .component(DataComponents.BLOCKS_ATTACKS, HEATER_SHIELD_BLOCKS_ATTACKS_COMPONENT)
+                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), CONFIG_SPIKED_HEATER_SHIELD_INFORMATION_COMPONENT
+                )
+        );
+    }
+
+    @SuppressWarnings("unused")
     public static Item.Properties spikedTargeShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
                 .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(TARGE_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
                 .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), SPIKED_TARGE_SHIELD_INFORMATION_COMPONENT
+                )
+        );
+    }
+
+
+    public static Item.Properties spikedTargeShieldProperties(Item.Properties properties) {
+        return defaultShieldProperties(properties
+                .component(DataComponents.BLOCKS_ATTACKS, TARGE_SHIELD_BLOCKS_ATTACKS_COMPONENT)
+                .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), CONFIG_SPIKED_TARGE_SHIELD_INFORMATION_COMPONENT
                 )
         );
     }

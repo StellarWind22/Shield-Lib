@@ -35,21 +35,25 @@ public class ShieldLibConfig extends MidnightConfig {
     @SuppressWarnings("unused") @Comment(category = SHIELDS, centered = true) public static Comment tower_section;
     @Entry(category = SHIELDS, min = 0F, max = 2F, isSlider = true) public static float  tower_movement_multiplier = 0.2F;
     @Entry(category = SHIELDS, min = 0F, max = 360F, isSlider = true) public static float  tower_blocking_angle = 90.0F;
+    @Entry(category = SHIELDS, min = 0F, max = 20F, isSlider = true) public static float tower_default_cooldown_seconds = 5.0F;
     @Entry(category = SHIELDS, min = 0) public static int tower_spiked_hit_damage = 3;
     @Entry(category = SHIELDS, min = 0) public static int tower_spiked_collide_damage = 2;
     @SuppressWarnings("unused") @Comment(category = SHIELDS, centered = true) public static Comment buckler_section;
     @Entry(category = SHIELDS, min = 0F, max = 2F, isSlider = true) public static float  buckler_movement_multiplier = 0.75F;
     @Entry(category = SHIELDS, min = 0F, max = 360F, isSlider = true) public static float  buckler_blocking_angle = 90;
+    @Entry(category = SHIELDS, min = 0F, max = 20F, isSlider = true) public static float buckler_default_cooldown_seconds = 2.5F;
     @Entry(category = SHIELDS, min = 0) public static int buckler_spiked_hit_damage = 2;
     @Entry(category = SHIELDS, min = 0) public static int buckler_spiked_collide_damage = 1;
     @SuppressWarnings("unused") @Comment(category = SHIELDS, centered = true) public static Comment heater_section;
     @Entry(category = SHIELDS, min = 0F, max = 2F, isSlider = true) public static float  heater_movement_multiplier = 0.5F;
     @Entry(category = SHIELDS, min = 0F, max = 360F, isSlider = true) public static float  heater_blocking_angle = 29.7F;
+    @Entry(category = SHIELDS, min = 0F, max = 20F, isSlider = true) public static float heater_default_cooldown_seconds = 3.5F;
     @Entry(category = SHIELDS, min = 0) public static int heater_spiked_hit_damage = 2;
     @Entry(category = SHIELDS, min = 0) public static int heater_spiked_collide_damage = 1;
     @SuppressWarnings("unused") @Comment(category = SHIELDS, centered = true) public static Comment targe_section;
     @Entry(category = SHIELDS, min = 0F, max = 2F, isSlider = true) public static float  targe_movement_multiplier = 0.1F;
     @Entry(category = SHIELDS, min = 0F, max = 360F, isSlider = true) public static float  targe_blocking_angle = 110.0F;
+    @Entry(category = SHIELDS, min = 0F, max = 20F, isSlider = true) public static float targe_default_cooldown_seconds = 6.0F;
     @Entry(category = SHIELDS, min = 0) public static int targe_spiked_hit_damage = 4;
     @Entry(category = SHIELDS, min = 0) public static int targe_spiked_collide_damage = 2;
 }

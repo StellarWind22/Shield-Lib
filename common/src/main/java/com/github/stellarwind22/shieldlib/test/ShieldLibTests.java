@@ -48,57 +48,57 @@ public class ShieldLibTests {
 
         TOWER_SHIELD = registerItem("tower_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.towerShieldProperties(props, 5.0F).durability(336),
+                        ShieldLibUtils.towerShieldProperties(props).durability(336),
                         Items.OAK_PLANKS
                 )
         );
 
         COMPONENT_SHIELD = registerItem("component_shield",
                 props -> new Item(
-                        ShieldLibUtils.towerShieldProperties(props, 5.0F).durability(336)
+                        ShieldLibUtils.towerShieldProperties(props).durability(336)
                                 .repairable(Items.OAK_PLANKS)
                                 .enchantable(14)
                 ));
 
         BUCKLER_SHIELD = registerItem("buckler_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.bucklerShieldProperties(props, 2.5F).durability(269),
+                        ShieldLibUtils.bucklerShieldProperties(props).durability(269),
                         Items.OAK_PLANKS
                 ));
 
         HEATER_SHIELD = registerItem("heater_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.heaterShieldProperties(props, 3.5F).durability(302),
+                        ShieldLibUtils.heaterShieldProperties(props).durability(302),
                         Items.OAK_PLANKS
                 ));
 
         TARGE_SHIELD = registerItem("targe_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.targeShieldProperties(props, 6.0F).durability(436),
+                        ShieldLibUtils.targeShieldProperties(props).durability(436),
                         Items.OAK_PLANKS
                 ));
 
         SPIKED_TOWER_SHIELD = registerItem("spiked_tower_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.spikedTowerShieldProperties(props, 5.0F).durability(336),
+                        ShieldLibUtils.spikedTowerShieldProperties(props).durability(336),
                         Items.OAK_PLANKS
                 ));
 
         SPIKED_BUCKLER_SHIELD = registerItem("spiked_buckler_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.spikedBucklerShieldProperties(props, 2.5F).durability(269),
+                        ShieldLibUtils.spikedBucklerShieldProperties(props).durability(269),
                         Items.OAK_PLANKS
                 ));
 
         SPIKED_HEATER_SHIELD = registerItem("spiked_heater_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.spikedHeaterShieldProperties(props, 3.5F).durability(302),
+                        ShieldLibUtils.spikedHeaterShieldProperties(props).durability(302),
                         Items.OAK_PLANKS
                 ));
 
         SPIKED_TARGE_SHIELD = registerItem("spiked_targe_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.spikedTargeShieldProperties(props, 6.0F).durability(436),
+                        ShieldLibUtils.spikedTargeShieldProperties(props).durability(436),
                         Items.OAK_PLANKS
                 ));
 
@@ -129,7 +129,7 @@ public class ShieldLibTests {
             int enchantmentLevel = ShieldLibUtils.getEnchantmentLevel(RECOVERY_ID, shield);
 
             if(enchantmentLevel > 0) {
-                return Math.round((currentCooldown - (currentCooldown * (0.20F * enchantmentLevel))) * 100.F) / 100.0F;
+                return Math.round((currentCooldown - (currentCooldown * (0.1F * enchantmentLevel))) * 100.F) / 100.0F;
             }
 
             return currentCooldown;

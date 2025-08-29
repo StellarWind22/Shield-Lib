@@ -9,9 +9,24 @@ import net.minecraft.world.item.Item;
 public class ShieldLibTags {
 
     /**
-     * Common shields item tag c:tools/shields
+     * Common axes item tag c:tools/axe
+     */
+    public static TagKey<Item> C_AXE;
+
+    /**
+     * Common axes item tag c:tools/axes
+     */
+    public static TagKey<Item> C_AXES;
+
+    /**
+     * Common shields item tag c:tools/shield
      */
     public static TagKey<Item> C_SHIELD;
+
+    /**
+     * Common shields item tag c:tools/shields
+     */
+    public static TagKey<Item> C_SHIELDS;
 
     /**
      * Indicate if a shield supports banners for not.
@@ -38,7 +53,10 @@ public class ShieldLibTags {
     public static TagKey<Item> SHIELD_ENCHANTABLE;
 
     public static void init() {
+        C_AXE =              TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "tools/axe"));
+        C_AXES =              TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "tools/axes"));
         C_SHIELD =              TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "tools/shield"));
+        C_SHIELDS =              TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "tools/shields"));
         SUPPORTS_BANNER =       TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "supports_banner"));
         NO_TOOLTIP =            TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "no_tooltip"));
         SHIELD_ENCHANTABLE =    TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "enchantable/shield"));
