@@ -1,8 +1,8 @@
 package com.github.stellarwind22.shieldlib.lib.event;
 
-import dev.architectury.event.CompoundEventResult;
 import dev.architectury.event.Event;
 import dev.architectury.event.EventFactory;
+import dev.architectury.event.EventResult;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -14,7 +14,8 @@ import net.minecraft.world.item.ItemStack;
 public interface ShieldEvents {
 
     Event<ShieldBlock> BLOCK = EventFactory.createLoop();
-    Event<ShieldCanBlock> CAN_BLOCK = EventFactory.createCompoundEventResult();
+    Event<ShieldBlockFail> BLOCK_FAIL = EventFactory.createLoop();
+    Event<ShieldCanBlock> CAN_BLOCK = EventFactory.createEventResult();
     Event<ShieldAttack> ATTACK = EventFactory.createLoop();
     Event<ShieldCollide> COLLIDE = EventFactory.createLoop();
     Event<ShieldDisable> DISABLE = EventFactory.createLoop();
@@ -23,8 +24,12 @@ public interface ShieldEvents {
         void onBlock(ServerLevel level, LivingEntity defender, DamageSource source, float amount, InteractionHand hand, ItemStack shield);
     }
 
+    interface ShieldBlockFail {
+        void onFail(ServerLevel level, LivingEntity defender, DamageSource source, float amount, InteractionHand hand, ItemStack shield);
+    }
+
     interface ShieldCanBlock {
-        CompoundEventResult<Boolean> tryBlock(ServerLevel level, LivingEntity defender, DamageSource source, float amount, InteractionHand hand, ItemStack shield);
+        EventResult tryBlock(ServerLevel level, LivingEntity defender, DamageSource source, float amount, InteractionHand hand, ItemStack shield);
     }
 
     interface ShieldAttack {

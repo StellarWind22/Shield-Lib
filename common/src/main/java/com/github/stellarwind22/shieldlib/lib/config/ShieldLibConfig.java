@@ -40,6 +40,7 @@ public class ShieldLibConfig extends MidnightConfig {
     @Entry(category = SHIELDS, min = 0F, max = 20F, isSlider = true) public static float buckler_default_cooldown_seconds = 2.5F;
     @Entry(category = SHIELDS, min = 0) public static int buckler_spiked_hit_damage = 2;
     @Entry(category = SHIELDS, min = 0) public static int buckler_spiked_collide_damage = 1;
+    @Entry(category = SHIELDS) public static boolean buckler_blocks_arrows = false;
     @SuppressWarnings("unused") @Comment(category = SHIELDS, centered = true) public static Comment heater_section;
     @Entry(category = SHIELDS, min = 0F, max = 2F, isSlider = true) public static float  heater_movement_multiplier = 0.5F;
     @Entry(category = SHIELDS, min = 0F, max = 360F, isSlider = true) public static float  heater_blocking_angle = 29.7F;

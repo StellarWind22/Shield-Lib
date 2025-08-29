@@ -12,6 +12,7 @@ import com.github.stellarwind22.shieldlib.lib.object.ShieldLibDamage;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import com.mojang.datafixers.util.Pair;
+import dev.architectury.event.EventResult;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.Holder;
@@ -21,7 +22,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.BlocksAttacks;
@@ -86,11 +89,55 @@ public final class ShieldLib {
             return movement.scale(multiplier * 5F);
         });
 
+        ShieldEvents.CAN_BLOCK.register(((level, defender, source, amount, hand, shield) -> {
+            if(!ShieldLibConfig.buckler_blocks_arrows) {
+                if (!shield.has(ShieldDataComponents.SHIELD_INFORMATION.get())) return EventResult.pass();
+                ShieldInformation shieldInfo = shield.get(ShieldDataComponents.SHIELD_INFORMATION.get());
+                assert shieldInfo != null;
+
+                Entity entity = source.getDirectEntity();
+
+                if(entity instanceof AbstractArrow && shieldInfo.isType("buckler")) {
+                    return EventResult.interruptFalse();
+                }
+            }
+
+            return EventResult.pass();
+        }));
+
+        ShieldEvents.BLOCK_FAIL.register(((level, defender, source, amount, hand, shield) -> {
+            if(!ShieldLibConfig.buckler_blocks_arrows) {
+
+                //Safely grab components
+                if (!shield.has(ShieldDataComponents.SHIELD_INFORMATION.get())) return;
+                if (!shield.has(DataComponents.BLOCKS_ATTACKS)) return;
+
+                ShieldInformation shieldInfo = shield.get(ShieldDataComponents.SHIELD_INFORMATION.get());
+                BlocksAttacks blocksAttacks = shield.get(DataComponents.BLOCKS_ATTACKS);
+
+                assert shieldInfo != null;
+                assert blocksAttacks != null;
+
+                Entity entity = source.getDirectEntity();
+
+                //If arrow & buckler
+                if(entity instanceof AbstractArrow && shieldInfo.isType("buckler")) {
+
+                    blocksAttacks.hurtBlockingItem(level, shield, defender, hand, amount);
+
+                    if(source.getEntity() instanceof LivingEntity attacker) {
+                        ShieldEvents.DISABLE.invoker().onDisable(level, attacker, defender, defender instanceof Player, hand, shield, 1F);
+                    }
+                    blocksAttacks.disable(level, defender, 1F, shield);
+                }
+            }
+        }));
+
         ShieldEvents.BLOCK.register((level, defender, source, amount, hand, shield) -> {
             if (!shield.has(ShieldDataComponents.SHIELD_INFORMATION.get())) return;
 
             ShieldInformation shieldInfo = shield.get(ShieldDataComponents.SHIELD_INFORMATION.get());
-            if (shieldInfo == null) return;
+            assert shieldInfo != null;
 
             if (!(shieldInfo.hasFeature("spiked") && shieldInfo.hasFeature("config"))) return;
 
@@ -135,17 +182,18 @@ public final class ShieldLib {
 
             if (damage > 0F) {
                 // Apply damage
-                collider.hurtServer(
+                if(collider.hurtServer(
                         level,
-                        ShieldLibDamage.sourceOf(level.registryAccess(), ShieldLibDamage.COLLIDE_SPIKED_SHIELD, player, collider),
+                        ShieldLibDamage.sourceOf(level.registryAccess(), ShieldLibDamage.COLLIDE_SPIKED_SHIELD, collider, player),
                         damage
-                );
-
-                // Play shield block sound using BlocksAttacks
-                BlocksAttacks blocksAttacks = shield.get(DataComponents.BLOCKS_ATTACKS);
-                assert blocksAttacks != null;
-                SoundEvent blockSound = blocksAttacks.blockSound().orElseGet(() -> Holder.direct(SoundEvents.ANVIL_LAND)).value();
-                level.playSound(null, player.getX(), player.getY(), player.getZ(), blockSound, SoundSource.PLAYERS, 1.0F, 1.0F);
+                ))
+                {
+                    // Play shield block sound using BlocksAttacks
+                    BlocksAttacks blocksAttacks = shield.get(DataComponents.BLOCKS_ATTACKS);
+                    assert blocksAttacks != null;
+                    SoundEvent blockSound = blocksAttacks.blockSound().orElseGet(() -> Holder.direct(SoundEvents.ANVIL_LAND)).value();
+                    level.playSound(null, player.getX(), player.getY(), player.getZ(), blockSound, SoundSource.PLAYERS, 1.0F, 1.0F);
+                }
             }
         });
 

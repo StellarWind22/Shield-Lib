@@ -4,11 +4,12 @@ import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldEvents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
-import com.llamalad7.mixinextras.sugar.Local;
+import dev.architectury.event.EventResult;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -30,11 +31,22 @@ public abstract class LivingEntityMixin {
                     shift = At.Shift.AFTER,
                     target = "Lnet/minecraft/world/item/component/BlocksAttacks;resolveBlockedDamage(Lnet/minecraft/world/damagesource/DamageSource;FD)F"
             ),
-            method = "applyItemBlocking(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)F"
+            method = "applyItemBlocking(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)F",
+            cancellable = true
     )
-    private void applyItemBlocking(ServerLevel level, DamageSource source, float amount, CallbackInfoReturnable<Float> cb, @Local(ordinal = 0) ItemStack blockingItem) {
+    private void applyItemBlockingReturn(ServerLevel level, DamageSource source, float amount, CallbackInfoReturnable<Float> cir) {
         LivingEntity self = (LivingEntity) (Object) this;
-        ShieldEvents.BLOCK.invoker().onBlock(level, self, source, amount, self.getUsedItemHand(), blockingItem);
+        ItemStack blockingItem = self.getItemBlockingWith();
+        InteractionHand hand = self.getUsedItemHand();
+
+        EventResult result = ShieldEvents.CAN_BLOCK.invoker().tryBlock(level, self, source, amount, hand, blockingItem);
+
+        if(result != EventResult.pass()) {
+            ShieldEvents.BLOCK_FAIL.invoker().onFail(level, self, source, amount, hand, blockingItem);
+            cir.setReturnValue(0F);
+        }
+
+        ShieldEvents.BLOCK.invoker().onBlock(level, self, source, amount, hand, blockingItem);
     }
 
     @Inject(
