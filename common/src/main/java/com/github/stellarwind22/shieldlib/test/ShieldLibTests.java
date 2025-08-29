@@ -1,7 +1,6 @@
 package com.github.stellarwind22.shieldlib.test;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
-import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibItem;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
@@ -42,64 +41,64 @@ public class ShieldLibTests {
         SHIELD = registerItem("shield",
                 props -> new ShieldLibItem(
                         props.durability(200),
-                        ShieldLibConfig.vanilla_shield_cooldown_ticks,
+                        5.0F,
                         9,
                         Items.OAK_PLANKS,
                         Items.SPRUCE_PLANKS));
 
         TOWER_SHIELD = registerItem("tower_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.towerShieldProperties(props, ShieldLibConfig.vanilla_shield_cooldown_ticks).durability(336),
+                        ShieldLibUtils.towerShieldProperties(props, 5.0F).durability(336),
                         Items.OAK_PLANKS
                 )
         );
 
         COMPONENT_SHIELD = registerItem("component_shield",
                 props -> new Item(
-                        ShieldLibUtils.towerShieldProperties(props, ShieldLibConfig.vanilla_shield_cooldown_ticks)
+                        ShieldLibUtils.towerShieldProperties(props, 5.0F).durability(336)
                                 .repairable(Items.OAK_PLANKS)
                                 .enchantable(14)
                 ));
 
         BUCKLER_SHIELD = registerItem("buckler_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.bucklerShieldProperties(props, 50).durability(269),
+                        ShieldLibUtils.bucklerShieldProperties(props, 2.5F).durability(269),
                         Items.OAK_PLANKS
                 ));
 
         HEATER_SHIELD = registerItem("heater_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.heaterShieldProperties(props, 70).durability(302),
+                        ShieldLibUtils.heaterShieldProperties(props, 3.5F).durability(302),
                         Items.OAK_PLANKS
                 ));
 
         TARGE_SHIELD = registerItem("targe_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.targeShieldProperties(props, 120).durability(436),
+                        ShieldLibUtils.targeShieldProperties(props, 6.0F).durability(436),
                         Items.OAK_PLANKS
                 ));
 
         SPIKED_TOWER_SHIELD = registerItem("spiked_tower_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.spikedTowerShieldProperties(props, ShieldLibConfig.vanilla_shield_cooldown_ticks).durability(336),
+                        ShieldLibUtils.spikedTowerShieldProperties(props, 5.0F).durability(336),
                         Items.OAK_PLANKS
                 ));
 
         SPIKED_BUCKLER_SHIELD = registerItem("spiked_buckler_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.spikedBucklerShieldProperties(props, 50).durability(269),
+                        ShieldLibUtils.spikedBucklerShieldProperties(props, 2.5F).durability(269),
                         Items.OAK_PLANKS
                 ));
 
         SPIKED_HEATER_SHIELD = registerItem("spiked_heater_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.spikedHeaterShieldProperties(props, 70).durability(302),
+                        ShieldLibUtils.spikedHeaterShieldProperties(props, 3.5F).durability(302),
                         Items.OAK_PLANKS
                 ));
 
         SPIKED_TARGE_SHIELD = registerItem("spiked_targe_shield",
                 props -> new ShieldLibItem(
-                        ShieldLibUtils.spikedTargeShieldProperties(props, 120).durability(436),
+                        ShieldLibUtils.spikedTargeShieldProperties(props, 6.0F).durability(436),
                         Items.OAK_PLANKS
                 ));
 

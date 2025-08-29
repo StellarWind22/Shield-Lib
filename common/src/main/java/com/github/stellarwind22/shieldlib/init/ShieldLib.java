@@ -68,7 +68,7 @@ public final class ShieldLib {
         ShieldLib.registerCooldownModifier(((player, stack, blocksAttacks, currentCooldown) -> {
 
             if(stack.is(Items.SHIELD)) {
-                return currentCooldown * ((float) ShieldLibConfig.vanilla_shield_cooldown_ticks / 100.0F);
+                return currentCooldown * (ShieldLibConfig.vanilla_shield_cooldown_seconds / 5.0F);
             }
             return currentCooldown;
         }));
@@ -130,8 +130,8 @@ public final class ShieldLib {
         return cooldown;
     }
 
-    public static float getCooldownTicksWithModifiers(Player player, ItemStack stack, BlocksAttacks blocksAttacks) {
-        float cooldown = 100.F * blocksAttacks.disableCooldownScale();
+    public static float getCooldownSecondsWithModifiers(Player player, ItemStack stack, BlocksAttacks blocksAttacks) {
+        float cooldown = blocksAttacks.disableCooldownScale() * 5.0F;
         for(BlocksAttacksCooldownModifier cooldownModifier : cooldownModifiers) {
             cooldown = cooldownModifier.modify(player, stack, blocksAttacks, cooldown);
         }

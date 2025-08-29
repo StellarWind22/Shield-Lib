@@ -75,4 +75,8 @@ tasks.register("buildProduction") {
     dependsOn(":common:jarProduction")
     dependsOn(":fabric:jarProduction")
     dependsOn(":neoforge:jarProduction")
+
+    doLast {
+        delete(project(":common").file("tmp"))
+    }
 }

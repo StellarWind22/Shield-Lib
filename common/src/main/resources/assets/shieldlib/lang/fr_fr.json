@@ -15,7 +15,7 @@
     "shieldlib.midnightconfig.vanilla_shield_enchantability": "Enchantabilité du bouclier vanilla",
     "shieldlib.midnightconfig.vanilla_shield_movement_multiplier": "Multiplicateur de mouvement du bouclier vanilla",
     "shieldlib.midnightconfig.vanilla_shield_blocking_angle": "Angle de parade du bouclier vanilla",
-    "shieldlib.midnightconfig.vanilla_shield_cooldown_ticks": "Ticks de recharge du bouclier vanilla",
+    "shieldlib.midnightconfig.vanilla_shield_cooldown_seconds": "Secondes de recharge du bouclier vanilla",
     "shieldlib.midnightconfig.tower_section": "Boucliers rectangulaires :",
     "shieldlib.midnightconfig.tower_movement_multiplier": "Multiplicateur de mouvement du bouclier rectangulaire",
     "shieldlib.midnightconfig.tower_blocking_angle": "Angle de parade du bouclier rectangulaire",

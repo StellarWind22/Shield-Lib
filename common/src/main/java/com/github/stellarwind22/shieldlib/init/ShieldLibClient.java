@@ -112,7 +112,7 @@ public class ShieldLibClient {
                     BlocksAttacks blocksAttacks = stack.get(DataComponents.BLOCKS_ATTACKS);
 
                     if(blocksAttacks != null) {
-                        float cooldownTicks = ShieldLib.getCooldownTicksWithModifiers(player, stack, blocksAttacks);
+                        float cooldownSeconds = ShieldLib.getCooldownSecondsWithModifiers(player, stack, blocksAttacks);
 
                         tooltip.add(Component.literal(""));
 
@@ -120,7 +120,7 @@ public class ShieldLibClient {
 
                         tooltip.add(Component.literal(translated).withStyle(ChatFormatting.GRAY));
 
-                        String cooldown = String.valueOf(cooldownTicks / 20.0F).replaceAll("\\.0*$", "");
+                        String cooldown = String.valueOf(cooldownSeconds).replaceAll("\\.0*$", "");
                         String cooldownTranslated = String.format(Component.translatable("shieldlib.cooldown_tooltip.body").getString(), cooldown);
                         tooltip.add(
                                 Component.literal(" " + cooldownTranslated).withStyle(ChatFormatting.DARK_GREEN)

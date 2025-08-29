@@ -125,65 +125,65 @@ public class ShieldLibUtils {
         return item.builtInRegistryHolder().is(ShieldLibTags.SUPPORTS_BANNER);
     }
 
-    public static Item.Properties towerShieldProperties(Item.Properties properties, int cooldownTicks) {
+    public static Item.Properties towerShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
-                .component(DataComponents.BLOCKS_ATTACKS, withCooldownTicks(TOWER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownTicks))
+                .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(TOWER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
                 .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), TOWER_SHIELD_INFORMATION_COMPONENT
                 )
         );
     }
 
-    public static Item.Properties bucklerShieldProperties(Item.Properties properties, int cooldownTicks) {
+    public static Item.Properties bucklerShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
-                .component(DataComponents.BLOCKS_ATTACKS, withCooldownTicks(BUCKLER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownTicks))
+                .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(BUCKLER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
                 .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), BUCKLER_SHIELD_INFORMATION_COMPONENT
                 )
         );
     }
 
-    public static Item.Properties heaterShieldProperties(Item.Properties properties, int cooldownTicks) {
+    public static Item.Properties heaterShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
-                .component(DataComponents.BLOCKS_ATTACKS, withCooldownTicks(HEATER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownTicks))
+                .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(HEATER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
                 .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), HEATER_SHIELD_INFORMATION_COMPONENT
                 )
         );
     }
 
-    public static Item.Properties targeShieldProperties(Item.Properties properties, int cooldownTicks) {
+    public static Item.Properties targeShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
-                .component(DataComponents.BLOCKS_ATTACKS, withCooldownTicks(TARGE_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownTicks))
+                .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(TARGE_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
                 .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), TARGE_SHIELD_INFORMATION_COMPONENT
                 )
         );
     }
 
-    public static Item.Properties spikedTowerShieldProperties(Item.Properties properties, int cooldownTicks) {
+    public static Item.Properties spikedTowerShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
-                .component(DataComponents.BLOCKS_ATTACKS, withCooldownTicks(TOWER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownTicks))
+                .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(TOWER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
                 .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), SPIKED_TOWER_SHIELD_INFORMATION_COMPONENT
                 )
         );
     }
 
-    public static Item.Properties spikedBucklerShieldProperties(Item.Properties properties, int cooldownTicks) {
+    public static Item.Properties spikedBucklerShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
-                .component(DataComponents.BLOCKS_ATTACKS, withCooldownTicks(BUCKLER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownTicks))
+                .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(BUCKLER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
                 .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), SPIKED_BUCKLER_SHIELD_INFORMATION_COMPONENT
                 )
         );
     }
 
-    public static Item.Properties spikedHeaterShieldProperties(Item.Properties properties, int cooldownTicks) {
+    public static Item.Properties spikedHeaterShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
-                .component(DataComponents.BLOCKS_ATTACKS, withCooldownTicks(HEATER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownTicks))
+                .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(HEATER_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
                 .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), SPIKED_HEATER_SHIELD_INFORMATION_COMPONENT
                 )
         );
     }
 
-    public static Item.Properties spikedTargeShieldProperties(Item.Properties properties, int cooldownTicks) {
+    public static Item.Properties spikedTargeShieldProperties(Item.Properties properties, float cooldownSeconds) {
         return defaultShieldProperties(properties
-                .component(DataComponents.BLOCKS_ATTACKS, withCooldownTicks(TARGE_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownTicks))
+                .component(DataComponents.BLOCKS_ATTACKS, withCooldownSeconds(TARGE_SHIELD_BLOCKS_ATTACKS_COMPONENT, cooldownSeconds))
                 .component(ShieldLibDataComponents.SHIELD_INFORMATION.get(), SPIKED_TARGE_SHIELD_INFORMATION_COMPONENT
                 )
         );
@@ -204,13 +204,31 @@ public class ShieldLibUtils {
 
     /**
      * @param in BlocksAttacks component going in.
+     * @param cooldownSeconds cooldown seconds to be added.
+     * @return component with that many cooldown seconds.
+     */
+    public static BlocksAttacks withCooldownSeconds(BlocksAttacks in, float cooldownSeconds) {
+        return new BlocksAttacks(
+                in.blockDelaySeconds(),
+                cooldownSeconds / 5.0F,
+                in.damageReductions(),
+                in.itemDamage(),
+                in.bypassedBy(),
+                in.blockSound(),
+                in.disableSound()
+        );
+    }
+
+    /**
+     * @param in BlocksAttacks component going in.
      * @param cooldownTicks cooldown ticks to be added.
      * @return component with that many cooldown ticks.
      */
+    @Deprecated
     public static BlocksAttacks withCooldownTicks(BlocksAttacks in, int cooldownTicks) {
         return new BlocksAttacks(
                 in.blockDelaySeconds(),
-                (float)cooldownTicks / 100.F,
+                (float) cooldownTicks / 100.0F,
                 in.damageReductions(),
                 in.itemDamage(),
                 in.bypassedBy(),
