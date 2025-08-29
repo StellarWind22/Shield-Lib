@@ -3,12 +3,17 @@ package com.github.stellarwind22.shieldlib.init;
 import com.github.stellarwind22.shieldlib.lib.component.ShieldInformation;
 import com.github.stellarwind22.shieldlib.lib.component.ShieldLibDataComponents;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
-import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
+import com.github.stellarwind22.shieldlib.lib.event.ShieldEvents;
 import com.github.stellarwind22.shieldlib.lib.object.BlocksAttacksCooldownModifier;
 import com.github.stellarwind22.shieldlib.lib.object.BlocksAttacksMovementModifier;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibDamage;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -77,7 +82,7 @@ public final class ShieldLib {
             ShieldLibTests.init();
         }
 
-        ShieldBlockEvent.EVENT.register(((level, defender, source, amount, hand, shield) -> {
+        ShieldEvents.BLOCK.register(((level, defender, source, amount, hand, shield) -> {
 
             if(shield.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) {
                 ShieldInformation shieldInformation = shield.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
@@ -106,7 +111,44 @@ public final class ShieldLib {
                 }
             }
         }));
+
+        ShieldEvents.COLLIDE.register((level, player, collider, hand, shield) -> {
+            if (!shield.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) return;
+
+            ShieldInformation shieldInfo = shield.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
+            if (shieldInfo == null) return;
+
+            boolean spiked = shieldInfo.hasFeature("spiked") && shieldInfo.hasFeature("config");
+            if (!spiked) return;
+
+            // Determine damage based on shield type
+            float damage = switch (shieldInfo.type()) {
+                case "tower" -> ShieldLibConfig.tower_spiked_collide_damage;
+                case "buckler" -> ShieldLibConfig.buckler_spiked_collide_damage;
+                case "heater" -> ShieldLibConfig.heater_spiked_collide_damage;
+                case "targe" -> ShieldLibConfig.targe_spiked_collide_damage;
+                default -> 0f;
+            };
+
+            if (damage > 0f) {
+                // Apply damage
+                collider.hurtServer(
+                        level,
+                        ShieldLibDamage.sourceOf(level.registryAccess(), ShieldLibDamage.COLLIDE_SPIKED_SHIELD, player, collider),
+                        damage
+                );
+
+                // Play shield block sound using BlocksAttacks
+                BlocksAttacks blocksAttacks = shield.get(DataComponents.BLOCKS_ATTACKS);
+                assert blocksAttacks != null;
+                SoundEvent blockSound = blocksAttacks.blockSound().orElseGet(() -> Holder.direct(SoundEvents.ANVIL_LAND)).value();
+                level.playSound(null, player.getX(), player.getY(), player.getZ(), blockSound, SoundSource.PLAYERS, 1.0F, 1.0F);
+            }
+        });
+
     }
+
+
 
     public static void registerCooldownModifier(BlocksAttacksCooldownModifier cooldownModifier) {
         cooldownModifiers.add(cooldownModifier);

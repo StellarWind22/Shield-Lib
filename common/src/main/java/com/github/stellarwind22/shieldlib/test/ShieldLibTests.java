@@ -1,7 +1,7 @@
 package com.github.stellarwind22.shieldlib.test;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
-import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
+import com.github.stellarwind22.shieldlib.lib.event.ShieldEvents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibItem;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
 import dev.architectury.registry.registries.DeferredRegister;
@@ -104,7 +104,7 @@ public class ShieldLibTests {
 
         TEST_ITEMS.register();
 
-        ShieldBlockEvent.EVENT.register((level, defender, source, amount, hand, itemStack) -> {
+        ShieldEvents.BLOCK.register((level, defender, source, amount, hand, itemStack) -> {
 
             ShieldLib.LOGGER.info("Shield Block Event Ran!");
 

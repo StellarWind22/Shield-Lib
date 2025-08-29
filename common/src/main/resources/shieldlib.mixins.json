@@ -10,6 +10,7 @@
     "SpecialModelRenderersAccessor"
   ],
   "mixins": [
+    "EntityMixin",
     "ItemsMixin",
     "ItemStackMixin",
     "LivingEntityMixin",

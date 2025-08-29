@@ -19,11 +19,11 @@ public class ItemStackMixin {
 
     @Inject(at = @At("RETURN"), method = "getTooltipLines")
     private void addDetailsToTooltip(Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir) {
-        ItemStack instance = (ItemStack) (Object) this;
+        ItemStack self = (ItemStack) (Object) this;
 
         //Only add tooltips to shields
-        if(ShieldLibUtils.isShieldItem(instance)) {
-           ShieldTooltipEvent.EVENT.invoker().OnGetTooltip(player, instance, tooltipContext, tooltipFlag, cir.getReturnValue());
+        if(ShieldLibUtils.isShieldItem(self)) {
+           ShieldTooltipEvent.EVENT.invoker().OnGetTooltip(player, self, tooltipContext, tooltipFlag, cir.getReturnValue());
         }
     }
 }

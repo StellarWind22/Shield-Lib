@@ -2,8 +2,7 @@ package com.github.stellarwind22.shieldlib.mixin;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
-import com.github.stellarwind22.shieldlib.lib.event.ShieldBlockEvent;
-import com.github.stellarwind22.shieldlib.lib.event.ShieldDisableEvent;
+import com.github.stellarwind22.shieldlib.lib.event.ShieldEvents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.Holder;
@@ -35,7 +34,7 @@ public abstract class LivingEntityMixin {
     )
     private void applyItemBlocking(ServerLevel level, DamageSource source, float amount, CallbackInfoReturnable<Float> cb, @Local(ordinal = 0) ItemStack blockingItem) {
         LivingEntity defender = (LivingEntity) (Object) this;
-        ShieldBlockEvent.EVENT.invoker().onBlock(level, defender, source, amount, defender.getUsedItemHand(), blockingItem);
+        ShieldEvents.BLOCK.invoker().onBlock(level, defender, source, amount, defender.getUsedItemHand(), blockingItem);
     }
 
     @Inject(
@@ -58,7 +57,7 @@ public abstract class LivingEntityMixin {
 
             if (secondsToDisable > 0 && blocksAttacks != null) {
 
-                ShieldDisableEvent.EVENT.invoker().onDisable(level, attacker, defender, isPlayer, defender.getUsedItemHand(), shield, secondsToDisable);
+                ShieldEvents.DISABLE.invoker().onDisable(level, attacker, defender, isPlayer, defender.getUsedItemHand(), shield, secondsToDisable);
 
                 if(ShieldLibConfig.universal_disabling) {
                     Iterable<Holder<Item>> holders = BuiltInRegistries.ITEM.getTagOrEmpty(ShieldLibTags.C_SHIELD);
