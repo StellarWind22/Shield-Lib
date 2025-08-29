@@ -44,31 +44,27 @@ public final class ShieldLib {
         ShieldLibTags.init();
         ShieldLibDataComponents.init();
 
-        ShieldLib.registerMovementModifier(((player, stack, blocksAttacks, movement) -> {
+        ShieldLib.registerMovementModifier((player, stack, blocksAttacks, movement) -> {
 
-            if(stack.is(Items.SHIELD)) {
-                return movement.scale(ShieldLibConfig.vanilla_shield_movement_multiplier * 5.0F);
+            if (stack.is(Items.SHIELD)) {
+                return movement.scale(ShieldLibConfig.vanilla_shield_movement_multiplier * 5.0f);
             }
 
-            if(stack.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) {
-                ShieldInformation shieldInformation = stack.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
-                assert shieldInformation != null;
+            if (!stack.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) return movement;
 
-                if(shieldInformation.isType("tower") && shieldInformation.hasFeature("config")) {
-                    return movement.scale(ShieldLibConfig.tower_movement_multiplier * 5.0F);
-                }
-                if(shieldInformation.isType("buckler") && shieldInformation.hasFeature("config")) {
-                    return movement.scale(ShieldLibConfig.buckler_movement_multiplier * 5.0F);
-                }
-                if(shieldInformation.isType("heater") && shieldInformation.hasFeature("config")) {
-                    return movement.scale(ShieldLibConfig.heater_movement_multiplier * 5.0F);
+            ShieldInformation shieldInfo = stack.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
+            if (shieldInfo == null || !shieldInfo.hasFeature("config")) return movement;
 
-                } else if (shieldInformation.isType("targe") && shieldInformation.hasFeature("config")) {
-                    return movement.scale(ShieldLibConfig.targe_movement_multiplier * 5.0F);
-                }
-            }
-            return movement;
-        }));
+            float multiplier = switch (shieldInfo.type()) {
+                case "tower" -> ShieldLibConfig.tower_movement_multiplier;
+                case "buckler" -> ShieldLibConfig.buckler_movement_multiplier;
+                case "heater" -> ShieldLibConfig.heater_movement_multiplier;
+                case "targe" -> ShieldLibConfig.targe_movement_multiplier;
+                default -> 1.0F;
+            };
+
+            return movement.scale(multiplier * 5.0F);
+        });
 
         ShieldLib.registerCooldownModifier(((player, stack, blocksAttacks, currentCooldown) -> {
 
@@ -82,38 +78,37 @@ public final class ShieldLib {
             ShieldLibTests.init();
         }
 
-        ShieldEvents.BLOCK.register(((level, defender, source, amount, hand, shield) -> {
-
-            if(shield.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) {
-                ShieldInformation shieldInformation = shield.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
-                assert shieldInformation != null;
-
-                Entity attacker = source.getEntity();
-                if(attacker == null) {
-                    return;
-                }
-
-                if(shieldInformation.isType("tower") && shieldInformation.hasFeature("spiked") && shieldInformation.hasFeature("config")) {
-
-                    attacker.hurtServer(level, ShieldLibDamage.sourceOf(level.registryAccess(), ShieldLibDamage.HIT_SPIKED_SHIELD, defender, attacker), ShieldLibConfig.tower_spiked_hit_damage);
-                }
-                if(shieldInformation.isType("buckler") && shieldInformation.hasFeature("spiked") && shieldInformation.hasFeature("config")) {
-
-                    attacker.hurtServer(level, ShieldLibDamage.sourceOf(level.registryAccess(), ShieldLibDamage.HIT_SPIKED_SHIELD, defender, attacker), ShieldLibConfig.buckler_spiked_hit_damage);
-                }
-                if(shieldInformation.isType("heater") && shieldInformation.hasFeature("spiked") && shieldInformation.hasFeature("config")) {
-
-                    attacker.hurtServer(level, ShieldLibDamage.sourceOf(level.registryAccess(), ShieldLibDamage.HIT_SPIKED_SHIELD, defender, attacker), ShieldLibConfig.heater_spiked_hit_damage);
-
-                } else if (shieldInformation.isType("targe") && shieldInformation.hasFeature("spiked") && shieldInformation.hasFeature("config")) {
-
-                    attacker.hurtServer(level, ShieldLibDamage.sourceOf(level.registryAccess(), ShieldLibDamage.HIT_SPIKED_SHIELD, defender, attacker), ShieldLibConfig.targe_spiked_hit_damage);
-                }
-            }
-        }));
-
-        ShieldEvents.COLLIDE.register((level, player, collider, hand, shield) -> {
+        ShieldEvents.BLOCK.register((level, defender, source, amount, hand, shield) -> {
             if (!shield.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) return;
+
+            ShieldInformation shieldInfo = shield.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
+            if (shieldInfo == null) return;
+
+            if (!(shieldInfo.hasFeature("spiked") && shieldInfo.hasFeature("config"))) return;
+
+            Entity attacker = source.getEntity();
+            if (attacker == null) return;
+
+            float damage = switch (shieldInfo.type()) {
+                case "tower" -> ShieldLibConfig.tower_spiked_hit_damage;
+                case "buckler" -> ShieldLibConfig.buckler_spiked_hit_damage;
+                case "heater" -> ShieldLibConfig.heater_spiked_hit_damage;
+                case "targe" -> ShieldLibConfig.targe_spiked_hit_damage;
+                default -> 0F;
+            };
+
+            if (damage > 0F) {
+                attacker.hurtServer(
+                        level,
+                        ShieldLibDamage.sourceOf(level.registryAccess(), ShieldLibDamage.HIT_SPIKED_SHIELD, defender, attacker),
+                        damage
+                );
+            }
+        });
+
+        ShieldEvents.COLLIDE.register((level, player, collider, withinAngle, hand, shield) -> {
+            if (!shield.has(ShieldLibDataComponents.SHIELD_INFORMATION.get())) return;
+            if (!withinAngle) return;
 
             ShieldInformation shieldInfo = shield.get(ShieldLibDataComponents.SHIELD_INFORMATION.get());
             if (shieldInfo == null) return;
@@ -127,10 +122,10 @@ public final class ShieldLib {
                 case "buckler" -> ShieldLibConfig.buckler_spiked_collide_damage;
                 case "heater" -> ShieldLibConfig.heater_spiked_collide_damage;
                 case "targe" -> ShieldLibConfig.targe_spiked_collide_damage;
-                default -> 0f;
+                default -> 0F;
             };
 
-            if (damage > 0f) {
+            if (damage > 0F) {
                 // Apply damage
                 collider.hurtServer(
                         level,

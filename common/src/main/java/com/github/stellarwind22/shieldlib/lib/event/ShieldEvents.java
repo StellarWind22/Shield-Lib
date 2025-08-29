@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 public interface ShieldEvents {
 
     Event<ShieldBlock> BLOCK = EventFactory.createLoop();
-    Event<ShieldCanBlock> CAN = EventFactory.createCompoundEventResult();
+    Event<ShieldCanBlock> CAN_BLOCK = EventFactory.createCompoundEventResult();
     Event<ShieldAttack> ATTACK = EventFactory.createLoop();
     Event<ShieldCollide> COLLIDE = EventFactory.createLoop();
     Event<ShieldDisable> DISABLE = EventFactory.createLoop();
@@ -32,7 +32,7 @@ public interface ShieldEvents {
     }
 
     interface ShieldCollide {
-        void onCollide(ServerLevel level, Player defender, Entity collider, InteractionHand hand, ItemStack shield);
+        void onCollide(ServerLevel level, Player defender, Entity collider, boolean withinAngle, InteractionHand hand, ItemStack shield);
     }
 
     interface ShieldDisable {

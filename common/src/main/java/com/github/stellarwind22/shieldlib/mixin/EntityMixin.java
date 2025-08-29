@@ -42,10 +42,8 @@ public class EntityMixin {
                     }
 
                     float resolved = blocksAttacks.resolveBlockedDamage(player.damageSources().playerAttack(player), 100.0F, angle);
-
-                    if(resolved > 0) {
-                        ShieldEvents.COLLIDE.invoker().onCollide(serverLevel, player, other, player.getUsedItemHand(), shield);
-                    }
+                    boolean withinAngle = resolved > 0;
+                    ShieldEvents.COLLIDE.invoker().onCollide(serverLevel, player, other, withinAngle, player.getUsedItemHand(), shield);
                 }
             }
         }
