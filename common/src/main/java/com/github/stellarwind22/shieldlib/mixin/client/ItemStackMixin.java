@@ -1,6 +1,6 @@
-package com.github.stellarwind22.shieldlib.mixin;
+package com.github.stellarwind22.shieldlib.mixin.client;
 
-import com.github.stellarwind22.shieldlib.lib.event.ShieldTooltipEvent;
+import com.github.stellarwind22.shieldlib.lib.client.event.ShieldClientEvents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -23,7 +23,7 @@ public class ItemStackMixin {
 
         //Only add tooltips to shields
         if(ShieldLibUtils.isShieldItem(self)) {
-           ShieldTooltipEvent.EVENT.invoker().OnGetTooltip(player, self, tooltipContext, tooltipFlag, cir.getReturnValue());
+           ShieldClientEvents.TOOLTIP.invoker().onTooltip(player, self, tooltipContext, tooltipFlag, cir.getReturnValue());
         }
     }
 }

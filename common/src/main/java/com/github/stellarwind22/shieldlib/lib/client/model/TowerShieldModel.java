@@ -1,4 +1,4 @@
-package com.github.stellarwind22.shieldlib.lib.model;
+package com.github.stellarwind22.shieldlib.lib.client.model;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

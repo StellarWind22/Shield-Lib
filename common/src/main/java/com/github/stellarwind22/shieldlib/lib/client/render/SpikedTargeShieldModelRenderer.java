@@ -1,8 +1,8 @@
-package com.github.stellarwind22.shieldlib.lib.render;
+package com.github.stellarwind22.shieldlib.lib.client.render;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
-import com.github.stellarwind22.shieldlib.lib.model.ShieldModel;
-import com.github.stellarwind22.shieldlib.lib.model.TargeShieldModel;
+import com.github.stellarwind22.shieldlib.lib.client.model.ShieldModel;
+import com.github.stellarwind22.shieldlib.lib.client.model.SpikedTargeShieldModel;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
@@ -15,13 +15,13 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
-public class TargeShieldModelRenderer implements ShieldModelRenderer {
+public class SpikedTargeShieldModelRenderer implements ShieldModelRenderer {
 
     private final ResourceLocation baseModel, baseModelNoPat;
-    private final TargeShieldModel model;
-    public static final ModelLayerLocation TARGE_MODEL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "targe_shield"), "main");
+    private final SpikedTargeShieldModel model;
+    public static final ModelLayerLocation SPIKED_TARGE_MODEL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_targe_shield"), "main");
 
-    public TargeShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, TargeShieldModel model) {
+    public SpikedTargeShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, SpikedTargeShieldModel model) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
@@ -44,23 +44,23 @@ public class TargeShieldModelRenderer implements ShieldModelRenderer {
 
     public record Unbaked(ResourceLocation baseModel, ResourceLocation baseModelNoPat) implements SpecialModelRenderer.Unbaked {
 
-        public static final MapCodec<TargeShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
+        public static final MapCodec<SpikedTargeShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        ResourceLocation.CODEC.fieldOf("texture_banner").forGetter(TargeShieldModelRenderer.Unbaked::baseModel),
-                        ResourceLocation.CODEC.fieldOf("texture_default").forGetter(TargeShieldModelRenderer.Unbaked::baseModelNoPat)
-                ).apply(instance, TargeShieldModelRenderer.Unbaked::new)
+                        ResourceLocation.CODEC.fieldOf("texture_banner").forGetter(SpikedTargeShieldModelRenderer.Unbaked::baseModel),
+                        ResourceLocation.CODEC.fieldOf("texture_default").forGetter(SpikedTargeShieldModelRenderer.Unbaked::baseModelNoPat)
+                ).apply(instance, SpikedTargeShieldModelRenderer.Unbaked::new)
         );
 
         @Override
-        public @NotNull MapCodec<TargeShieldModelRenderer.Unbaked> type() {
+        public @NotNull MapCodec<SpikedTargeShieldModelRenderer.Unbaked> type() {
             return CODEC;
         }
 
         @Override
         public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(TARGE_MODEL_LAYER);
-            TargeShieldModel model = new TargeShieldModel(root);
-            return new TargeShieldModelRenderer(
+            ModelPart root = entityModelSet.bakeLayer(SPIKED_TARGE_MODEL_LAYER);
+            SpikedTargeShieldModel model = new SpikedTargeShieldModel(root);
+            return new SpikedTargeShieldModelRenderer(
                     this.baseModel,
                     this.baseModelNoPat,
                     model

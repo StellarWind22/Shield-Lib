@@ -1,7 +1,7 @@
-package com.github.stellarwind22.shieldlib.lib.render;
+package com.github.stellarwind22.shieldlib.lib.client.render;
 
-import com.github.stellarwind22.shieldlib.lib.model.TowerShieldModel;
-import com.github.stellarwind22.shieldlib.lib.model.ShieldModel;
+import com.github.stellarwind22.shieldlib.lib.client.model.TowerShieldModel;
+import com.github.stellarwind22.shieldlib.lib.client.model.ShieldModel;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;

@@ -1,4 +1,4 @@
-package com.github.stellarwind22.shieldlib.lib.event;
+package com.github.stellarwind22.shieldlib.lib.client.event;
 
 import dev.architectury.event.Event;
 import dev.architectury.event.EventFactory;
@@ -10,11 +10,11 @@ import net.minecraft.world.item.TooltipFlag;
 
 import java.util.List;
 
-public interface ShieldTooltipEvent {
+public interface ShieldClientEvents {
 
-    Event<ShieldTooltip> EVENT = EventFactory.createLoop();
+    Event<ShieldTooltip> TOOLTIP = EventFactory.createLoop();
 
     interface ShieldTooltip {
-        void OnGetTooltip(Player player, ItemStack stack, Item.TooltipContext tooltipContext, TooltipFlag tooltipFlag, List<Component> components);
+        void onTooltip(Player player, ItemStack stack, Item.TooltipContext tooltipContext, TooltipFlag tooltipFlag, List<Component> components);
     }
 }

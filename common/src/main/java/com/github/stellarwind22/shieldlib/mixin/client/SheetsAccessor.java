@@ -1,4 +1,4 @@
-package com.github.stellarwind22.shieldlib.mixin;
+package com.github.stellarwind22.shieldlib.mixin.client;
 
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
@@ -12,5 +12,5 @@ import java.util.Map;
 public interface SheetsAccessor {
 
     @Accessor(value = "SHIELD_MATERIALS")
-    static Map<ResourceLocation, Material> getShieldMaterials() { throw new AssertionError(); };
+    static Map<ResourceLocation, Material> getShieldMaterials() { throw new AssertionError(); }
 }

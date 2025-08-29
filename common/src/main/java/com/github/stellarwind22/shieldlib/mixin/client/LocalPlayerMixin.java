@@ -1,4 +1,4 @@
-package com.github.stellarwind22.shieldlib.mixin;
+package com.github.stellarwind22.shieldlib.mixin.client;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import net.minecraft.client.player.LocalPlayer;

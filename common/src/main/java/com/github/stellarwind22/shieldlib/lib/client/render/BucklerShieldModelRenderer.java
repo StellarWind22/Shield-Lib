@@ -1,8 +1,8 @@
-package com.github.stellarwind22.shieldlib.lib.render;
+package com.github.stellarwind22.shieldlib.lib.client.render;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
-import com.github.stellarwind22.shieldlib.lib.model.SpikedTowerShieldModel;
-import com.github.stellarwind22.shieldlib.lib.model.ShieldModel;
+import com.github.stellarwind22.shieldlib.lib.client.model.BucklerShieldLibModel;
+import com.github.stellarwind22.shieldlib.lib.client.model.ShieldModel;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
@@ -15,13 +15,14 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
-public class SpikedTowerShieldModelRenderer implements ShieldModelRenderer {
+public class BucklerShieldModelRenderer implements ShieldModelRenderer {
 
     private final ResourceLocation baseModel, baseModelNoPat;
-    private final SpikedTowerShieldModel model;
-    public static final ModelLayerLocation SPIKED_TOWER_MODEL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_tower_shield"), "main");
+    private final BucklerShieldLibModel model;
 
-    public SpikedTowerShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, SpikedTowerShieldModel model) {
+    public static final ModelLayerLocation BUCKLER_MODEL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield"), "main");
+
+    public BucklerShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, BucklerShieldLibModel model) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
@@ -44,23 +45,23 @@ public class SpikedTowerShieldModelRenderer implements ShieldModelRenderer {
 
     public record Unbaked(ResourceLocation baseModel, ResourceLocation baseModelNoPat) implements SpecialModelRenderer.Unbaked {
 
-        public static final MapCodec<SpikedTowerShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
+        public static final MapCodec<BucklerShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        ResourceLocation.CODEC.fieldOf("texture_banner").forGetter(SpikedTowerShieldModelRenderer.Unbaked::baseModel),
-                        ResourceLocation.CODEC.fieldOf("texture_default").forGetter(SpikedTowerShieldModelRenderer.Unbaked::baseModelNoPat)
-                ).apply(instance, SpikedTowerShieldModelRenderer.Unbaked::new)
+                        ResourceLocation.CODEC.fieldOf("texture_banner").forGetter(BucklerShieldModelRenderer.Unbaked::baseModel),
+                        ResourceLocation.CODEC.fieldOf("texture_default").forGetter(BucklerShieldModelRenderer.Unbaked::baseModelNoPat)
+                ).apply(instance, BucklerShieldModelRenderer.Unbaked::new)
         );
 
         @Override
-        public @NotNull MapCodec<SpikedTowerShieldModelRenderer.Unbaked> type() {
+        public @NotNull MapCodec<BucklerShieldModelRenderer.Unbaked> type() {
             return CODEC;
         }
 
         @Override
         public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(SPIKED_TOWER_MODEL_LAYER);
-            SpikedTowerShieldModel model = new SpikedTowerShieldModel(root);
-            return new SpikedTowerShieldModelRenderer(
+            ModelPart root = entityModelSet.bakeLayer(BUCKLER_MODEL_LAYER);
+            BucklerShieldLibModel model = new BucklerShieldLibModel(root);
+            return new BucklerShieldModelRenderer(
                     this.baseModel,
                     this.baseModelNoPat,
                     model

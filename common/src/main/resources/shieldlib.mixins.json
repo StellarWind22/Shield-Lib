@@ -4,15 +4,15 @@
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "client": [
-    "ItemInHandRendererMixin",
-    "LocalPlayerMixin",
-    "SheetsAccessor",
-    "SpecialModelRenderersAccessor"
+    "client.ItemInHandRendererMixin",
+    "client.LocalPlayerMixin",
+    "client.SheetsAccessor",
+    "client.SpecialModelRenderersAccessor"
   ],
   "mixins": [
     "EntityMixin",
     "ItemsMixin",
-    "ItemStackMixin",
+    "client.ItemStackMixin",
     "LivingEntityMixin",
     "RecipeMixin"
   ],

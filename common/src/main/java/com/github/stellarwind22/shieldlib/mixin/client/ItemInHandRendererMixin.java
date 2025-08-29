@@ -1,4 +1,4 @@
-package com.github.stellarwind22.shieldlib.mixin;
+package com.github.stellarwind22.shieldlib.mixin.client;
 
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;

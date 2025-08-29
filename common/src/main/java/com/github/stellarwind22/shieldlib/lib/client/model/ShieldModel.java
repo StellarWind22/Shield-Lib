@@ -1,4 +1,4 @@
-package com.github.stellarwind22.shieldlib.lib.model;
+package com.github.stellarwind22.shieldlib.lib.client.model;
 
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;

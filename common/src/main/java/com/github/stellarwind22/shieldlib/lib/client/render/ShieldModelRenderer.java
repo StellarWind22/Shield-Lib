@@ -1,7 +1,7 @@
-package com.github.stellarwind22.shieldlib.lib.render;
+package com.github.stellarwind22.shieldlib.lib.client.render;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
-import com.github.stellarwind22.shieldlib.lib.model.ShieldModel;
+import com.github.stellarwind22.shieldlib.lib.client.model.ShieldModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.geom.ModelPart;

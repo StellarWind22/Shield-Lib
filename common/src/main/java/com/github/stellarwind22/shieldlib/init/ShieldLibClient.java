@@ -1,12 +1,12 @@
 package com.github.stellarwind22.shieldlib.init;
 
+import com.github.stellarwind22.shieldlib.lib.client.model.*;
+import com.github.stellarwind22.shieldlib.lib.client.render.*;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
-import com.github.stellarwind22.shieldlib.lib.event.ShieldTooltipEvent;
-import com.github.stellarwind22.shieldlib.lib.model.*;
+import com.github.stellarwind22.shieldlib.lib.client.event.ShieldClientEvents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
-import com.github.stellarwind22.shieldlib.lib.render.*;
-import com.github.stellarwind22.shieldlib.mixin.SheetsAccessor;
-import com.github.stellarwind22.shieldlib.mixin.SpecialModelRenderersAccessor;
+import com.github.stellarwind22.shieldlib.mixin.client.SheetsAccessor;
+import com.github.stellarwind22.shieldlib.mixin.client.SpecialModelRenderersAccessor;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import com.mojang.serialization.MapCodec;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
@@ -99,7 +99,7 @@ public class ShieldLibClient {
         EntityModelLayerRegistry.register(SpikedHeaterShieldModel.LOCATION,     SpikedHeaterShieldModel::createLayer);
         EntityModelLayerRegistry.register(SpikedTargeShieldModel.LOCATION,      SpikedTargeShieldModel::createLayer);
 
-        ShieldTooltipEvent.EVENT.register((player,stack, context, flag, tooltip) -> {
+        ShieldClientEvents.TOOLTIP.register((player, stack, context, flag, tooltip) -> {
             if(stack.get(DataComponents.BLOCKS_ATTACKS) == null || stack.is(ShieldLibTags.NO_TOOLTIP)) return;
 
             switch (ShieldLibConfig.cooldown_tooltip_mode) {

@@ -1,4 +1,4 @@
-package com.github.stellarwind22.shieldlib.mixin;
+package com.github.stellarwind22.shieldlib.mixin.client;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
