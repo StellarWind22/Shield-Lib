@@ -1,8 +1,8 @@
 {
     "shieldlib.midnightconfig.title": "Configuration de ShieldLib",
     "shieldlib.midnightconfig.category.main": "Général",
-    "shieldlib.midnightconfig.show_cooldown_tooltip": "Show Cooldown Tooltip",
-    "shieldlib.midnightconfig.show_movement_tooltip": "Show Movement Tooltip",
+    "shieldlib.midnightconfig.show_cooldown_tooltip": "Afficher l'info-bulle de temps de recharge",
+    "shieldlib.midnightconfig.show_movement_tooltip": "Afficher l'info-bulle de mouvement",
     "shieldlib.midnightconfig.universal_disabling": "Désactivation universelle des boucliers",
     "shieldlib.midnightconfig.universal_disabling_description": "Si un bouclier quelconque est désactivé, tous les boucliers seront désactivés.",
     "shieldlib.midnightconfig.category.shields": "Boucliers",
@@ -25,6 +25,7 @@
     "shieldlib.midnightconfig.buckler_default_cooldown_seconds": "Secondes de recharge du bouclier bocle",
     "shieldlib.midnightconfig.buckler_spiked_hit_damage": "Dégâts reflétés par le bouclier bocle à piques",
     "shieldlib.midnightconfig.buckler_spiked_collide_damage": "Dégâts de collision avec le bouclier bocle à piques",
+    "shieldlib.midnightconfig.buckler_blocks_arrows": "Bloque le bouclier bocle des flèches",
     "shieldlib.midnightconfig.heater_section": "Boucliers écus :",
     "shieldlib.midnightconfig.heater_movement_multiplier": "Multiplicateur de mouvement du bouclier écu",
     "shieldlib.midnightconfig.heater_blocking_angle": "Angle de parade du bouclier écu",

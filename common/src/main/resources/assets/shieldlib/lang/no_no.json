@@ -25,6 +25,7 @@
   "shieldlib.midnightconfig.buckler_default_cooldown_seconds": "Nedkjølingssekunder for bukler",
   "shieldlib.midnightconfig.buckler_spiked_hit_damage": "Skade ved slag med pigg-bukler",
   "shieldlib.midnightconfig.buckler_spiked_collide_damage": "Skade ved kollisjon med pigg-bukler",
+  "shieldlib.midnightconfig.buckler_blocks_arrows": "Bukler blokkerer piler",
   "shieldlib.midnightconfig.heater_section": "Varmeskjold:",
   "shieldlib.midnightconfig.heater_movement_multiplier": "Bevegelsesmultiplikator for varmeskjold",
   "shieldlib.midnightconfig.heater_blocking_angle": "Blokkeringsvinkel for varmeskjold",
