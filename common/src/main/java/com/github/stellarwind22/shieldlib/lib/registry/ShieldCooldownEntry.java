@@ -5,7 +5,6 @@ import com.github.stellarwind22.shieldlib.lib.component.ShieldLibDataComponents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -41,10 +40,5 @@ public record ShieldCooldownEntry(ShieldInformation shieldInformation, TagKey<It
 
     public boolean matchWeapon(RegistryAccess access, ItemStack weapon) {
         return access.lookup(Registries.ITEM).orElseThrow().getOrThrow(tag).stream().anyMatch((itemHolder -> itemHolder.value().equals(weapon.getItem())));
-    }
-
-    public String getTagTranslationKey() {
-        ResourceLocation location = tag.location();
-        return "tag.item." + location.getNamespace() + "." + location.getPath().replace('/', '.');
     }
 }

@@ -11,6 +11,8 @@ import com.github.stellarwind22.shieldlib.lib.registry.ShieldMovementModifier;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibDamage;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
@@ -27,7 +29,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public final class ShieldLib {
 
@@ -75,12 +79,7 @@ public final class ShieldLib {
                 new ShieldCooldownEntry(ShieldLibUtils.CONFIG_TOWER_SHIELD_INFORMATION_COMPONENT,          ShieldLibTags.C_AXE,  () -> ShieldLibConfig.tower_default_cooldown_seconds),
                 new ShieldCooldownEntry(ShieldLibUtils.CONFIG_BUCKLER_SHIELD_INFORMATION_COMPONENT,        ShieldLibTags.C_AXE,  () -> ShieldLibConfig.buckler_default_cooldown_seconds),
                 new ShieldCooldownEntry(ShieldLibUtils.CONFIG_HEATER_SHIELD_INFORMATION_COMPONENT,         ShieldLibTags.C_AXE,  () -> ShieldLibConfig.heater_default_cooldown_seconds),
-                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_TARGE_SHIELD_INFORMATION_COMPONENT,          ShieldLibTags.C_AXE,  () -> ShieldLibConfig.targe_default_cooldown_seconds),
-                new ShieldCooldownEntry(ShieldLibUtils.VANILLA_SHIELD_INFORMATION_COMPONENT,               ShieldLibTags.C_AXES, () -> ShieldLibConfig.vanilla_shield_cooldown_seconds),
-                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_TOWER_SHIELD_INFORMATION_COMPONENT,          ShieldLibTags.C_AXES, () -> ShieldLibConfig.tower_default_cooldown_seconds),
-                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_BUCKLER_SHIELD_INFORMATION_COMPONENT,        ShieldLibTags.C_AXES, () -> ShieldLibConfig.buckler_default_cooldown_seconds),
-                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_HEATER_SHIELD_INFORMATION_COMPONENT,         ShieldLibTags.C_AXES, () -> ShieldLibConfig.heater_default_cooldown_seconds),
-                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_TARGE_SHIELD_INFORMATION_COMPONENT,          ShieldLibTags.C_AXES, () -> ShieldLibConfig.targe_default_cooldown_seconds)
+                new ShieldCooldownEntry(ShieldLibUtils.CONFIG_TARGE_SHIELD_INFORMATION_COMPONENT,          ShieldLibTags.C_AXE,  () -> ShieldLibConfig.targe_default_cooldown_seconds)
         );
 
         if(IS_DEV) {
@@ -208,5 +207,15 @@ public final class ShieldLib {
             cooldown = cooldownModifier.modify(player, stack, blocksAttacks, cooldown);
         }
         return cooldown;
+    }
+
+    @Environment(EnvType.CLIENT)
+    public static Set<String> getTagTranslationKeys(ShieldInformation shieldInformation) {
+        Set<String> set = new HashSet<>();
+
+        cooldownEntries.forEach((cooldownEntry) -> {
+            if(cooldownEntry.matchShield(shieldInformation)) set.add(ShieldLibTags.getTranslationKey(cooldownEntry.tag()));
+        });
+        return set;
     }
 }
