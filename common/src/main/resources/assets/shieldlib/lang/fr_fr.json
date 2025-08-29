@@ -46,5 +46,10 @@
     "tag.item.c.tools.shields": "Boucliers",
     "tag.item.shieldlib.supports_banner": "Supporte les bannières",
     "tag.item.shieldlib.no_tooltip": "Pas d'info-bulle",
-    "tag.item.shieldlib.enchantable.shield": "Enchantable sur les boucliers"
+    "tag.item.shieldlib.enchantable.shield": "Enchantable sur les boucliers",
+    "death.attack.hit_spiked_shield": "%s a été transpercé par des piques",
+    "death.attack.hit_spiked_shield.item": "%s a été transpercé par les piques de %s avec %s",
+    "death.attack.hit_spiked_shield.player": "%s a été transpercé par les piques de %s",
+    "death.attack.collide_spiked_shield": "%s a été empalé sur des piques",
+    "death.attack.collide_spiked_shield.player": "%s a été empalé sur les piques de %s"
 }

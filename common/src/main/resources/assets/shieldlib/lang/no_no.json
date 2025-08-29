@@ -46,5 +46,10 @@
   "tag.item.c.tools.shields": "Skjold",
   "tag.item.shieldlib.supports_banner": "Støtter banner",
   "tag.item.shieldlib.no_tooltip": "Ingen verktøytips",
-  "tag.item.shieldlib.enchantable.shield": "Fortryllelig skjold"
+  "tag.item.shieldlib.enchantable.shield": "Fortryllelig skjold",
+  "death.attack.hit_spiked_shield": "%s ble spiddet av pigger",
+  "death.attack.hit_spiked_shield.item": "%s ble spiddet av %s sine pigger med %s",
+  "death.attack.hit_spiked_shield.player": "%s ble spiddet av %s sine pigger",
+  "death.attack.collide_spiked_shield": "%s gikk på pigger",
+  "death.attack.collide_spiked_shield.player": "%s gikk på %s sine pigger"
 }
