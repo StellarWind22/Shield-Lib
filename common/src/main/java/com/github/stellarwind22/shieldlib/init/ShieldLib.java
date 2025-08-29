@@ -9,7 +9,6 @@ import com.github.stellarwind22.shieldlib.lib.object.BlocksAttacksMovementModifi
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibDamage;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -91,19 +90,19 @@ public final class ShieldLib {
 
                 if(shieldInformation.isType("tower") && shieldInformation.hasFeature("spiked") && shieldInformation.hasFeature("config")) {
 
-                    attacker.hurtServer(level, new DamageSource(ShieldLibDamage.of(level , ShieldLibDamage.HIT_SPIKED_SHIELD), defender), ShieldLibConfig.tower_spiked_hit_damage);
+                    attacker.hurtServer(level, ShieldLibDamage.sourceOf(level.registryAccess(), ShieldLibDamage.HIT_SPIKED_SHIELD, defender, attacker), ShieldLibConfig.tower_spiked_hit_damage);
                 }
                 if(shieldInformation.isType("buckler") && shieldInformation.hasFeature("spiked") && shieldInformation.hasFeature("config")) {
 
-                    attacker.hurtServer(level, new DamageSource(ShieldLibDamage.of(level , ShieldLibDamage.HIT_SPIKED_SHIELD), defender), ShieldLibConfig.buckler_spiked_hit_damage);
+                    attacker.hurtServer(level, ShieldLibDamage.sourceOf(level.registryAccess(), ShieldLibDamage.HIT_SPIKED_SHIELD, defender, attacker), ShieldLibConfig.buckler_spiked_hit_damage);
                 }
                 if(shieldInformation.isType("heater") && shieldInformation.hasFeature("spiked") && shieldInformation.hasFeature("config")) {
 
-                    attacker.hurtServer(level, new DamageSource(ShieldLibDamage.of(level , ShieldLibDamage.HIT_SPIKED_SHIELD), defender), ShieldLibConfig.heater_spiked_hit_damage);
+                    attacker.hurtServer(level, ShieldLibDamage.sourceOf(level.registryAccess(), ShieldLibDamage.HIT_SPIKED_SHIELD, defender, attacker), ShieldLibConfig.heater_spiked_hit_damage);
 
                 } else if (shieldInformation.isType("targe") && shieldInformation.hasFeature("spiked") && shieldInformation.hasFeature("config")) {
 
-                    attacker.hurtServer(level, new DamageSource(ShieldLibDamage.of(level , ShieldLibDamage.HIT_SPIKED_SHIELD), defender), ShieldLibConfig.targe_spiked_hit_damage);
+                    attacker.hurtServer(level, ShieldLibDamage.sourceOf(level.registryAccess(), ShieldLibDamage.HIT_SPIKED_SHIELD, defender, attacker), ShieldLibConfig.targe_spiked_hit_damage);
                 }
             }
         }));

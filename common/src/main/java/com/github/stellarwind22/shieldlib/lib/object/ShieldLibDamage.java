@@ -6,26 +6,30 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.Entity;
 
 public class ShieldLibDamage {
 
     public static final ResourceKey<DamageType> HIT_SPIKED_SHIELD = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "hit_spiked_shield"));
     public static final ResourceKey<DamageType> COLLIDE_SPIKED_SHIELD = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "hit_spiked_shield"));
 
-    public static Holder<DamageType> of(ServerLevel level, ResourceKey<DamageType> key) {
-        RegistryAccess access = level.registryAccess();
+    public static Holder<DamageType> of(RegistryAccess access, ResourceKey<DamageType> key) {
         return access.lookup(Registries.DAMAGE_TYPE).orElseThrow().getOrThrow(key);
     }
 
-    public static DamageSource sourceOf(ServerLevel level, ResourceKey<DamageType> key) {
-        RegistryAccess access = level.registryAccess();
+    @SuppressWarnings("unused")
+    public static DamageSource sourceOf(RegistryAccess access, ResourceKey<DamageType> key) {
         return new DamageSource(access.lookup(Registries.DAMAGE_TYPE).orElseThrow().getOrThrow(key));
     }
 
-    public static Holder<DamageSource> sourceHolderOf(ServerLevel level, ResourceKey<DamageType> key) {
-        return new Holder.Direct<>(sourceOf(level, key));
+    @SuppressWarnings("unused")
+    public static DamageSource sourceOf(RegistryAccess access, ResourceKey<DamageType> key, Entity receiver) {
+        return new DamageSource(of(access, key), receiver);
+    }
+
+    public static DamageSource sourceOf(RegistryAccess access, ResourceKey<DamageType> key, Entity dealer, Entity receiver) {
+        return new DamageSource(of(access, key), dealer, receiver);
     }
 }

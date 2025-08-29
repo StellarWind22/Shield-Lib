@@ -47,10 +47,9 @@
     "tag.item.shieldlib.supports_banner": "Supports Banner",
     "tag.item.shieldlib.no_tooltip": "No Tooltip",
     "tag.item.shieldlib.enchantable.shield": "Enchantable Shield",
-    "death.attack.hit_spiked_shield": "%s was electrocuted",
-    "death.attack.hit_spiked_shield.item": "%s was electrocuted by %s using %s",
-    "death.attack.hit_spiked_shield.player": "%s was electrocuted whilst trying to escape %s",
-    "death.attack.collide_spiked_shield": "%s was electrocuted",
-    "death.attack.collide_spiked_shield.item": "%s was electrocuted by %s using %s",
-    "death.attack.collide_spiked_shield.player": "%s was electrocuted whilst trying to escape %s"
+    "death.attack.hit_spiked_shield": "%s was spiked to death",
+    "death.attack.hit_spiked_shield.item": "%s hit %s's spikes on %s",
+    "death.attack.hit_spiked_shield.player": "%s hit %s's spikes",
+    "death.attack.collide_spiked_shield": "%s walked into spikes",
+    "death.attack.collide_spiked_shield.player": "%s walked into %s's spikes"
 }
