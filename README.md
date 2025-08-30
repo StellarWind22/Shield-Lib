@@ -1,19 +1,16 @@
-# Shield Lib
+## Shield Lib
 Library that makes it easy to add shields with banner support, enchantment support, & custom shapes without conflictions!
 
-## Importing
-
-#### put this in gradle.properties
+### Importing
+put this in `gradle.properties`
 ```properties
 shieldlib_version=2.0.0-beta.7-1.21.8
 ```
-
-#### build.gradle in repositories just above dependencies
+`build.gradle` in repositories just above dependencies
 ```gradle
 maven {url = "https://api.modrinth.com/maven"}
 ```
-
-#### build.gradle in dependencies
+`build.gradle` in dependencies
 ```gradle
 dependencies {
 	//Platform specific stuff here
@@ -26,6 +23,8 @@ dependencies {
 - - - -
 
 ## Documentation?
-#### Fabric: [Fabric Wiki(Out of date)](https://fabricmc.net/wiki/tutorial:shield).
+### - [Architectury](docs/page/architectury/getting_started.md)
+### - [Fabric](docs/page/fabric/getting_started.md)
+### - [Neoforge](docs/page/neoforge/getting_started.md)
 
-The [example mod repo](https://github.com/CrimsonDawn45/Fabric-Shield-Lib-Example-Mod) is a template repo you can use to quickly get started if your making a new mod. Although it isn't updated as frequently.
+### The [example mod repo](https://github.com/CrimsonDawn45/Fabric-Shield-Lib-Example-Mod) is a template repo you can use to quickly get started if your making a new mod. Although it isn't updated as frequently.
