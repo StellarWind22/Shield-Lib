@@ -14,31 +14,12 @@
 ## Tooltips:
 ![Vanilla shield with a new tooltip saying that when it's hit by an axe it will have 5 seconds of cooldown](docs/image/showcase_tooltip.png)
 
-### Pages:
+---
+## Pages:
 - [Github](https://github.com/StellarWind22/Shield-Lib)
 - [Modrinth](https://modrinth.com/mod/shieldlib)
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/shield-lib)
 
----
-## Importing
-put this in `gradle.properties`
-```properties
-shieldlib_version=2.0.0-beta.7-1.21.8
-```
-`build.gradle` in repositories just above dependencies
-```gradle
-maven {url = "https://api.modrinth.com/maven"}
-```
-`build.gradle` in dependencies
-```gradle
-dependencies {
-	//Other stuff here
-        
-    //Shield Lib(replace [LOADER] with fabric OR neoforge)
-	modImplementation "maven.modrinth:shieldlib:${project.shieldlib_version}-[LOADER]"
-}
-```
----
 ## Documentation?
 [![Architectury](docs/image/architectury_64.png)](docs/page/architectury/getting_started.md) [![Fabric](docs/image/fabric_64.png)](docs/page/fabric/getting_started.md) [![Neoforge](docs/image/neoforge_64.png)](docs/page/neoforge/getting_started.md)
 
