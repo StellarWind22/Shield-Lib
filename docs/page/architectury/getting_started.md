@@ -13,9 +13,9 @@
 
 ## 3. Create your mod project:
 ### Select the "Minecraft" wizard
-![Intellij select wizard screen](../../image/intellij_architectury_select_wizard.png)
+![Intellij select wizard screen](../../image/intellij_select_wizard.png)
 ### Select Architectury as the Template
-![Intellij select wizard screen](../../image/intellij_architectury_create_project.png)
+![Intellij create architectury project screen](../../image/intellij_architectury_create_project.png)
 
 ### Fill in your information:
 - Name(ex. ExampleMod)
