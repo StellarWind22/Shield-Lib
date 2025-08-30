@@ -27,4 +27,42 @@
 
 ## Importing ShieldLib:
 
-## Creating your first shield:
+### 1. Version
+#### Add `shieldlib_version` to your `gradle.properties`. Find [Latest full release](https://github.com/StellarWind22/Shield-Lib/releases/latest)
+```properties
+shieldlib_version=[VERSION] (ex. 2.0.0-1.21.8)
+```
+
+### 2. Add to subprojects
+#### Add modrinth maven repository in common, fabric, & neoforge `build.gradle`
+```gradle
+repositories {
+    //other stuff here
+    maven {url = "https://api.modrinth.com/maven"}
+}
+```
+
+#### Add to dependencies using `modImplementation`
+
+common & fabric:
+```gradle
+dependencies {
+    //other stuff here
+    modImplementation "maven.modrinth:shieldlib:${project.shieldlib_version}-fabric"
+}
+```
+
+neoforge:
+```gradle
+dependencies {
+    //other stuff here
+    modImplementation "maven.modrinth:shieldlib:${project.shieldlib_version}-neoforge"
+}
+```
+
+---
+
+### Creating your first shield:
+- [Vanilla Style](tower_shield.md)
+- [Bring Your Own Model](component_shield.md)
+- [New shield shape](custom_shield.md)
