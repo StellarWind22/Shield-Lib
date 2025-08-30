@@ -43,7 +43,7 @@
   "shieldlib.cooldown_tooltip.body": "Recarga de %s %ss",
   "shieldlib.cooldown_tooltip.body.single": "Recarga %ss",
   "shieldlib.movement_tooltip.head": "Ao bloquear:",
-  "shieldlib.movement_tooltip.body": "%s de velocidade",
+  "shieldlib.movement_tooltip.body": "%s%% de velocidade",
   "tag.item.c.tools.axe": "Machado",
   "tag.item.c.tools.axes": "Machados",
   "tag.item.c.tools.shield": "Escudo",
