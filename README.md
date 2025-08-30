@@ -20,8 +20,6 @@ dependencies {
 }
 ```
 
-- - - -
-
 ## Documentation?
 ### - [Architectury](docs/page/architectury/getting_started.md)
 ### - [Fabric](docs/page/fabric/getting_started.md)
