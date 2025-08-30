@@ -65,4 +65,4 @@ dependencies {
 ### Creating your first shield:
 - [Vanilla Style](tower_shield.md)
 - [Bring Your Own Model](component_shield.md)
-- [New shield shape](custom_shield.md)
+- [New shield shape](new_shape_shield.md)
