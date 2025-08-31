@@ -43,7 +43,7 @@
   "shieldlib.cooldown_tooltip.body": "%s冷却时间%s秒",
   "shieldlib.cooldown_tooltip.body.single": "冷却时间%s秒",
   "shieldlib.movement_tooltip.head": "格挡时：",
-  "shieldlib.movement_tooltip.body": "移动速度%s",
+  "shieldlib.movement_tooltip.body": "%s%% 速度",
   "tag.item.c.tools.axe": "斧",
   "tag.item.c.tools.axes": "斧类",
   "tag.item.c.tools.shield": "盾牌",
