@@ -35,5 +35,12 @@ versionRange = "[17.0.8,)"
 ordering = "AFTER"
 side = "BOTH"
 
+[[dependencies.shieldlib]]
+modId = "midnightlib"
+type = "required"
+versionRange = "[1.7.5+1.21.6,)"
+ordering = "AFTER"
+side = "BOTH"
+
 [[mixins]]
 config = "shieldlib.mixins.json"

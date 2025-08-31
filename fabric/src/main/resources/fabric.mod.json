@@ -54,6 +54,7 @@
     "fabricloader": ">=0.17.1",
     "minecraft": "~1.21.8",
     "java": ">=21",
-    "architectury": ">=17.0.8"
+    "architectury": ">=17.0.8",
+    "midnightlib": ">=1.7.5+1.21.6"
   }
 }
