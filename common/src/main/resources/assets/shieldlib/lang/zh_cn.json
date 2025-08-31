@@ -60,7 +60,7 @@
   "tag.item.shieldlib.no_tooltip": "无提示信息",
   "tag.item.shieldlib.enchantable.shield": "可附魔盾牌",
   "death.attack.hit_spiked_shield": "%s 被尖刺刺死",
-  "death.attack.hit_spiked_shield.item": "%s撞上了%s的ITEM尖刺",
+  "death.attack.hit_spiked_shield.item": "%s撞上了%s的%s尖刺",
   "death.attack.hit_spiked_shield.player": "%s撞上了%s的尖刺",
   "death.attack.collide_spiked_shield": "%s误触尖刺",
   "death.attack.collide_spiked_shield.player": "%s误触%s的尖刺"
