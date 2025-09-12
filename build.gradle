@@ -1,118 +1,79 @@
-import groovy.json.JsonSlurper
-import groovy.json.JsonOutput
-
 plugins {
-	id 'fabric-loom' version '1.11-SNAPSHOT'
-	id 'maven-publish'
+    id 'dev.architectury.loom' version '1.10-SNAPSHOT' apply false
+    id 'architectury-plugin' version '3.4-SNAPSHOT'
+    id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
 }
 
-sourceCompatibility = JavaVersion.VERSION_21
-targetCompatibility = JavaVersion.VERSION_21
-
-archivesBaseName = project.archives_base_name
-version = project.mod_version
-group = project.maven_group
-
-repositories {
-	maven {url = "https://minecraft.guntram.de/maven/"}
-	maven { url = "https://jitpack.io" }
-	maven { url = "https://maven.shedaniel.me/" }
-	maven { url "https://maven.terraformersmc.com/releases/"}
-	maven {url = "https://api.modrinth.com/maven"}
+architectury {
+    minecraft = project.minecraft_version
 }
 
-dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-
-
-	//Mod Menu
-	modCompileOnly modRuntimeOnly ("com.terraformersmc:modmenu:${project.mod_menu_version}"), {
-		exclude(group: "net.fabricmc.fabric-api")
-	}
-	
-	//Fabric ASM
-	modImplementation("com.github.Chocohead:Fabric-ASM:v2.3") {
-		exclude (group: "net.fabricmc.fabric-api")
-	}
-	include "com.github.Chocohead:Fabric-ASM:v2.3"
-
-	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
-	include "maven.modrinth:midnightlib:${project.midnightlib_version}"
+allprojects {
+    group = rootProject.maven_group
 }
 
-processResources {
-	inputs.property "version", project.version
+subprojects {
+    apply plugin: 'dev.architectury.loom'
+    apply plugin: 'architectury-plugin'
+    apply plugin: 'maven-publish'
 
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
+    base {
+        // Set up a suffixed format for the mod jar names, e.g. `example-fabric`.
+        archivesName = "$project.archives_name"
+        version = "$rootProject.mod_version+$rootProject.minecraft_version-$project.name"
+    }
+
+    repositories {
+
+    }
+
+    dependencies {
+        minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
+        mappings loom.officialMojangMappings()
+    }
+
+    java {
+        // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+        // if it is present.
+        // If you remove this line, sources will not be generated.
+        withSourcesJar()
+
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        it.options.release = 21
+    }
+
+    // Configure Maven publishing.
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                artifactId = base.archivesName.get()
+                from components.java
+            }
+        }
+
+        // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+        repositories {
+            // Add repositories to publish to here.
+            // Notice: This block does NOT have the same function as the block in the top level.
+            // The repositories here will be used for publishing your artifact, not for
+            // retrieving dependencies.
+        }
+    }
 }
 
-tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = "UTF-8"
-	it.options.release = 21
-}
+tasks.register("buildProduction") {
+    group = "build"
+    description = "Builds production jars for all modules"
 
-java {
-	withSourcesJar()
-}
+    dependsOn(":common:jarProduction")
+    dependsOn(":fabric:jarProduction")
+    dependsOn(":neoforge:jarProduction")
 
-// Remove debug tags
-jar.doFirst {
-	def tagDirs = [
-		file("$buildDir/resources/main/data/fabricshieldlib/tags/item"),
-		file("$buildDir/resources/main/data/c/tags/item/tools"),
-		file("$buildDir/resources/main/data/minecraft/tags/item/enchantable")
-	]
-
-	def entriesToRemove = [
-		'fabricshieldlib:fabric_shield',
-		'fabricshieldlib:fabric_banner_shield',
-		'fabricshieldlib:fabric_component_shield'
-	]
-
-	tagDirs.each { tagDir ->
-		if (tagDir.exists()) {
-			tagDir.eachFileMatch(~/.+\.json$/) { File jsonFile ->
-				def json = new JsonSlurper().parse(jsonFile)
-	
-				if (json.values instanceof List) {
-					json.values.removeAll { it in entriesToRemove }
-	
-					jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
-					System.out.println("Stripped debug items from: ${jsonFile}")
-				}
-			}
-		}
-	}
-}
-
-jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
-}
-
-// configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
-		}
-	}
-	repositories {
-	}
-}
-
-fabricApi {
-	configureDataGeneration()
+    doLast {
+        delete(project(":common").file("tmp"))
+    }
 }

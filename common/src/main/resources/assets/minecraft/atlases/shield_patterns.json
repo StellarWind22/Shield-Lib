@@ -1,0 +1,76 @@
+{
+  "sources": [
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/shield_base_nopattern"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/tower_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/tower_shield_base_nopattern"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/buckler_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/buckler_shield_base_nopattern"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/heater_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/heater_shield_base_nopattern"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/targe_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/targe_shield_base_nopattern"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_tower_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_tower_shield_base_nopattern"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_buckler_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_buckler_shield_base_nopattern"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_heater_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_heater_shield_base_nopattern"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_targe_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "shieldlib:entity/spiked_targe_shield_base_nopattern"
+    }
+  ]
+}

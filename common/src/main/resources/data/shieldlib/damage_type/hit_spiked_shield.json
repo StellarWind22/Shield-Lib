@@ -1,0 +1,6 @@
+{
+  "exhaustion": 0.1,
+  "message_id": "hit_spiked_shield",
+  "scaling": "never",
+  "effects": "hurt"
+}

@@ -1,0 +1,46 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+issueTrackerURL = "https://github.com/StellarWind22/Fabric-Shield-Lib/issues"
+license = "LGPL 2.1"
+logoFile = "shieldlib.png"
+
+[[mods]]
+modId = "shieldlib"
+version = "${version}"
+displayName = "ShieldLib"
+authors = "StellarWind22"
+credits = "CringeStar, OliviaTheVampire, val_int1, Rikka0w0, LegibleSleet827, RDKRACZ, Jamalam360, NLxDodge, Spaceman, How-Bout-No, Draylar, ggtylerr, kanpov, LimonBlaze, Luligabi1, ExDrill, muhammedesadcomert, timoreo22, OverLordsIII, SKZGx, Starexify"
+description = '''
+Library that makes it easy to add shields with banner support, enchantment support, & custom shapes without conflictions!
+'''
+
+[[dependencies.shieldlib]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.shieldlib]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.6,1.21.8]"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.shieldlib]]
+modId = "architectury"
+type = "required"
+versionRange = "[17.0.8,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.shieldlib]]
+modId = "midnightlib"
+type = "required"
+versionRange = "[1.7.5+1.21.6,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[mixins]]
+config = "shieldlib.mixins.json"

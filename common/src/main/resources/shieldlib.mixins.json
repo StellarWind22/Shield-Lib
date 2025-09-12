@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "package": "com.github.stellarwind22.shieldlib.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "client.ItemInHandRendererMixin",
+    "client.LocalPlayerMixin",
+    "client.SheetsAccessor",
+    "client.SpecialModelRenderersAccessor"
+  ],
+  "mixins": [
+    "EntityMixin",
+    "ItemsMixin",
+    "client.ItemStackMixin",
+    "LivingEntityMixin",
+    "RecipeMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
