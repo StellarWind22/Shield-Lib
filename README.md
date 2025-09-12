@@ -23,7 +23,7 @@
 ## Importing
 put this in `gradle.properties`
 ```properties
-shieldlib_version=2.0.0-beta.8-1.21.8
+shieldlib_version=2.0.0-1.21.8
 ```
 `build.gradle` in repositories just above dependencies
 ```gradle
