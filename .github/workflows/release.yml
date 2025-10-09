@@ -1,0 +1,20 @@
+name: release
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build
+        uses: actions/build
+      - name: curseforge-modrinth-publish
+        uses: Kir-Antipov/mc-publish@v3
+        with:
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          project-id-modrinth: 7SDalH12
+          project-id-curseforge: 380649
