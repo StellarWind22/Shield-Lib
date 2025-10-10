@@ -4,16 +4,23 @@ import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
 import com.github.stellarwind22.shieldlib.lib.client.model.ShieldModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.MaterialSet;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Unit;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -54,41 +61,37 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
         poseStack.pushPose();
         poseStack.scale(1.0F, -1.0F, -1.0F);
 
-        try {
 
-            Material spriteMat = bl2 ? new Material(ShieldLibClient.SHIELD_ATLAS_LOCATION, this.baseModel()) : new Material(ShieldLibClient.SHIELD_ATLAS_LOCATION, this.baseModelNoPat());
+        Material spriteMat = bl2 ? new Material(ShieldLibClient.SHIELD_ATLAS_LOCATION, this.baseModel()) : new Material(ShieldLibClient.SHIELD_ATLAS_LOCATION, this.baseModelNoPat());
 
-            VertexConsumer vertexConsumer = spriteMat.sprite()
-                    .wrap(ItemRenderer.getFoilBuffer(multiBufferSource,
-                            this.model().getRenderType(spriteMat.atlasLocation()), itemDisplayContext == ItemDisplayContext.GUI, bl));
+        submitNodeCollector.submitModelPart(this.model().handle(), poseStack, this.model().getRenderType(spriteMat.atlasLocation()), i, j, this.materials.);
+        if(bl2) {
+            this.submitPatterns(poseStack, submitNodeCollector, i, j, this.model().plate(), Unit.INSTANCE, spriteMat, Objects.requireNonNullElse(color, DyeColor.WHITE), bannerPatternLayers, bl, false);
+        } else {
+            this.model().plate().render(poseStack, vertexConsumer, i, j);
+        }
 
-            this.model().handle().render(poseStack, vertexConsumer, i, j);
-
-
-            if(bl2) {
-                renderPatterns(poseStack, multiBufferSource, i, j, this.model().plate(), spriteMat, Objects.requireNonNullElse(color, DyeColor.WHITE), bannerPatternLayers, bl, false);
-            } else {
-                this.model().plate().render(poseStack, vertexConsumer, i, j);
-            }
-        } finally {
             poseStack.popPose();
-        }
     }
 
-    default void renderPatterns(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, ModelPart modelPart, Material material, DyeColor dyeColor, BannerPatternLayers bannerPatternLayers, boolean bl2, boolean bl3) {
-        modelPart.render(poseStack, material.buffer(multiBufferSource, RenderType::entitySolid, bl3, bl2), i, j);
-        renderPatternLayer(poseStack, multiBufferSource, i, j, modelPart, ShieldLibClient.getShapedBannerMaterial(this.model().shape(), ResourceLocation.withDefaultNamespace("base")), dyeColor);
+    default void submitPatterns(MaterialSet materialSet, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int j, int k, Model<Unit> model, Unit object, Material material, boolean bl, DyeColor arg6, BannerPatternLayers arg7, boolean bl2, @Nullable ModelFeatureRenderer.CrumblingOverlay arg8, int l) {
+        submitNodeCollector.submitModel(model, object, poseStack, material.renderType(RenderType::entitySolid), j, k, -1, materialSet.get(material), l, arg8);
+        if (bl2) {
+            submitNodeCollector.submitModel(model, object, poseStack, RenderType.entityGlint(), j, k, -1, materialSet.get(material), 0, arg8);
+        }
 
-        for(int k = 0; k < 16 && k < bannerPatternLayers.layers().size(); ++k) {
-            BannerPatternLayers.Layer layer = bannerPatternLayers.layers().get(k);
-            Material material2 = ShieldLibClient.getShapedBannerMaterial(this.model().shape(), layer.pattern());
-            renderPatternLayer(poseStack, multiBufferSource, i, j, modelPart, material2, layer.color());
+        this.submitPatternLayer(materialSet, poseStack, submitNodeCollector, j, k, model, object, bl ? Sheets.BANNER_BASE : Sheets.SHIELD_BASE, arg6, arg8);
+
+        for(int i = 0; i < 16 && i < arg7.layers().size(); ++i) {
+            BannerPatternLayers.Layer bannerpatternlayers$layer = arg7.layers().get(i);
+            Material material2 = bl ? Sheets.getBannerMaterial(bannerpatternlayers$layer.pattern()) : Sheets.getShieldMaterial(bannerpatternlayers$layer.pattern());
+            submitPatternLayer(materialSet, poseStack, submitNodeCollector, j, k, model, object, material2, bannerpatternlayers$layer.color(), null);
         }
 
     }
 
-    default void renderPatternLayer(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, ModelPart modelPart, Material material, DyeColor dyeColor) {
-        int k = dyeColor.getTextureDiffuseColor();
-        modelPart.render(poseStack, material.buffer(multiBufferSource, RenderType::entityNoOutline), i, j, k);
+    default void submitPatternLayer(MaterialSet materialSet, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int j, int k, Model<Unit> model, Unit object, Material material, DyeColor dyeColor, @Nullable ModelFeatureRenderer.CrumblingOverlay overlay) {
+        int color = dyeColor.getTextureDiffuseColor();
+        submitNodeCollector.submitModel(model, object, poseStack, material.renderType(RenderType::entityNoOutline), j, k, color, materialSet.get(material), 0, overlay);
     }
 }
