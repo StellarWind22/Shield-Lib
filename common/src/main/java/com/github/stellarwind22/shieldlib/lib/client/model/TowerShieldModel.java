@@ -6,9 +6,10 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Unit;
 
 @Environment(EnvType.CLIENT)
-public class TowerShieldModel extends Model implements ShieldModel {
+public class TowerShieldModel extends Model<Unit> implements ShieldModel {
 
     private final ModelPart plate;
     private final ModelPart handle;

@@ -8,8 +8,9 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Unit;
 
-public class HeaterShieldModel extends Model implements ShieldModel {
+public class HeaterShieldModel extends Model<Unit> implements ShieldModel {
 
     private final ModelPart handle;
     private final ModelPart plate;

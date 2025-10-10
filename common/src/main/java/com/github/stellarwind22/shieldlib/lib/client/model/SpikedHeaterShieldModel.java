@@ -8,8 +8,9 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Unit;
 
-public class SpikedHeaterShieldModel extends Model implements ShieldModel {
+public class SpikedHeaterShieldModel extends Model<Unit> implements ShieldModel {
     private final ModelPart plate;
     private final ModelPart handle;
     public static final ModelLayerLocation LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_heater_shield"), "main");
