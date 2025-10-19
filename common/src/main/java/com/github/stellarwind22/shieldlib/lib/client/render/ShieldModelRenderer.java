@@ -3,20 +3,15 @@ package com.github.stellarwind22.shieldlib.lib.client.render;
 import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
 import com.github.stellarwind22.shieldlib.lib.client.model.ShieldModel;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.MaterialSet;
-import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
@@ -33,6 +28,7 @@ import java.util.Set;
 
 public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentMap> {
 
+    MaterialSet materialSet();
     ResourceLocation baseModel();
     ResourceLocation baseModelNoPat();
     ShieldModel model();
@@ -49,6 +45,7 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
         this.model().getRoot().getExtentsForGui(poseStack, set);
     }
 
+    //Based off of ShieldSpecialRenderer
     @Override
     default void submit(@Nullable DataComponentMap componentMap, ItemDisplayContext itemDisplayContext, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int j, boolean bl, int k) {
 
@@ -64,34 +61,101 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
 
         Material spriteMat = bl2 ? new Material(ShieldLibClient.SHIELD_ATLAS_LOCATION, this.baseModel()) : new Material(ShieldLibClient.SHIELD_ATLAS_LOCATION, this.baseModelNoPat());
 
-        submitNodeCollector.submitModelPart(this.model().handle(), poseStack, this.model().getRenderType(spriteMat.atlasLocation()), i, j, this.materials.);
+        submitNodeCollector.submitModelPart(
+                this.model().handle(),
+                poseStack,
+                this.model().getRenderType(spriteMat.atlasLocation()),
+                i, j,
+                this.materialSet().get(spriteMat),
+                false, bl, -1,
+                null, k
+        );
+
         if(bl2) {
-            this.submitPatterns(poseStack, submitNodeCollector, i, j, this.model().plate(), Unit.INSTANCE, spriteMat, Objects.requireNonNullElse(color, DyeColor.WHITE), bannerPatternLayers, bl, false);
+
+            this.submitPatterns(
+                    submitNodeCollector,
+                    this.model().plate(),
+                    poseStack,
+                    i, j,
+                    spriteMat,
+                    false,
+                    Objects.requireNonNullElse(
+                            color,
+                            DyeColor.WHITE
+                    ),
+                    bannerPatternLayers,
+                    bl, null, k
+            );
+
         } else {
-            this.model().plate().render(poseStack, vertexConsumer, i, j);
+
+            submitNodeCollector.submitModelPart(
+                    this.model().plate(),
+                    poseStack,
+                    this.model().getRenderType(spriteMat.atlasLocation()),
+                    i, j,
+                    this.materialSet().get(spriteMat),
+                    false, bl, -1,
+                    null, k
+            );
         }
 
-            poseStack.popPose();
+        poseStack.popPose();
     }
 
-    default void submitPatterns(MaterialSet materialSet, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int j, int k, Model<Unit> model, Unit object, Material material, boolean bl, DyeColor arg6, BannerPatternLayers arg7, boolean bl2, @Nullable ModelFeatureRenderer.CrumblingOverlay arg8, int l) {
-        submitNodeCollector.submitModel(model, object, poseStack, material.renderType(RenderType::entitySolid), j, k, -1, materialSet.get(material), l, arg8);
+    default void submitPatterns(SubmitNodeCollector submitNodeCollector, ModelPart modelPart, PoseStack poseStack, int i, int j, Material material, boolean bl, DyeColor dyeColor, BannerPatternLayers arg7, boolean bl2, @Nullable ModelFeatureRenderer.CrumblingOverlay overlay, int k) {
+        submitNodeCollector.submitModelPart(
+                modelPart,
+                poseStack,
+                material.renderType(RenderType::entitySolid),
+                i, j,
+                this.materialSet().get(material),
+                false, bl, -1,
+                overlay, k
+        );
+
         if (bl2) {
-            submitNodeCollector.submitModel(model, object, poseStack, RenderType.entityGlint(), j, k, -1, materialSet.get(material), 0, arg8);
+            submitNodeCollector.submitModelPart(modelPart, poseStack, RenderType.entityGlint(), i, j, this.materialSet().get(material), false, bl, -1, overlay, k);
         }
 
-        this.submitPatternLayer(materialSet, poseStack, submitNodeCollector, j, k, model, object, bl ? Sheets.BANNER_BASE : Sheets.SHIELD_BASE, arg6, arg8);
+        this.submitPatternLayer(
+                submitNodeCollector,
+                modelPart,
+                poseStack,
+                i, j,
+                bl ? Sheets.BANNER_BASE : Sheets.SHIELD_BASE,
+                false, dyeColor,
 
-        for(int i = 0; i < 16 && i < arg7.layers().size(); ++i) {
-            BannerPatternLayers.Layer bannerpatternlayers$layer = arg7.layers().get(i);
-            Material material2 = bl ? Sheets.getBannerMaterial(bannerpatternlayers$layer.pattern()) : Sheets.getShieldMaterial(bannerpatternlayers$layer.pattern());
-            submitPatternLayer(materialSet, poseStack, submitNodeCollector, j, k, model, object, material2, bannerpatternlayers$layer.color(), null);
+        );
+
+        for(int b = 0; b < 16 && b < arg7.layers().size(); ++b) {
+            BannerPatternLayers.Layer layer = arg7.layers().get(b);
+            Material material2 = ShieldLibClient.getShapedBannerMaterial(this.model().shape(), layer.pattern());
+            submitPatternLayer(
+                    submitNodeCollector,
+                    modelPart,
+                    poseStack,
+                    i, j,
+                    material2,
+                    false, dyeColor,
+                    layer,
+                    overlay, k
+            );
         }
 
     }
 
-    default void submitPatternLayer(MaterialSet materialSet, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int j, int k, Model<Unit> model, Unit object, Material material, DyeColor dyeColor, @Nullable ModelFeatureRenderer.CrumblingOverlay overlay) {
+    default void submitPatternLayer(SubmitNodeCollector submitNodeCollector, ModelPart modelPart, PoseStack poseStack, int i, int j, Material material, boolean bl, DyeColor dyeColor, BannerPatternLayers.Layer layer, @Nullable ModelFeatureRenderer.CrumblingOverlay overlay, int k) {
         int color = dyeColor.getTextureDiffuseColor();
-        submitNodeCollector.submitModel(model, object, poseStack, material.renderType(RenderType::entityNoOutline), j, k, color, materialSet.get(material), 0, overlay);
+        submitNodeCollector.submitModelPart(
+                modelPart,
+                poseStack,
+                material.renderType(RenderType::entityNoOutline),
+                i, j,
+                this.materialSet().get(material),
+                false, bl, -1,
+                overlay, k
+        );
     }
 }
