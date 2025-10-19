@@ -3,32 +3,16 @@ package com.github.stellarwind22.shieldlib.lib.client.render;
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.client.model.BucklerShieldLibModel;
 import com.github.stellarwind22.shieldlib.lib.client.model.ShieldModel;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.blockentity.BannerRenderer;
-import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.MaterialSet;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Unit;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.level.block.entity.BannerPatternLayers;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
 public class BucklerShieldModelRenderer implements ShieldModelRenderer {
