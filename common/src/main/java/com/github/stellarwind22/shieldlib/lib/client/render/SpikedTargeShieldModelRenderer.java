@@ -11,21 +11,27 @@ import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class SpikedTargeShieldModelRenderer implements ShieldModelRenderer {
 
+    private final MaterialSet materialSet;
     private final ResourceLocation baseModel, baseModelNoPat;
     private final SpikedTargeShieldModel model;
     public static final ModelLayerLocation SPIKED_TARGE_MODEL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_targe_shield"), "main");
 
-    public SpikedTargeShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, SpikedTargeShieldModel model) {
+    public SpikedTargeShieldModelRenderer(MaterialSet materialSet, ResourceLocation baseModel, ResourceLocation baseModelNoPat, SpikedTargeShieldModel model) {
+        this.materialSet = materialSet;
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
     }
+
+    @Override
+    public MaterialSet materialSet() { return this.materialSet; }
 
     @Override
     public ResourceLocation baseModel() {
@@ -57,10 +63,11 @@ public class SpikedTargeShieldModelRenderer implements ShieldModelRenderer {
         }
 
         @Override
-        public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(SPIKED_TARGE_MODEL_LAYER);
+        public @NotNull SpecialModelRenderer<?> bake(BakingContext bakingContext) {
+            ModelPart root = bakingContext.entityModelSet().bakeLayer(SPIKED_TARGE_MODEL_LAYER);
             SpikedTargeShieldModel model = new SpikedTargeShieldModel(root);
             return new SpikedTargeShieldModelRenderer(
+                    bakingContext.materials(),
                     this.baseModel,
                     this.baseModelNoPat,
                     model

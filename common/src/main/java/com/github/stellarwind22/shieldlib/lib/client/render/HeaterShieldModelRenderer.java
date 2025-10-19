@@ -11,31 +11,33 @@ import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class HeaterShieldModelRenderer implements ShieldModelRenderer {
 
+    private final MaterialSet materialSet;
     private final ResourceLocation baseModel, baseModelNoPat;
     private final HeaterShieldModel model;
     public static final ModelLayerLocation HEATER_MODEL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield"), "main");
 
-    public HeaterShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, HeaterShieldModel model) {
+    public HeaterShieldModelRenderer(MaterialSet materialSet,ResourceLocation baseModel, ResourceLocation baseModelNoPat, HeaterShieldModel model) {
+        this.materialSet = materialSet;
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
     }
 
     @Override
-    public ResourceLocation baseModel() {
-        return this.baseModel;
-    }
+    public MaterialSet materialSet() { return this.materialSet; }
 
     @Override
-    public ResourceLocation baseModelNoPat() {
-        return this.baseModelNoPat;
-    }
+    public ResourceLocation baseModel() { return this.baseModel; }
+
+    @Override
+    public ResourceLocation baseModelNoPat() { return this.baseModelNoPat; }
 
     @Override
     public ShieldModel model() {
@@ -57,10 +59,11 @@ public class HeaterShieldModelRenderer implements ShieldModelRenderer {
         }
 
         @Override
-        public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(HEATER_MODEL_LAYER);
+        public @NotNull SpecialModelRenderer<?> bake(BakingContext bakingContext) {
+            ModelPart root = bakingContext.entityModelSet().bakeLayer(HEATER_MODEL_LAYER);
             HeaterShieldModel model = new HeaterShieldModel(root);
             return new HeaterShieldModelRenderer(
+                    bakingContext.materials(),
                     this.baseModel,
                     this.baseModelNoPat,
                     model

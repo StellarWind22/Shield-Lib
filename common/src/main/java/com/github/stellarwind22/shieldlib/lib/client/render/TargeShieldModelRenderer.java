@@ -11,21 +11,27 @@ import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class TargeShieldModelRenderer implements ShieldModelRenderer {
 
+    private final MaterialSet materialSet;
     private final ResourceLocation baseModel, baseModelNoPat;
     private final TargeShieldModel model;
     public static final ModelLayerLocation TARGE_MODEL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "targe_shield"), "main");
 
-    public TargeShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, TargeShieldModel model) {
+    public TargeShieldModelRenderer(MaterialSet materialSet, ResourceLocation baseModel, ResourceLocation baseModelNoPat, TargeShieldModel model) {
+        this.materialSet = materialSet;
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
     }
+
+    @Override
+    public MaterialSet materialSet() { return this.materialSet; }
 
     @Override
     public ResourceLocation baseModel() {
@@ -57,10 +63,11 @@ public class TargeShieldModelRenderer implements ShieldModelRenderer {
         }
 
         @Override
-        public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(TARGE_MODEL_LAYER);
+        public @NotNull SpecialModelRenderer<?> bake(BakingContext bakingContext) {
+            ModelPart root = bakingContext.entityModelSet().bakeLayer(TARGE_MODEL_LAYER);
             TargeShieldModel model = new TargeShieldModel(root);
             return new TargeShieldModelRenderer(
+                    bakingContext.materials(),
                     this.baseModel,
                     this.baseModelNoPat,
                     model

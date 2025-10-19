@@ -10,20 +10,26 @@ import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class TowerShieldModelRenderer implements ShieldModelRenderer {
 
+    private final MaterialSet materialSet;
     private final ResourceLocation baseModel, baseModelNoPat;
     private final TowerShieldModel model;
 
-    public TowerShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, TowerShieldModel model) {
+    public TowerShieldModelRenderer(MaterialSet materialSet, ResourceLocation baseModel, ResourceLocation baseModelNoPat, TowerShieldModel model) {
+        this.materialSet = materialSet;
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
     }
+
+    @Override
+    public MaterialSet materialSet() { return this.materialSet; }
 
     @Override
     public ResourceLocation baseModel() {
@@ -55,10 +61,11 @@ public class TowerShieldModelRenderer implements ShieldModelRenderer {
         }
 
         @Override
-        public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(ModelLayers.SHIELD);
+        public @NotNull SpecialModelRenderer<?> bake(BakingContext bakingContext) {
+            ModelPart root = bakingContext.entityModelSet().bakeLayer(ModelLayers.SHIELD);
             TowerShieldModel model = new TowerShieldModel(root);
             return new TowerShieldModelRenderer(
+                    bakingContext.materials(),
                     this.baseModel,
                     this.baseModelNoPat,
                     model

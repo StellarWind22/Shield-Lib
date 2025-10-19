@@ -3,10 +3,8 @@ package com.github.stellarwind22.shieldlib.lib.client.render;
 import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
 import com.github.stellarwind22.shieldlib.lib.client.model.ShieldModel;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
@@ -15,7 +13,6 @@ import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Unit;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -124,9 +121,9 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
                 modelPart,
                 poseStack,
                 i, j,
-                bl ? Sheets.BANNER_BASE : Sheets.SHIELD_BASE,
+                ShieldLibClient.getShapedBannerMaterial(this.model().shape(), ResourceLocation.withDefaultNamespace("base")),
                 false, dyeColor,
-
+                overlay
         );
 
         for(int b = 0; b < 16 && b < arg7.layers().size(); ++b) {
@@ -138,15 +135,14 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
                     poseStack,
                     i, j,
                     material2,
-                    false, dyeColor,
-                    layer,
-                    overlay, k
+                    false, layer.color(),
+                    overlay
             );
         }
 
     }
 
-    default void submitPatternLayer(SubmitNodeCollector submitNodeCollector, ModelPart modelPart, PoseStack poseStack, int i, int j, Material material, boolean bl, DyeColor dyeColor, BannerPatternLayers.Layer layer, @Nullable ModelFeatureRenderer.CrumblingOverlay overlay, int k) {
+    default void submitPatternLayer(SubmitNodeCollector submitNodeCollector, ModelPart modelPart, PoseStack poseStack, int i, int j, Material material, boolean bl, DyeColor dyeColor, @Nullable ModelFeatureRenderer.CrumblingOverlay overlay) {
         int color = dyeColor.getTextureDiffuseColor();
         submitNodeCollector.submitModelPart(
                 modelPart,
@@ -155,7 +151,7 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
                 i, j,
                 this.materialSet().get(material),
                 false, bl, -1,
-                overlay, k
+                overlay, color
         );
     }
 }
