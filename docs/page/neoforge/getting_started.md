@@ -1,4 +1,6 @@
-[![](../../image/architectury_64.png)](../architectury/getting_started.md) [![](../../image/fabric_64.png)](../fabric/getting_started.md) [![](../../image/neoforge_64.png)](../neoforge/getting_started.md)
+[![](../../image/architectury_64.png)](../architectury/getting_started.md)
+[![](../../image/fabric_64.png)](../fabric/getting_started.md)
+[![](../../image/neoforge_64.png)](../neoforge/getting_started.md)
 
 ---
 # Getting Started(NeoForge)
@@ -59,4 +61,6 @@ dependencies {
 - [New shield shape](new_shape_shield.md)
 
 ---
-[![](../../image/architectury_64.png)](../architectury/getting_started.md) [![](../../image/fabric_64.png)](../fabric/getting_started.md) [![](../../image/neoforge_64.png)](../neoforge/getting_started.md)
+[![](../../image/architectury_64.png)](../architectury/getting_started.md)
+[![](../../image/fabric_64.png)](../fabric/getting_started.md)
+[![](../../image/neoforge_64.png)](../neoforge/getting_started.md)

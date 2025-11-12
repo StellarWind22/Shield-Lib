@@ -1,0 +1,17 @@
+on:
+  schedule:
+    - cron: '0 8 * * 1' # Runs every Monday at 08:00 UTC
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check-stale
+        uses: actions/stale@v9
+        with:
+          days-before-stale: 30
+          stale-issue-message: 'Marked `stale` due to inactivity.'
+          days-before-close: 30
+          close-issue-message: 'Closed due to further inactivity'
+          stale-issue-label: 'stale'
+          exempt-issue-labels: 'needs-investigation,help-wanted,question'

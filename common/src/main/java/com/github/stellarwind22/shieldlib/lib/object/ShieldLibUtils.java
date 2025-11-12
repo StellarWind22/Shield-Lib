@@ -375,6 +375,9 @@ public class ShieldLibUtils {
     }
 
     public static int getEnchantmentLevel(ResourceLocation enchantmentId, ItemStack itemStack) {
+
+        if(itemStack == null) return 0;
+
         ItemEnchantments enchants = itemStack.getEnchantments();
         AtomicInteger result = new AtomicInteger();
 
