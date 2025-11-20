@@ -11,7 +11,6 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
-@Environment(EnvType.CLIENT)
 public class BucklerShieldLibModel extends Model implements ShieldModel {
 
     private final ModelPart plate;
