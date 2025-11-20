@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-@Environment(EnvType.CLIENT)
 public class TowerShieldModelRenderer implements ShieldModelRenderer {
 
     private final ResourceLocation baseModel, baseModelNoPat;
