@@ -1,8 +1,6 @@
 package com.github.stellarwind22.shieldlib.lib.client.model;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
