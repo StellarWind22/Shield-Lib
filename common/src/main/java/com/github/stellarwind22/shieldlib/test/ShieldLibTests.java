@@ -180,9 +180,7 @@ public class ShieldLibTests {
     private static <T extends Item> RegistrySupplier<T> registerItem(String name, Function<Item.Properties, T> constructor) {
         return TEST_ITEMS.register(name, () -> {
             ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, name));
-            Item.Properties properties = new Item.Properties();
-            properties = properties.setId(key);
-            return constructor.apply(properties);
+            return constructor.apply(new Item.Properties().setId(key));
         });
     }
 }

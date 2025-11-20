@@ -1,9 +1,11 @@
 [![](../../image/architectury_64.png)](../architectury/tower_shield.md)
 [![](../../image/fabric_64.png)](../fabric/tower_shield.md)
 [![](../../image/neoforge_64.png)](../neoforge/tower_shield.md)
+---
+# Creating a Vanilla Style Shield(NeoForge)
 
 ## Step 1.
-Register a shield. click [here](https://docs.neoforged.net/docs/items/) for a the neoforge docs on items.
+Register a shield. click [here](https://docs.neoforged.net/docs/items/) for the neoforge docs on items.
 
 ```java
 public final class ExampleItems {
