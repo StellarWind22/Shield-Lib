@@ -20,12 +20,11 @@ public final class ExampleItems {
 public static Item register(String name, Function<Item.Properties, Item> itemFactory, Item.Properties settings) {
     //Create key
     ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ExampleMod.MOD_ID, name));
-    
     //Create item instance
     Item item = itemFactory.apply(settings.setId(key));
-    
     //Register
     Registry.register(BuiltInRegistries.ITEM, key, item);
+    return item;
 }
 ```
 
